@@ -551,7 +551,6 @@ def post_update(request):
         for img in images:
             image = PostImage(post=post,cover=img)
             image.save()
-
     return redirect('https://lincart.herokuapp.com/posts/')
 
 class post_delete(View):
