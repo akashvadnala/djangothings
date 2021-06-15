@@ -13,7 +13,7 @@ from django.views.generic import ListView,View
 
 def home(request):
     context={}
-    context['page_title'] = 'lincart.in'
+    context['page_title'] = 'lincart'
     dashboard = {'n':'Dashboard','w':'dashboard'}
     posts = {'n': 'Products','w':'posts'}
     uploadpost = {'n': 'Sell Products', 'w':'uploadpost'}
