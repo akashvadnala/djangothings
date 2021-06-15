@@ -339,7 +339,7 @@ def prof_update(request):
                 img = request.FILES["image"]
                 data.profile_pic = img
                 data.save()
-    return HttpResponseRedirect(reverse('https://lincart.herokuapp.com/settings'))
+    return HttpResponseRedirect(reverse("https://lincart.herokuapp.com/settings"))
 
 def change_password(request):
     check = register_table.objects.filter(user__id=request.user.id)
