@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import login, authenticate, logout
 from django.utils import timezone
-from django.shortcuts import render, redirect, get_object_or_404, reverse,HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404, reverse,HttpResponse,HttpResponseRedirect
 from .models import *
 import hashlib 
 import datetime
@@ -339,7 +339,7 @@ def prof_update(request):
                 img = request.FILES["image"]
                 data.profile_pic = img
                 data.save()
-    return redirect('/settings/')
+    return HttpResponseRedirect(reverse('base settings'))
 
 def change_password(request):
     check = register_table.objects.filter(user__id=request.user.id)
