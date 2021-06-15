@@ -1,0 +1,172 @@
+{% load static %}
+{% static "images" as baseUrl %}
+
+<div class="con-inside">
+    <div class="con-heading">
+        {% for nav in navss %}
+            {% if nav.w == sec %}
+                {{ nav.n }}
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="theme-settings">
+        <div class="theme-heading">
+            Theme
+        </div>
+        <div class="hr"></div>
+        <div class="light-dark theme-main">
+            <div class="theme">
+                <div type="button" class="theme-but" onclick="theme_light()">
+                    {% if data.darkmode %}
+                    <i class="fa light fa-circle-o"></i>
+                    {% else %}
+                    <i class="fa light fa-dot-circle-o"></i>
+                    {% endif %}
+                    light
+                </div>
+            </div>
+            <div class="theme">
+                <div type="button" class="theme-but" onclick="theme_dark()">
+                    {% if data.darkmode %}
+                    <i class="fa dark fa-dot-circle-o"></i>
+                    {% else %}
+                    <i class="fa dark fa-circle-o"></i>
+                    {% endif %}
+                    dark
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-settings">
+        <div class="prof-heading">
+            Profile Settings
+        </div>
+        <div class="hr"></div>
+        <div class="prof-main">
+            <form action="{% url 'prof-update' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="prof-main-inp">
+                    <div class="prof-lab">First Name :</div>
+                    <div class="prof-inp"><input type="text" value="{{user.first_name}}" name="first_name" placeholder="First Name"></div>
+                </div>
+                <div class="prof-main-inp">
+                    <div class="prof-lab">Last Name :</div>
+                    <div class="prof-inp"><input type="text" value="{{user.last_name}}" name="last_name" placeholder="Last Name"></div>
+                </div>
+                <div class="prof-main-inp">
+                    <div class="prof-lab">Email :</div>
+                    <div class="prof-inp"><input type="email" value="{{user.email}}" name="email" placeholder="Email"></div>
+                </div>
+                {% if data.profile_pic %}
+                <div style="margin-left: 15px;" id="dp-{{data.id}}" class="img-inp" type="button" onclick="deldp({{data.id}})">
+                    <div class="overlay">
+                        <div class="text">x</div>
+                    </div>
+                    <img src="{{data.profile_pic.url}}" alt=""   style="
+                    width: 60px;
+                    height: 50px;
+                    object-fit: contain;
+                    margin-right:10px ;
+                    cursor: pointer;">
+                    <input id="inp-{{i.id}}" style="display: none;" value="{{data.profile_pic..url}}" type="file" name="cover" required>
+                </div>
+                   
+                
+                {% endif %}
+                <div class="prof-main-inp fil">
+                    <div class="prof-lab">Display Pic :</div>
+                    <div class="prof-inp fil"><input type="file" name="image" accept="images"> </div>
+                </div>
+                <div class="prof-main-inp">
+                    <div class="prof-lab">Contact No. :</div>
+                    <div class="prof-inp"><input type="text" value="{{data.contact_number}}" name="contact" pattern="[0-9]{10}" placeholder="Enter Contact Number" title="Number must contain 10 digits only!!"></div>
+                </div>
+                <div class="prof-main-inp">
+                    <div class="prof-lab">Institute :</div>
+                    <div class="prof-inp"><input type="text" value="{{data.Institute}}" name="institute" placeholder="Institute"></div>
+                </div>
+                <div class="prof-main-inp">
+                    <div class="prof-lab">Address :</div>
+                    <div class="prof-inp"><input type="text" value="{{data.place}}" name="place" placeholder="Address"></div>
+                </div>
+                <div class="prof-main-inp">
+                    <div class="prof-lab">Occupation:</div>
+                    <div class="prof-inp"><input type="text" value="{{data.occupation}}" name="occupation" placeholder="Occupation"></div>
+                </div>
+                <div class="but"><button>Submit</button></div>
+            </form>
+        </div>
+    </div>
+    <div class="password-settings">
+        <div class="pass-heading">
+            Change Password
+        </div>
+        <div class="hr"></div>
+        <div class="pass-main">
+            <form action="{% url 'change-password' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="pass-main-inp">
+                    <div class="pass-lab">Current Password :</div>
+                    <div class="pass-inp"><input type="password" name="cpassword" placeholder="Current Password" required></div>
+                </div>
+                <div class="pass-main-inp">
+                    <div class="pass-lab">New Password :</div>
+                    <div class="pass-inp"><input type="password" name="npassword" placeholder="New Password" required></div>
+                </div>
+                <div class="pass-main-inp">
+                    <div class="pass-lab">Confirm Password :</div>
+                    <div class="pass-inp"><input type="password" name="cnpassword" placeholder="Confirm New Password" required></div>
+                </div>
+                <div class="but"><button>Submit</button></div>
+            </form>
+        </div>
+    </div>
+    
+        
+</div>
+<script>
+function deldp(id){
+    $.ajax({
+      url: '{% url "del_dp" %}',
+      data:{
+        'id' : id,
+      },
+      dataType:'json',
+      success:function(data){
+        if(data.deleted){
+          $("#dp-"+id).remove();
+        }
+      }
+    });
+}
+
+function theme_light(){
+    $.ajax({
+        url:'{% url "theme-light" %}',
+        dataType:'json',
+        success:$(function () {
+            $("body").removeClass('darkmode');
+            $(".light").addClass('fa-dot-circle-o');
+            $(".light").removeClass('fa-circle-o');
+            $(".dark").addClass('fa-circle-o');
+            $(".dark").removeClass('fa-dot-circle-o');
+        }),
+        
+    });
+}
+
+function theme_dark(){
+    $.ajax({
+        url:'{% url "theme-dark" %}',
+        dataType:'json',
+        success:$(function () {
+            $("body").addClass('darkmode');
+            $(".dark").addClass('fa-dot-circle-o');
+            $(".dark").removeClass('fa-circle-o');
+            $(".light").removeClass('fa-dot-circle-o');
+            $(".light").addClass('fa-circle-o');
+        }),
+        
+    });
+}
+</script>

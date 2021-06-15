@@ -1,0 +1,86 @@
+{% load static %}
+{% static "images" as baseUrl %}
+<div class="container-box">
+    <div class="swiper-container con-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">Slide 1</div>
+            <div class="swiper-slide">Slide 2</div>
+            <div class="swiper-slide">Slide 3</div>
+            <div class="swiper-slide">Slide 4</div>
+            <div class="swiper-slide">Slide 5</div>
+            <div class="swiper-slide">Slide 6</div>
+            <div class="swiper-slide">Slide 7</div>
+            <div class="swiper-slide">Slide 8</div>
+            <div class="swiper-slide">Slide 9</div>
+            <div class="swiper-slide">Slide 10</div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+    <div class="stack">
+        <div class="location">
+            <span class="area">
+                Place : 
+                <input type="text" value="{{data.place}}">
+            </span>
+                <span class="radius">
+                    Over : 
+                    <input type="text" value="{{data.over}} kms">
+                </span>
+        </div>
+        <div class="lmr">
+            <div class="l"></div>
+            <div class="m">
+                {% for post in posts %}
+                    <div class="even">
+                        <div class="pic">
+                            {% for i in imgs %}
+                                {% if i.post.id == post.id %}
+                                <img  style="
+                                width: 100%;
+                                height: 100%;
+                                object-fit: contain;"  src="{{ i.cover.url }}" alt="{{ post.post_title }}">
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="det">
+                            <div class="ncc">
+                                <div class="name">
+                                    <a href="{% url 'open-post' post.sha %}" title="{{post.post_title}}" target="_blank">{{post.post_title|truncatewords:25}}</a>
+                                </div>
+                                <div class="contact">
+                                    <a href="">contact</a>
+                                </div>
+                            </div>
+                            <div class="price">
+                                Rs. {{post.price}}/-
+                            </div>
+                            <div class="desc">
+                                {{post.desc|truncatewords:14}}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="r"></div>
+        </div>
+        
+    </div>
+    
+</div>
+
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }, 
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+</script>

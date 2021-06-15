@@ -1,0 +1,62 @@
+{% load static %}
+{% static "images" as baseUrl %}
+
+<div class="con-inside">
+    <div class="con-heading">
+        {% for nav in navss %}
+            {% if nav.w == sec %}
+                {{ nav.n }}
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="dashboard">
+        <div class="dash-head">
+            <div class="pic">
+                {% if data.profile_pic %}
+                    <img src="{{data.profile_pic.url}}" alt="dp">
+                {% endif %}
+            </div>
+            <div class="name">
+                {{user.first_name}} {{user.last_name}}
+            </div>
+        </div>
+        <div class="info">
+            <div class="info-head">
+            <div>Personal Details</div>
+            <div><a href="http://127.0.0.1:8000/settings/"><i class="fa fa-edit"></i></a></div>
+            </div> 
+            <div class="info-one">
+                <div class="label">
+                    Email
+                </div>
+                <div class="value">
+                    {{user.email}}
+                </div>
+            </div>
+            <div class="info-one">
+                <div class="label">
+                    Contact
+                </div>
+                <div class="value">
+                    {{data.contact_number}}
+                </div>
+            </div>
+            <div class="info-one">
+                <div class="label">
+                    Institute
+                </div>
+                <div class="value">
+                    {{data.Institute}}
+                </div>
+            </div>
+            <div class="info-one">
+                <div class="label">
+                    Address
+                </div>
+                <div class="value">
+                    {{data.place}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

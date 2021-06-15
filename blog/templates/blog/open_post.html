@@ -1,0 +1,131 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% static "images" as baseUrl %}
+
+{% block title %} {{post.post_title}} {% endblock %}
+
+
+
+{% block container-box %}
+    <div class="post-show">
+        <div class="post-pic">
+            <div class="swiper-container gallery-top">
+                <div class="swiper-wrapper">
+                    {% for i in imgs %}
+                        {% if i.post.id == post.id %}
+                            <div class="swiper-slide"><img src="{{i.cover.url}}" alt=""></div>
+                        {% endif %}
+                    {% endfor %}
+                   </div>
+            </div>
+            <div class="swiper-container gallery-thumbs">
+                <div class="swiper-wrapper">
+                    {% for i in imgs %}
+                        {% if i.post.id == post.id %}
+                            <div class="swiper-slide"><img src="{{i.cover.url}}" alt=""></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="post-det">
+            <div class="name">
+                {{ post.post_title }}
+            </div>
+            <div class="hr"></div>
+            {% if post.label1 and post.inp1 %}
+                <div class="det-each">
+                    <div class="det-lab">{{post.label1}} : </div>
+                    <div class="det-val">{{ post.inp1 }}</div>
+                </div>
+            {% endif %}
+            {% if post.author %}
+                <div class="det-each">
+                    <div class="det-lab">Author : </div>
+                    <div class="det-val">{{ post.author }}</div>
+                </div>
+            {% endif %}
+            {% if post.company %}
+                <div class="det-each">
+                    <div class="det-lab">Company : </div>
+                    <div class="det-val">{{ post.company }}</div>
+                </div>
+            {% endif %}
+            <div class="det-each">
+                <div class="det-lab">Price : </div>
+                <div class="det-val">Rs. {{ post.price }}/-</div>
+            </div>
+            <div class="det-each">
+                <div class="det-lab">About : </div>
+                <div class="det-val">{{ post.desc }}</div>
+            </div>
+            <div class="but">
+                <button>Contact</button>
+            </div>
+        </div>
+    </div>
+    <div class="other-items">
+        <div class="heading">
+            Related Products
+        </div>
+        <div class="stack">
+            <div class="lmr">
+                <div class="l"></div>
+                <div class="m">
+                    {% for post in oth_posts %}
+                        <div class="even">
+                            <div class="pic">
+                                {% for i in imgs %}
+                                    {% if i.post.id == post.id %}
+                                    <img  style="
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: contain;"  src="{{ i.cover.url }}" alt="{{ post.post_title }}">
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="det">
+                                <div class="ncc">
+                                    <div class="name">
+                                        <a href="{% url 'open-post' post.sha %}" title="{{post.post_title}}" target="_blank">{{post.post_title|truncatewords:25}}</a>
+                                    </div>
+                                    <div class="contact">
+                                        <a href="">contact</a>
+                                    </div>
+                                </div>
+                                <div class="price">
+                                    Rs. {{post.price}}/-
+                                </div>
+                                <div class="desc">
+                                    {{post.desc|truncatewords:14}}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="r"></div>
+            </div>
+            
+        </div>
+    </div>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var galleryThumbs = new Swiper('.gallery-thumbs', {
+        spaceBetween: 0,
+        slidesPerView: 6,
+        freeMode: true,
+        watchSlidesVisibility: true,
+        watchSlidesProgress: true,
+        });
+        var galleryTop = new Swiper('.gallery-top', {
+        spaceBetween: 10,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        thumbs: {
+            swiper: galleryThumbs
+        }
+        });
+    </script>
+{% endblock %}

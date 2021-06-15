@@ -1,0 +1,62 @@
+.footer{
+    height: 300px;
+    width: 100%;
+    background: rgba(0,0,0,.05);
+    border: solid 1px rgba(200,200,200,.7);
+    color: rgb(50,50,50);
+}
+
+.footer a{
+    color:rgb(50,50,50);
+    text-decoration: none;
+}
+
+.footer a:hover{
+    text-decoration: underline;
+}
+
+.footer .lists{
+    margin: 30px 12% 0 12%;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.footer .footer-s .footer-s-column div{
+    margin: 4px;
+}
+
+.footer .footer-s .footer-s-column .heading{
+    font-weight: bolder;
+}
+
+.footer .footer-s .footer-s-column .list{
+    font-size: 14px;
+}
+
+.footer .footer-f{
+    margin: 30px 12% 0 12%;
+}
+
+.footer .footer-f .hr{
+    background: rgba(100,100,100,.7);
+    height: 1px;
+}
+
+.footer .footer-f .det{
+    display: grid;
+    grid-template-columns: calc(100% - 90px) 40px 40px;
+}
+
+.footer .footer-f .det .name{
+    font-size: 20px;
+}
+
+.footer .footer-f .det .name a{
+    color: black;
+}
+
+.footer .footer-f .det .im a img{
+    width:30px;
+    height: 30px;
+    border-radius: 5px;
+}

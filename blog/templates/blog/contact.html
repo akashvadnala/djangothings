@@ -1,0 +1,62 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% static "images" as baseUrl %}
+
+{% block title %}{{page_title}}{% endblock %}
+
+{% block container-box %}
+
+<div class="contact">
+    <div class="contact-s">
+        <div class="heading">
+            <div class="heading-s">
+                <div class="icon">
+                    {% if con %}
+                    <img src="{% static 'images/contact.png' %}" alt="">
+                    {% else %}
+                    <img src="{% static 'images/feedback.png' %}" alt="">
+                    {% endif %}
+                </div>
+                <div class="name">
+                    {% if con %}
+                    Contact
+                    {% else %}
+                    Feedback
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="msg_us">
+            {% if con %}
+            <form action="{% url 'send-msg' %}" method="POST">
+            {% else %}
+            <form action="{% url 'send-feedback' %}" method="POST">
+            {% endif %}
+                {% csrf_token %}
+                <div class="msg-s">
+                    <div class="msg-inp">
+                        <input name="msg_email" type="email" placeholder="Email" required>
+                    </div>
+                    <div class="msg-inp">
+                        {% if con %}
+                        <textarea name="msg_msg" placeholder="Write your views.." required></textarea>
+                        {% else %}
+                        <textarea name="msg_msg" placeholder="Write your feedback.." required></textarea>
+                        {% endif %}
+                    </div>
+                    <div class="msg-inp">
+                        <button>Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% if con %}
+        <div class="see_faq">
+            <div class="see-faq-s">
+              <a href="{% url 'faqs' %}">Click here to see the Frequently Asked Questions</a> 
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

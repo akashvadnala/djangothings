@@ -1,0 +1,93 @@
+{% load static %}
+{% static "images" as baseUrl %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <title>
+           {% block title %} {{page_title}} {% endblock %}
+        </title>
+        {% block links%}
+        <link href="{% static 'styles/header.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/modal.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/container-box.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/open_post.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/footer.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/about.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/faqs.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/contact.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/darkmode.css' %}" rel="stylesheet" type="text/css">
+        <script src="{% static 'js/base.js' %}"></script>
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <script src="{% static 'js/jquery.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        {% endblock %}
+    </head>
+    {% if data.darkmode %}
+    <body class="darkmode">
+        {% else %}
+    <body>
+        {% endif %}
+        {% block home %}
+
+            {% block header %}
+                {% include 'blog/header.html' %}
+            {% endblock %}
+
+            {% block modal %}
+                {% include 'blog/modal.html' %}
+            {% endblock %}
+
+            {% block container-box %}
+                {% include 'blog/container-box.html' %}
+            {% endblock %}
+
+            {% block footer %}
+                {% include 'blog/footer.html' %}
+            {% endblock %}
+
+        {% endblock %}
+    
+            <script>
+                $(".inn input").focus(function() {
+                    $(".expand").css('display','block');
+                    $(".search_in").css('border-bottom-left-radius','0');
+                    $(".search_in").css('border-bottom-right-radius','0');
+                });
+                $('body .header .logo').click(function(){
+                    $(".expand").css('display','none');
+                    $(".search_in").css('border-bottom-left-radius','5px');
+                    $(".search_in").css('border-bottom-right-radius','5px');
+                });
+                $('body .header .mnu').click(function(){
+                    $(".expand").css('display','none');
+                    $(".search_in").css('border-bottom-left-radius','5px');
+                    $(".search_in").css('border-bottom-right-radius','5px');
+                });
+                $('body .post-show').click(function(){
+                    $(".expand").css('display','none');
+                    $(".search_in").css('border-bottom-left-radius','5px');
+                    $(".search_in").css('border-bottom-right-radius','5px');
+                });
+                $('body .faqs').click(function(){
+                    $(".expand").css('display','none');
+                    $(".search_in").css('border-bottom-left-radius','5px');
+                    $(".search_in").css('border-bottom-right-radius','5px');
+                });
+                $('body .contact').click(function(){
+                    $(".expand").css('display','none');
+                    $(".search_in").css('border-bottom-left-radius','5px');
+                    $(".search_in").css('border-bottom-right-radius','5px');
+                });
+                $('body .container-box').click(function(){
+                    $(".expand").css('display','none');
+                    $(".search_in").css('border-bottom-left-radius','5px');
+                    $(".search_in").css('border-bottom-right-radius','5px');
+                });
+            </script>
+    </body>
+</html>
+

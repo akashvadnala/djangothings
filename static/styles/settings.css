@@ -1,0 +1,92 @@
+.con-inside{
+    margin: 20px;
+    margin-top: 10px;
+}
+
+.theme-settings .theme-heading, .profile-settings .prof-heading,.password-settings .pass-heading{
+    color: rgb(50,50,50);
+    font-size: 13.5px;
+    margin-bottom: 2px;
+}
+
+.profile-settings, .password-settings{
+    margin-top: 40px;
+}
+
+.hr{
+    width: 100%;
+    height: 1px;
+    background-color: rgb(50,50,50);
+}
+
+.theme-settings .theme-main, .profile-settings .prof-main, .password-settings .pass-main{
+    font-size: 12.5px;
+    color: rgb(50,50,50);
+    margin-top: 15px;
+} 
+
+.theme-settings .light-dark{
+    margin-left: 20px;
+    display: grid;
+    grid-template-columns: 100px 100px;
+    color: rgb(50,50,50);
+}
+
+.light-dark .theme .theme-but{
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.light-dark .theme .theme-but .dark, .light-dark .theme .theme-but .light{
+    margin-right: 5px;
+    font-weight: 100;
+    font-size: 18px;
+}
+
+.prof-main-inp, .pass-main-inp{
+    display: grid;
+    grid-template-columns: 80px calc(100% - 80px);
+    margin-bottom:12px ;
+    align-items: center;
+}
+
+.pass-main-inp{
+    display: grid;
+    grid-template-columns: 120px calc(100% - 120px);
+}
+
+.prof-lab, .pass-lab{
+    text-align: end;
+    font-weight: lighter;
+    font-size: 11.5px;
+}
+
+.prof-inp, .pass-inp{
+    margin-left: 10px;
+}
+
+.prof-inp input, .pass-inp input{
+    height: 25px;
+    width: 220px;
+    border-radius: 5px;
+    border: solid .7px rgba(100,100,100,.7);
+    outline-color: cornflowerblue;
+    padding-left: 6px;
+    font-size: 12px;
+}
+
+.fil input{
+    border: none;
+    border-radius: 0;
+}
+
+
+@media only screen and (max-width:500px) {
+
+    .prof-inp input, .pass-inp input{
+        width: calc(100% - 40px);
+    }
+
+}

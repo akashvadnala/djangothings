@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% static "images" as baseUrl %}
+
+{% block title %}{{page_title}}{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block container-box %}
+<div class="container-box">
+    <div class="error">
+        <div class="error-head">
+            <img src="{% static 'images/error-404.png' %}" alt="">
+            Error - 404
+        </div>
+        <div class="con">
+            {{con}}
+        </div>
+        <div class="retrive">
+            To go back to home page, click here <a href="{% url 'home' %}">Baat</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

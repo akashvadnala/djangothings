@@ -1,0 +1,31 @@
+{% load static %}
+{% static "images" as baseUrl %}
+<div class="footer">
+    <div class="lists footer-s">
+        <div class="footer-s-column">
+            <div class="heading">USER's</div>
+            <div class="list"><a href="{% url 'base' 'dashboard' %}">Profile</a></div>
+            <div class="list"><a href="{% url 'base' 'posts' %}">Products</a></div>
+            <div class="list"><a href="{% url 'base' 'uploadpost' %}">Upload Product</a></div>
+        </div>
+        <div class="footer-s-column">
+            <div class="heading">HELP</div>
+            <div class="list"><a href="{% url 'faqs' %}">FAQs</a></div>
+        </div>
+        <div class="footer-s-column">
+            <div class="heading">START-UP</div>
+            <div class="list"><a href="{% url 'about' %}">About</a></div>
+            <div class="list"><a href="{% url 'contact' %}">Contact Us</a></div>
+            <div class="list"><a href="{% url 'feedback' %}">Feedback</a></div>
+            </div>
+    </div>
+    <div class="footer-f">
+        <div class="hr"></div>
+        <div class="det">
+            <div class="name"><a href="{% url 'home' %}">lincart.in</a></div>
+            <div class="im"><a target="_blank" href="https://www.instagram.com/this_is__aa_ka_sh/"><img src="{% static 'images/instagram.png' %}" alt=""></a></div>
+            <div class="im"><a target="_blank" href="mailto:akashvadnala123@gmail.com"><img src="{% static 'images/gmail.png' %}" alt=""></a></div>
+        </div>
+    </div>
+</div>
+
