@@ -36,7 +36,7 @@
                                 <div class="dot"></div>
                             </div>
                             <div class="tog-con post.id" style="position: absolute;z-index:1000;transform: translate(-55%,50%);">
-                                <a href="{% url 'edit' post.sha %}"><div class="tog">Edit</div></a>
+                                <a href="{% url 'base' post.sha %}"><div class="tog">Edit</div></a>
                                 <a><div type="button" onclick="dele({{post.id}})" class="tog">Delete</div></a>
                                 <a><div id="post-{{post.id}}-chan" type="button" onclick="chan({{post.id}})" class="tog">
                                     {% if post.sell %}

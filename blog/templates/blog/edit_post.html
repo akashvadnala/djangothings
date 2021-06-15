@@ -1,66 +1,222 @@
+{% extends 'blog/base.html' %}
 {% load static %}
 {% static "images" as baseUrl %}
-<div class="con-inside">
-    <div class="con-heading-sel">
-        Edit Post  <div style="font-size: 14px;font-weight: normal;color: #06c;
-        margin-top: 10px;">{{post.post_title}}</div>
-    </div>
-    <div class="hr"></div>
-    <div class="con-main-sel book-sel">
-        <form action="{% url 'update_post' %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="text" name="id" value="{{post.id}}" style="display: none;">
-            <div class="con-main-sel-inp sel-inp">
-                <div class="lab">Category :</div>
-                <div class="inp"><input value="{{post.category}}" type="text" name="cate" placeholder="Author"></div>
-            </div>
-            {% if post.author %}
-            <div class="con-main-sel-inp sel-inp">
-                <div class="lab">Author :</div>
-                <div class="inp"><input value="{{post.author}}" type="text" name="author" placeholder="Author"></div>
-            </div>
-            {% endif %}
-            <div class="con-main-sel-inp sel-inp">
-                <div class="lab">Name :</div>
-                <div class="inp"><input value="{{post.post_title}}" type="text" name="name" placeholder="Name" required></div>
-            </div>
-            <div class="con-main-sel-inp sel-inp">
-                <div class="lab">Price :</div>
-                <div class="inp"><input value="{{post.price}}" type="text" name="price" placeholder="Price" required></div>
-            </div>
-            <div class="con-main-sel-inp sel-inp" style="margin-left: 100px;display: flex; ">
-                {% for i in imgs %}
-                {% if i.post.id == post.id %}
-                <div id="img-{{i.id}}" class="img-inp" type="button" onclick="delimg({{i.id}})">
-                    <div class="overlay">
-                        <div class="text">x</div>
-                    </div>
-                    <img src="{{i.cover.url}}" alt=""   style="
-                    width: 60px;
-                    height: 50px;
-                    object-fit: contain;
-                    margin-right:10px ;
-                    cursor: pointer;">
-                    <input id="inp-{{i.id}}" style="display: none;" value="{{i.cover.url}}" type="file" name="cover">
+{% extends 'blog/base.html' %}
+{% load static %}
+{% static "images" as baseUrl %}
+        {% block links %}
+        <link href="{% static 'styles/home.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/dashboard.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/posts.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/uploadpost.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/settings.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/edit_post.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/darkmode.css' %}" rel="stylesheet" type="text/css">
+        <script src="{% static 'js/base.js' %}"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        {% endblock %}
+   
+        {% block home %}
+        <div class="side-header">
+            <div class="logo">
+                <div>
+                    <a href="/">lincart.in</a>
                 </div>
-                   
+            </div>
+            <div class="nav">
+                <div class="ull">
+                    {% for nav in navs %}
+                        <a title="{{nav.n}}" href="{% url 'base' nav.w %}">
+                        {% if nav.w == sec %}
+                            <div class="lii" style="background-color: cornflowerblue; color: white;">
+                        {% else%}
+                            <div class="lii">
+                        {% endif %}
+                                <div>{{nav.n}}</div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    {% if user.is_superuser %}
+                        <a title="Admin Panel" href="https://lincart.herokuapp.com/admin" target="_blank">
+                            <div class="lii">Admin Panel</div>
+                        </a>
+                    {% endif %}
+                </div>
+                <hr/>
                 
-                {% endif %}
-                {% endfor %}
+                <div class="ull">
+                    <a title="About" href="https://lincart.herokuapp.com/about">
+                        <div class="lii">About</div>
+                    </a>
+                    <a title="Logout" href="https://lincart.herokuapp.com/logout">
+                        <div class="lii">Logout</div>
+                    </a>
+                </div>
             </div>
-            
-            <div class="con-main-sel-inp sel-inp">
-                <div class="lab">Pics :</div>
-                <div class="inp fil"><input type="file" name="cover" accept="images" multiple ></div>
-            </div>
-            <div class="con-main-sel-inp tex">
-                <div class="lab tex">About :</div>
-                <div class="inp"><textarea title="About"  name="desc" placeholder="About" rows="10" style="resize: none;">{{post.desc}}</textarea></div>
-            </div>
-            <div class="but"><button>Submit</button></div>
-        </form>
+        </div>
+
+        
+<div class="min-header">
+    <div class="logo">
+        <div>
+            <a href="{% url 'home' %}">
+                lincart.in
+            </a>
+       </div>
+    </div>
+    <div class="bars">
+        <div class="navigation-toggle klik">
+            <div class="bar bar1"></div>
+            <div class="bar bar2"></div>
+            <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+            <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+            <script id="rendered-js">
+
+                $(function () {
+                    $('.klik').on('click', function (e) {
+                        $('body').toggleClass('navigation-show');
+                    });
+                });
+            </script>
+        </div>
     </div>
 </div>
+
+<div class="navigation">
+    <div class="ull">
+        <div class="search">
+            <form action="{% url 'search' %}" method="GET">
+                <div id="search" class="search_in">
+                <div class="im">
+                    <img src="{% static 'images/search_icon.png' %}" alt="search_icon" >
+                </div>
+                <div class="inn">
+                    <input title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="{{sea}}">
+                </div>
+            </div>
+            </form>
+        </div>
+        {% for nav in navss %}
+            {% if user.is_authenticated %}
+                <a title="{{nav.n}}" href="{% url 'base' nav.w %}">
+            {% else %}
+                <a title="{{nav.n}}" style="color: rgba(192,192,192,1);">
+            {% endif %}
+            <div class="lii">
+                {{nav.n}}
+            </div>
+        </a>
+        {% endfor %}
+        <a title="About" href='https://lincart.herokuapp.com/about'>
+            <div class="lii">
+                About
+            </div>
+        </a>
+        {% if user.is_authenticated %}
+        {% if user.is_superuser %}
+            <a title="Logout" href='https://lincart.herokuapp.com/logout'>
+        {% else %}
+            <a title="Logout" href='https://lincart.herokuapp.com/logout' style="border: none;">
+        {% endif %}            
+            <div class="lii">
+                Logout
+            </div>
+        </a>
+        {% else %}
+            <a title="Register" onclick="document.getElementById('id02').style.display='block';document.getElementById('modal-del').style.display='block'" style="cursor: pointer;">
+                <div class="lii">
+                    Register
+                </div>
+            </a>
+            <a title="Login" onclick="document.getElementById('id01').style.display='block';document.getElementById('modal-del').style.display='block'" style="border: none; cursor: pointer;">
+                <div class="lii">
+                    Login
+                </div>
+            </a>
+        {% endif %}
+        {% if user.is_superuser %}
+            <a title="Admin" href='https://lincart.herokuapp.com/admin' style="border: none;" target="_blank">
+                <div class="lii">
+                    Admin
+                </div>
+            </a>
+        {% endif %}
+    
+    </div>
+</div>
+
+
+<div class="side-container-box">
+        
+    <div class="con-inside">
+        <div class="con-heading-sel">
+            Edit Post  <div style="font-size: 14px;font-weight: normal;color: #06c;
+            margin-top: 10px;">{{post.post_title}}</div>
+        </div>
+        <div class="hr"></div>
+        <div class="con-main-sel book-sel">
+            <form action="{% url 'update_post' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="text" name="id" value="{{post.id}}" style="display: none;">
+                <div class="con-main-sel-inp sel-inp">
+                    <div class="lab">Category :</div>
+                    <div class="inp"><input value="{{post.category}}" type="text" name="cate" placeholder="Author"></div>
+                </div>
+                {% if post.author %}
+                <div class="con-main-sel-inp sel-inp">
+                    <div class="lab">Author :</div>
+                    <div class="inp"><input value="{{post.author}}" type="text" name="author" placeholder="Author"></div>
+                </div>
+                {% endif %}
+                <div class="con-main-sel-inp sel-inp">
+                    <div class="lab">Name :</div>
+                    <div class="inp"><input value="{{post.post_title}}" type="text" name="name" placeholder="Name" required></div>
+                </div>
+                <div class="con-main-sel-inp sel-inp">
+                    <div class="lab">Price :</div>
+                    <div class="inp"><input value="{{post.price}}" type="text" name="price" placeholder="Price" required></div>
+                </div>
+                <div class="con-main-sel-inp sel-inp" style="margin-left: 100px;display: flex; ">
+                    {% for i in imgs %}
+                    {% if i.post.id == post.id %}
+                    <div id="img-{{i.id}}" class="img-inp" type="button" onclick="delimg({{i.id}})">
+                        <div class="overlay">
+                            <div class="text">x</div>
+                        </div>
+                        <img src="{{i.cover.url}}" alt=""   style="
+                        width: 60px;
+                        height: 50px;
+                        object-fit: contain;
+                        margin-right:10px ;
+                        cursor: pointer;">
+                        <input id="inp-{{i.id}}" style="display: none;" value="{{i.cover.url}}" type="file" name="cover">
+                    </div>
+                    
+                    
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                
+                <div class="con-main-sel-inp sel-inp">
+                    <div class="lab">Pics :</div>
+                    <div class="inp fil"><input type="file" name="cover" accept="images" multiple ></div>
+                </div>
+                <div class="con-main-sel-inp tex">
+                    <div class="lab tex">About :</div>
+                    <div class="inp"><textarea title="About"  name="desc" placeholder="About" rows="10" style="resize: none;">{{post.desc}}</textarea></div>
+                </div>
+                <div class="but"><button>Submit</button></div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
 
 <script>
     function delimg(id){
