@@ -302,7 +302,7 @@ def sel_submit(request):
             image.save()
         upload.sha = hashlib.sha1(str(upload.id).encode()).hexdigest()
         upload.save()
-    return redirect('http://127.0.0.1:8000/uploadpost')
+    return redirect('https://lincart.herokuapp.com/uploadpost')
 
 def prof_update(request):
     context = {}
@@ -339,7 +339,7 @@ def prof_update(request):
                 img = request.FILES["image"]
                 data.profile_pic = img
                 data.save()
-    return redirect('http://127.0.0.1:8000/settings')
+    return redirect('https://lincart.herokuapp.com/settings')
 
 def change_password(request):
     check = register_table.objects.filter(user__id=request.user.id)
@@ -356,7 +356,7 @@ def change_password(request):
             user.save()
             user = User.objects.get(username=uname)
             auth.login(request,user)
-    return redirect('http://127.0.0.1:8000/settings')
+    return redirect('https://lincart.herokuapp.com/settings')
 
 
 def open_post(request,sha):
@@ -551,7 +551,7 @@ def post_update(request):
             image = PostImage(post=post,cover=img)
             image.save()
 
-    return redirect('http://127.0.0.1:8000/posts')
+    return redirect('https://lincart.herokuapp.com/posts')
 
 class post_delete(View):
     def get(self, request):
@@ -757,7 +757,7 @@ def send_msg(request):
         msg = request.POST['msg_msg']
         send = contact(email=email,msg=msg)
         send.save()
-    return redirect('http://127.0.0.1:8000/contact/')
+    return redirect('https://lincart.herokuapp.com/contact/')
 
 def send_feedback(request):
     if request.method == 'POST':
@@ -765,4 +765,4 @@ def send_feedback(request):
         msg = request.POST['msg_msg']
         send = feedback(email=email,msg=msg)
         send.save()
-    return redirect('http://127.0.0.1:8000/feedback/')
+    return redirect('https://lincart.herokuapp.com/feedback/')
