@@ -552,7 +552,7 @@ def post_update(request):
             image = PostImage(post=post,cover=img)
             image.save()
 
-    return redirect('https://lincart.herokuapp.com/posts')
+    return redirect('https://lincart.herokuapp.com/posts/')
 
 class post_delete(View):
     def get(self, request):
