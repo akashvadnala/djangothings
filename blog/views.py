@@ -302,7 +302,7 @@ def sel_submit(request):
             image.save()
         upload.sha = hashlib.sha1(str(upload.id).encode()).hexdigest()
         upload.save()
-    return redirect('https://lincart.herokuapp.com/uploadpost')
+    return redirect('https://lincart.herokuapp.com/uploadpost/')
 
 def prof_update(request):
     context = {}
@@ -339,7 +339,7 @@ def prof_update(request):
                 img = request.FILES["image"]
                 data.profile_pic = img
                 data.save()
-    return HttpResponseRedirect(reverse("https://lincart.herokuapp.com/settings"))
+    return redirect('https://lincart.herokuapp.com/settings/')
 
 def change_password(request):
     check = register_table.objects.filter(user__id=request.user.id)
@@ -356,7 +356,7 @@ def change_password(request):
             user.save()
             user = User.objects.get(username=uname)
             auth.login(request,user)
-    return redirect('https://lincart.herokuapp.com/settings')
+    return redirect('https://lincart.herokuapp.com/settings/')
 
 
 def open_post(request,sha):
