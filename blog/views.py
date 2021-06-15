@@ -488,6 +488,7 @@ def post_edit(request,sha):
                 context['page_title'] = 'Edit Post - '+post.post_title
                 imgs = PostImage.objects.all()
                 context['imgs'] = imgs
+                return render(request,'blog/edit_post.html',context)
             else:
                 context['page_title'] = 'Error - 404'
                 context['con'] = "Unable to edit this post"
@@ -500,7 +501,7 @@ def post_edit(request,sha):
         context['page_title'] = 'Error - 404'
         context['con'] = "Please do Login"
         return render(request,'blog/error.html',context)
-    return render(request,'blog/home.html',context)
+    
 
 def post_update(request):
     check = register_table.objects.filter(user__id=request.user.id)
