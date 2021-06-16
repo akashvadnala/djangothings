@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 
-import django
+import django_heroku
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -88,7 +88,7 @@ DATABASES = {
         'HOST':'localhost',
     }
 }
-'''
+
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
 
@@ -148,3 +148,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media/img')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_heroku.settings(locals())
