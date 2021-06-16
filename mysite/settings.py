@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 
+import django_heroku
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-h7@@_dsb&!-h-za14^$72^2b6a*hjai1^pt!*3ujbg68tk(ls&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['lincart.herokuapp.com']
 
@@ -79,14 +82,18 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'akashvadnala123',
-        'USER':'akash',
+        'NAME': 'testing',
+        'USER':'postgres',
         'PASSWORD':'1323',
-        'HOST':'lincart.herokuapp.com',
+        'HOST':'localhost',
     }
 }
 
-
+'''
+DATABASES = {
+    'default': dj_database_url.config()
+}
+'''
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -141,3 +148,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media/img')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_heroku.settings(locals())
