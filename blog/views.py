@@ -7,8 +7,14 @@ import hashlib
 import datetime
 import re
 from django.http import JsonResponse
-
 from django.views.generic import ListView,View
+
+def get_sea(request):
+    seas_all = Seainp.objects.all().order_by('-all')[:10]
+    if request.user.is_active:
+        seas_ind =  Search.objects.filter(user=request.user).order_by('-sea_date')[:10]
+        return seas_ind,seas_all
+    return False, seas_all
 
 
 def home(request):
@@ -22,17 +28,7 @@ def home(request):
     settings = {'n' : 'Settings', 'w':'settings'}
     navss = [posts, uploadpost, notifications,settings, dashboard]
     context['navss'] = navss
-    if request.user.is_active:
-        sealist = []
-        seas = Seainp.objects.all()
-        print('seas',seas)
-        for s in seas:
-            print('s.inp',s.inp)
-            if request.user in s.users.all():
-                sealist.append(s.inp)
-        print('sealist',sealist)
-        context['seas_ind'] = sealist
-    context['seas_all'] = Seainp.objects.all().order_by('all')
+    context['seas_ind'], context['seas_all'] = get_sea(request)
     check = register_table.objects.filter(user__id=request.user.id)
     if len(check)>0:
         data = register_table.objects.get(user__id=request.user.id)
@@ -62,7 +58,7 @@ def search(request):
         data = register_table.objects.get(user__id=request.user.id)
         context['data'] = data
     if sea=='':
-        return redirect('/settings')
+        return redirect('/')
     else:
         sea_split = re.findall(r'[a-z0-9]*',sea.lower())
         while '' in sea_split:
@@ -122,15 +118,20 @@ def search(request):
         #Seainps
         if len(Seainp.objects.filter(inp=sea))>0:
             seain = Seainp.objects.get(inp=sea)
-            print('seainp',Seainp.objects.get(inp=sea))
         if request.user.is_active:
             if len(Seainp.objects.filter(inp=sea))==0:
                 seain = Seainp.objects.create(inp=sea)
             seain.users.add(request.user)
             seain.all=seain.num_users()
             seain.save()
-            context['seas_ind'] = Seainp.objects.filter(users=request.user)
-        context['seas_all'] = Seainp.objects.all().order_by('all')
+            if len(Search.objects.filter(inp=sea,user=request.user))>0:
+                search = Search.objects.get(inp=sea,user=request.user)
+            else:
+                search = Search.objects.create(inp=sea,user=request.user)
+            search.sea_date = datetime.datetime.now()
+            search.save()
+            context['seas_ind'] = Search.objects.filter(user=request.user).order_by('-sea_date')[:10]
+        context['seas_all'] = Seainp.objects.all().order_by('-all')[:10]
         context['sea'] = sea
         imgs = PostImage.objects.all()
         context['imgs'] = imgs
@@ -210,9 +211,9 @@ def about(request):
     settings = {'n' : 'Settings', 'w':'settings'}
     navss = [posts, uploadpost, notifications,settings, dashboard]
     context['navss'] = navss
-    if request.user.is_active:
-        context['seas_ind'] = Seainp.objects.filter(users=request.user)
-    context['seas_all'] = Seainp.objects.all().order_by('all')
+    #seain
+    seain = Seainp.objects.all()
+    context['seas_ind'], context['seas_all'] = get_sea(request)
     check = register_table.objects.filter(user__id=request.user.id)
     if len(check)>0:
         data = register_table.objects.get(user__id=request.user.id)
@@ -232,9 +233,9 @@ def base(request,sec):
     context['navs'] = navs
     navss = [posts, uploadpost, notifications,settings, dashboard]
     context['navss'] = navss
-    if request.user.is_active:
-        context['seas_ind'] = Seainp.objects.filter(users=request.user)
-    context['seas_all'] = Seainp.objects.all().order_by('all')
+    #seain
+    seain = Seainp.objects.all()
+    context['seas_ind'], context['seas_all'] = get_sea(request)
     t=0
     for nav in navs:
         if nav['w']==sec:
@@ -298,7 +299,7 @@ def sel_submit(request):
             image.save()
         upload.sha = hashlib.sha1(str(upload.id).encode()).hexdigest()
         upload.save()
-    return redirect('http://127.0.0.1:8000/uploadpost/')
+    return redirect('/uploadpost/')
 
 def prof_update(request):
     context = {}
@@ -335,7 +336,7 @@ def prof_update(request):
                 img = request.FILES["image"]
                 data.profile_pic = img
                 data.save()
-    return redirect('http://127.0.0.1:8000/settings/')
+    return redirect('/settings/')
 
 def change_password(request):
     check = register_table.objects.filter(user__id=request.user.id)
@@ -352,7 +353,7 @@ def change_password(request):
             user.save()
             user = User.objects.get(username=uname)
             auth.login(request,user)
-    return redirect('http://127.0.0.1:8000/settings/')
+    return redirect('/settings/')
 
 
 def open_post(request,sha):
@@ -367,9 +368,9 @@ def open_post(request,sha):
     settings = {'n' : 'Settings', 'w':'settings'}
     navss = [posts, uploadpost, notifications,settings, dashboard]
     context['navss'] = navss
-    if request.user.is_active:
-        context['seas_ind'] = Seainp.objects.filter(users=request.user)
-    context['seas_all'] = Seainp.objects.all().order_by('all')
+    #seain
+    seain = Seainp.objects.all()
+    context['seas_ind'], context['seas_all'] = get_sea(request)
     check = register_table.objects.filter(user__id=request.user.id)
     if len(check)>0:
         data = register_table.objects.get(user__id=request.user.id)
@@ -469,9 +470,9 @@ def post_edit(request,sha):
     context['navs'] = navs
     navss = [posts, uploadpost, notifications,settings, dashboard]
     context['navss'] = navss
-    if request.user.is_active:
-        context['seas_ind'] = Seainp.objects.filter(users=request.user)
-    context['seas_all'] = Seainp.objects.all().order_by('all')
+    #seain
+    seain = Seainp.objects.all()
+    context['seas_ind'], context['seas_all'] = get_sea(request)
     check = register_table.objects.filter(user__id=request.user.id)
     if len(check)>0:
         data = register_table.objects.get(user=request.user)
@@ -547,7 +548,7 @@ def post_update(request):
         for img in images:
             image = PostImage(post=post,cover=img)
             image.save()
-    return redirect('http://127.0.0.1:8000/posts/')
+    return redirect('/posts/')
 
 class post_delete(View):
     def get(self, request):
@@ -602,9 +603,9 @@ def faqs(request):
     settings = {'n' : 'Settings', 'w':'settings'}
     navss = [posts, uploadpost, notifications,settings, dashboard]
     context['navss'] = navss
-    if request.user.is_active:
-        context['seas_ind'] = Seainp.objects.filter(users=request.user)
-    context['seas_all'] = Seainp.objects.all().order_by('all')
+    #seain
+    seain = Seainp.objects.all()
+    context['seas_ind'], context['seas_all'] = get_sea(request)
     check = register_table.objects.filter(user__id=request.user.id)
     if len(check)>0:
         data = register_table.objects.get(user__id=request.user.id)
@@ -624,9 +625,9 @@ def faqs_search(request):
     settings = {'n' : 'Settings', 'w':'settings'}
     navss = [posts, uploadpost, notifications,settings, dashboard]
     context['navss'] = navss
-    if request.user.is_active:
-        context['seas_ind'] = Seainp.objects.filter(users=request.user)
-    context['seas_all'] = Seainp.objects.all().order_by('all')
+    #seain
+    seain = Seainp.objects.all()
+    context['seas_ind'], context['seas_all'] = get_sea(request)
     check = register_table.objects.filter(user__id=request.user.id)
     if len(check)>0:
         data = register_table.objects.get(user__id=request.user.id)
@@ -709,9 +710,9 @@ def contact_us(request):
     context={}
     context['page_title'] = 'Contact Us'
     context['con'] = True
-    if request.user.is_active:
-        context['seas_ind'] = Seainp.objects.filter(users=request.user)
-    context['seas_all'] = Seainp.objects.all().order_by('all')
+    #seain
+    seain = Seainp.objects.all()
+    context['seas_ind'], context['seas_all'] = get_sea(request)
     check = register_table.objects.filter(user__id=request.user.id)
     dashboard = {'n':'Dashboard','w':'dashboard'}
     posts = {'n': 'Products','w':'posts'}
@@ -730,9 +731,9 @@ def feedback_us(request):
     context={}
     context['page_title'] = 'Contact Us'
     context['con'] = False
-    if request.user.is_active:
-        context['seas_ind'] = Seainp.objects.filter(users=request.user)
-    context['seas_all'] = Seainp.objects.all().order_by('all')
+    #seain
+    seain = Seainp.objects.all()
+    context['seas_ind'], context['seas_all'] = get_sea(request)
     check = register_table.objects.filter(user__id=request.user.id)
     dashboard = {'n':'Dashboard','w':'dashboard'}
     posts = {'n': 'Products','w':'posts'}
@@ -753,7 +754,7 @@ def send_msg(request):
         msg = request.POST['msg_msg']
         send = contact(email=email,msg=msg)
         send.save()
-    return redirect('http://127.0.0.1:8000/contact/')
+    return redirect('/contact/')
 
 def send_feedback(request):
     if request.method == 'POST':
@@ -761,4 +762,25 @@ def send_feedback(request):
         msg = request.POST['msg_msg']
         send = feedback(email=email,msg=msg)
         send.save()
-    return redirect('http://127.0.0.1:8000/feedback/')
+    return redirect('/feedback/')
+
+class sea_delete(View):
+    def get(self, request):
+        id = request.GET.get('id',None)
+        search = Search.objects.get(id=id)
+        seain = Seainp.objects.get(inp=search.inp)
+        seain.users.remove(request.user)
+        seain.all=seain.num_users()
+        seain.save()
+        search.delete()
+        data={}
+        if len(Search.objects.filter(user=request.user).order_by('-sea_date'))>9:
+            s = Search.objects.filter(user=request.user).order_by('-sea_date')[9]
+            print(s)
+            if s is not None:
+                data['sinp']=s.inp
+                data['sid']=s.id
+                data['st']=True
+        data['deleted']=True
+        print(data)
+        return JsonResponse(data)

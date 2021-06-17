@@ -8,12 +8,10 @@ class ContactAdmin(admin.ModelAdmin):
 class FeedbackAdmin(admin.ModelAdmin):
     list_display = ["email","msg"]
 
-class SearchAdmin(admin.ModelAdmin):
-    list_display = ["user","inp"]
 
 admin.site.register(Post)
 admin.site.register(register_table)
 admin.site.register(contact,ContactAdmin)
 admin.site.register(feedback,FeedbackAdmin)
 admin.site.register(Seainp)
-admin.site.register(Search,SearchAdmin)
+admin.site.register(Search)

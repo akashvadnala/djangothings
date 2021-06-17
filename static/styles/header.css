@@ -6,6 +6,7 @@ body{
     letter-spacing:0.3px;
     background: rgba(240,240,240,.2);
 }
+
 *{
     box-sizing: border-box;
 }
@@ -39,7 +40,7 @@ body{
 .logo div a{
   color: rgb(50,50,50);
   text-decoration: none;
-    font-size: 25px;
+  font-size: 25px;
 }
 
 .expand{
@@ -75,16 +76,20 @@ body{
   letter-spacing:0.5px;
 }
 
-.expand .expand-s button:hover{
+.expand .expand-s form:hover{
   background: rgb(230,230,230);
 }
-
-.expand .expand-s  a{
-  color: rgb(50,50,50);
-  text-decoration: none;
-  font-family:-apple-system,SF Pro Text,Helvetica Neue,HelveticaNeue,Helvetica,Arial,sans-serif;
-  letter-spacing:0.3px;
+.expand .expand-s .subm{
+  padding: 3px 3px 3px 25px;
+  width: calc(100% - 30px);
 }
+
+.expand .expand-s .subc{
+  padding: 0 3px 3px 3px;
+  width: 20px;
+
+}
+
 
 .search form .search_in{
     display: flex;

@@ -1,3 +1,4 @@
+from re import search
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User, auth
@@ -69,7 +70,7 @@ class Like(models.Model):
 
 class Seainp(models.Model):
     inp = models.CharField(max_length=100000,null=True)
-    users = models.ManyToManyField(User,blank=True)
+    users = models.ManyToManyField(User,related_name='users',blank=True)
     all = models.IntegerField(null=True)
     def __str__(self):
         return str(self.inp)
@@ -77,13 +78,13 @@ class Seainp(models.Model):
         return self.users.count()
 
 class Search(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
-    inp = models.ForeignKey(Seainp, on_delete=models.CASCADE,null=True)
-    all = models.IntegerField(null=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    inp = models.CharField(max_length=100000,null=True)
+    sea_date = models.DateTimeField(auto_now_add=True,null=True)
+    def __str__(self):
+        return str(self.inp)
     class Meta:
         verbose_name_plural = "Search"
-    def __str__(self):
-        return str(str(self.user.username)+' '+str(self.inp)+' '+str(self.all))
 
 class contact(models.Model):
     email = models.CharField(max_length=100,null=True)
