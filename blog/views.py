@@ -772,6 +772,8 @@ class sea_delete(View):
         seain.users.remove(request.user)
         seain.all=seain.num_users()
         seain.save()
+        if seain.all==0:
+            seain.delete()
         search.delete()
         data={}
         if len(Search.objects.filter(user=request.user).order_by('-sea_date'))>9:
