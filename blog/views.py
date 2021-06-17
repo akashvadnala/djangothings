@@ -62,7 +62,7 @@ def search(request):
         data = register_table.objects.get(user__id=request.user.id)
         context['data'] = data
     if sea=='':
-        return redirect('/')
+        return redirect('/settings')
     else:
         sea_split = re.findall(r'[a-z0-9]*',sea.lower())
         while '' in sea_split:
@@ -119,21 +119,17 @@ def search(request):
         context['posts'] = post_fin
         print(post_fin)
         print(len(post_fin))
-        if len(post_fin)>0:
+        #Seainps
+        if len(Seainp.objects.filter(inp=sea))>0:
+            seain = Seainp.objects.get(inp=sea)
+            print('seainp',Seainp.objects.get(inp=sea))
+        if request.user.is_active:
             if len(Seainp.objects.filter(inp=sea))==0:
                 seain = Seainp.objects.create(inp=sea)
-            else:
-                seain = Seainp.objects.get(inp=sea)
-            if request.user.is_active:
-                seain.users.add(request.user)
-                print('numusers',seain.num_users())
-                seain.all=seain.num_users()
-                print('all',seain.all)
-                seain.save()
-                val,created = Search.objects.get_or_create(user=request.user,inp=seain)
-                print('cr',created)
-                print('val',Search.objects.all())
-                context['seas_ind'] = Seainp.objects.filter(users=request.user)
+            seain.users.add(request.user)
+            seain.all=seain.num_users()
+            seain.save()
+            context['seas_ind'] = Seainp.objects.filter(users=request.user)
         context['seas_all'] = Seainp.objects.all().order_by('all')
         context['sea'] = sea
         imgs = PostImage.objects.all()
@@ -302,7 +298,7 @@ def sel_submit(request):
             image.save()
         upload.sha = hashlib.sha1(str(upload.id).encode()).hexdigest()
         upload.save()
-    return redirect('https://lincart.herokuapp.com/uploadpost/')
+    return redirect('http://127.0.0.1:8000/uploadpost/')
 
 def prof_update(request):
     context = {}
@@ -339,7 +335,7 @@ def prof_update(request):
                 img = request.FILES["image"]
                 data.profile_pic = img
                 data.save()
-    return redirect('https://lincart.herokuapp.com/settings/')
+    return redirect('http://127.0.0.1:8000/settings/')
 
 def change_password(request):
     check = register_table.objects.filter(user__id=request.user.id)
@@ -356,7 +352,7 @@ def change_password(request):
             user.save()
             user = User.objects.get(username=uname)
             auth.login(request,user)
-    return redirect('https://lincart.herokuapp.com/settings/')
+    return redirect('http://127.0.0.1:8000/settings/')
 
 
 def open_post(request,sha):
@@ -551,7 +547,7 @@ def post_update(request):
         for img in images:
             image = PostImage(post=post,cover=img)
             image.save()
-    return redirect('https://lincart.herokuapp.com/posts/')
+    return redirect('http://127.0.0.1:8000/posts/')
 
 class post_delete(View):
     def get(self, request):
@@ -757,7 +753,7 @@ def send_msg(request):
         msg = request.POST['msg_msg']
         send = contact(email=email,msg=msg)
         send.save()
-    return redirect('https://lincart.herokuapp.com/contact/')
+    return redirect('http://127.0.0.1:8000/contact/')
 
 def send_feedback(request):
     if request.method == 'POST':
@@ -765,4 +761,4 @@ def send_feedback(request):
         msg = request.POST['msg_msg']
         send = feedback(email=email,msg=msg)
         send.save()
-    return redirect('https://lincart.herokuapp.com/feedback/')
+    return redirect('http://127.0.0.1:8000/feedback/')
