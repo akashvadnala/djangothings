@@ -1,6 +1,6 @@
 let currentRecipient = '';
 let chatInput = $('#chat-input');
-let chatButton = $('#btn-send');
+let chatButton = $('#btn-send');0
 let userList = $('#user-list');
 let messageList = $('#messages');
 

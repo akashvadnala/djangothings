@@ -1,6 +1,6 @@
 from django.db import IntegrityError
 from django.test import TestCase
-from core.models import MessageModel
+from blog.models import MessageModel
 from django.contrib.auth.models import User
 
 

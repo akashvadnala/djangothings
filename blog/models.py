@@ -124,10 +124,10 @@ class MessageModel(Model):
     body = TextField('body', null=True)
 
     user1 = ForeignKey(User, on_delete=CASCADE, verbose_name='user1',
-                      related_name='user1', db_index=True, null=True)
+                      related_name='user1', db_index=True, null=True,blank=True)
     
     user2 = ForeignKey(User, on_delete=CASCADE, verbose_name='user2',
-                      related_name='user2', db_index=True, null=True)
+                      related_name='user2', db_index=True, null=True,blank=True)
 
     def __str__(self):
         return str(self.id)

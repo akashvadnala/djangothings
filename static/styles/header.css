@@ -78,6 +78,7 @@ body{
 
 .expand .expand-s form:hover{
   background: rgb(230,230,230);
+  border-radius: 5px;
 }
 .expand .expand-s .subm{
   padding: 3px 3px 3px 25px;
