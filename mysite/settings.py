@@ -35,7 +35,7 @@ ALLOWED_HOSTS = ['lincart.herokuapp.com','127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'blog.apps.BlogConfig',
+    #'blog.apps.BlogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'livereload',
     'django.contrib.staticfiles',
+    'blog',
     'rest_framework',
     'channels',
 ]
@@ -129,10 +130,11 @@ REST_FRAMEWORK = {
 MESSAGES_TO_LOAD = 15
 
 # In settings.py
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "asgiref.inmemory.ChannelLayer",
-        "ROUTING": "blog.routing.channel_routing",
+        "ROUTING": "core.routing.channel_routing",
     },
 }
 
@@ -155,7 +157,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+#STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 STATIC_URL = '/static/'
 
@@ -172,11 +174,12 @@ ASGI_APPLICATION = 'mysite.routing.application'
 
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels_redis.blog.RedisChannelLayer',
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             "hosts": [('127.0.0.1', 6379)],
         },
     },
+    'ROUTING': 'my_site.routing.application',
 }
 
 # Default primary key field type

@@ -1,6 +1,6 @@
 let currentRecipient = '';
 let chatInput = $('#chat-input');
-let chatButton = $('#btn-send');0
+let chatButton = $('#btn-send');
 let userList = $('#user-list');
 let messageList = $('#messages');
 
@@ -59,11 +59,11 @@ function getMessageById(message) {
 }
 
 function sendMessage(recipient, body) {
-    $.post('/api/v1/message/', {
+    $.post('/notifications/api/v1/message/', {
         recipient: recipient,
         body: body
     }).fail(function () {
-        alert('Error! Check console!');
+        alert('Hello Error! Check console!');
     });
 }
 
@@ -92,7 +92,7 @@ $(document).ready(function () {
 //    let socket = new WebSocket(`ws://127.0.0.1:8000/?session_key=${sessionKey}`);
     var socket = new WebSocket(
         'ws://' + window.location.host +
-        '/ws?session_key=${sessionKey}')
+        '/notifications/ws?session_key=${sessionKey}')
 
     chatInput.keypress(function (e) {
         if (e.keyCode == 13)

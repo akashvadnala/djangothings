@@ -223,6 +223,7 @@ def about(request):
 def base(request,sec):
     context={}
     context['sec'] = sec
+    context['users'] = User.objects.all()
     dashboard = {'n':'Dashboard','w':'dashboard'}
     posts = {'n': 'Products','w':'posts'}
     uploadpost = {'n': 'Sell Products', 'w':'uploadpost'}

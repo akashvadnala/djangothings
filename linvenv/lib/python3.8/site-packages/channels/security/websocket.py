@@ -16,7 +16,7 @@ class OriginValidator:
         self.application = application
         self.allowed_origins = allowed_origins
 
-    def __call__(self, scope):
+    async def __call__(self, scope, send, receive):
         # Make sure the scope is of type websocket
         if scope["type"] != "websocket":
             raise ValueError(
@@ -28,16 +28,17 @@ class OriginValidator:
             if header_name == b"origin":
                 try:
                     # Set ResultParse
-                    parsed_origin = urlparse(header_value.decode("ascii"))
+                    parsed_origin = urlparse(header_value.decode("latin1"))
                 except UnicodeDecodeError:
                     pass
         # Check to see if the origin header is valid
         if self.valid_origin(parsed_origin):
             # Pass control to the application
-            return self.application(scope)
+            return await self.application(scope, send, receive)
         else:
             # Deny the connection
-            return WebsocketDenier(scope)
+            denier = WebsocketDenier()
+            return await denier(scope, send, receive)
 
     def valid_origin(self, parsed_origin):
         """
@@ -58,14 +59,14 @@ class OriginValidator:
 
         Check than the origin looks valid and matches the origin pattern in
         specified list ``allowed_origins``. Any pattern begins with a scheme.
-        After the scheme there must be a domain. Any domain beginning with a period
-        corresponds to the domain and all its subdomains (for example, ``http://.example.com``
-        ``http://example.com`` and any subdomain). After the domain there must be a port,
+        After the scheme there must be a domain. Any domain beginning with a
+        period corresponds to the domain and all its subdomains (for example,
+        ``http://.example.com``). After the domain there must be a port,
         but it can be omitted. ``*`` matches anything and anything
         else must match exactly.
 
-        Note. This function assumes that the given origin has a schema, domain and port,
-        but port is optional.
+        Note. This function assumes that the given origin has a schema, domain
+        and port, but port is optional.
 
         Returns ``True`` for a valid host, ``False`` otherwise.
         """
