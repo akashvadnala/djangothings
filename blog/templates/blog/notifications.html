@@ -1,0 +1,46 @@
+{% load static %}
+{% static "images" as baseUrl %}
+
+<div class="con-inside">
+    <div class="con-heading">
+        {% for nav in navss %}
+            {% if nav.w == sec %}
+                {{ nav.n }}
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="notifications">
+        <div class="notifications-s">
+            <div class="noti-front">
+                <div class="noti-head">
+                    <input type="search" placeholder="Search User..">
+                </div>
+                <div id="user-list" class="noti-users">
+                    {% for i in data.chats.users %}
+                        {{i.username}}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="noti-back">
+                <!--div id="messages" class="messages">
+                    {# Messages go here #}
+                </div>
+                <div class="input-group">
+                    <div><input id="chat-input" type="text"
+                        class="form-control input"
+                        placeholder="Type your message here ...">
+                    </div>
+                    <div>
+                        <button id="btn-send">Send</button>
+                    </div>
+                </div-->
+            </div>
+            
+        </div>
+    </div>
+</div>
+<script>
+    let sessionKey = '{{ request.session.session_key }}';
+    let currentUser = '{{ request.user.username }}';
+</script>
+<script src="{% static 'js/app.js' %}"></script>

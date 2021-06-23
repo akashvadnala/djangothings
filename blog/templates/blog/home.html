@@ -6,6 +6,7 @@
         <link href="{% static 'styles/dashboard.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'styles/posts.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'styles/uploadpost.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/notifications.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'styles/settings.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'styles/edit_post.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'styles/darkmode.css' %}" rel="stylesheet" type="text/css">
@@ -155,7 +156,7 @@
             {% elif sec == 'uploadpost' %}
                 {% include 'blog/uploadpost.html' %}
             {% elif sec == 'notifications' %}
-                Notifications/Messages
+            {% include 'blog/notifications.html' %}
             {% elif sec == 'settings' %}
                 {% include 'blog/settings.html' %}
             {% else %}
