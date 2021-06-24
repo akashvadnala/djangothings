@@ -3,6 +3,7 @@ let chatInput = $('#chat-input');
 let chatButton = $('#btn-send');
 let userList = $('#user-list');
 let messageList = $('#messages');
+let con = $('#side-container-box');
 
 function updateUserList() {
     $.getJSON('api/v1/user/', function (data) {
@@ -26,11 +27,10 @@ function drawMessage(message) {
     if (message.user === currentUser) position = 'right';
     const messageItem = `
             <li class="message ${position}">
-                <div class="avatar">${message.user}</div>
-                    <div class="text_wrapper">
-                        <div class="text">${message.body}<br>
-                            <!--span class="small">${date}</span-->
-                    </div>
+                <div class="avatar">
+                    <span>${message.body}</span>
+                    <!--span>${message.user}</span>
+                    <span class="small">${date}</span-->
                 </div>
             </li>`;
     $(messageItem).appendTo('#messages');
@@ -43,6 +43,7 @@ function getConversation(recipient) {
             drawMessage(data['results'][i]);
         }
         messageList.animate({scrollTop: messageList.prop('scrollHeight')});
+        con.animate({scrollTop: con.prop('scrollHeight')});
     });
 
 }
@@ -55,6 +56,7 @@ function getMessageById(message) {
             drawMessage(data);
         }
         messageList.animate({scrollTop: messageList.prop('scrollHeight')});
+        con.animate({scrollTop: con.prop('scrollHeight')});
     });
 }
 

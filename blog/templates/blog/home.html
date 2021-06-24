@@ -11,7 +11,7 @@
         <link href="{% static 'styles/edit_post.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'styles/darkmode.css' %}" rel="stylesheet" type="text/css">
         <script src="{% static 'js/base.js' %}"></script>
-        <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+        <!--link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}"-->
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <link rel="stylesheet" href="{% static 'styles/font-awesome.min.css' %}"/>
@@ -151,7 +151,7 @@
 </div>
 
 
-        <div class="side-container-box">
+        <div class="side-container-box" id="side-container-box">
             {% if sec == 'dashboard' %}
                 {% include 'blog/dashboard.html' %}
             {% elif sec == 'posts' %}

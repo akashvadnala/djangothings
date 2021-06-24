@@ -9,12 +9,29 @@
             {% endif %}
         {% endfor %}
     </div>
-    <div class="container">
-        <div class="page-header">
-            <h1>Welcome to ChatApp
-                <small>Pick a user and start chatting!</small>
-            </h1>
+    <div class="con-noti-main">
+        <div id="user-list" class="user-list">
+            <a href="" class="list-group-item disabled">
+                <h4 class="list-group-item-heading">Users</h4>
+                {# Users go here #}
+            </a>
         </div>
+        <div class="msg-list">
+            <div msg-head>
+
+            </div>
+            <div class="msg-main">
+                <ul id="messages" class="messages">
+                    {# Messages go here #}
+                </ul>
+            </div>
+           <div class="msg-input">
+                <input id="chat-input" type="text" class="form-control input" placeholder="Type your message here ..." maxlength="1000">
+                <button class="btn btn-info btn" id="btn-send">Send</button>
+           </div>
+        </div>
+    </div>
+    <!--div class="container">
         <div class="row">
             <div class="col-md-4">
                 <div id="user-list" class="list-group">
@@ -48,11 +65,9 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
-    </div>
+    </div-->
     <!--div class="notifications">
         <div class="notifications-s">
             <div class="noti-front">

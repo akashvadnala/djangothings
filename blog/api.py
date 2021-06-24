@@ -8,7 +8,7 @@ from rest_framework.authentication import SessionAuthentication
 
 from mysite import settings
 from blog.serializers import MessageModelSerializer, UserModelSerializer
-from blog.models import MessageModel
+from blog.models import MessageModel, register_table
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -56,12 +56,20 @@ class MessageModelViewSet(ModelViewSet):
 
 
 class UserModelViewSet(ModelViewSet):
-    queryset = User.objects.all()
+    queryset = []
+    #queryset = User.objects.all()
     serializer_class = UserModelSerializer
     allowed_methods = ('GET', 'HEAD', 'OPTIONS')
     pagination_class = None  # Get all user
 
     def list(self, request, *args, **kwargs):
         # Get all users except yourself
-        self.queryset = self.queryset.exclude(id=request.user.id)
+        self.queryset = []
+        iamuser = register_table.objects.get(user=request.user)
+        users = User.objects.all()
+        for user in users:
+            if user in iamuser.users.all():
+                self.queryset.append(user)
+        print('queryset',self.queryset)
+        #self.queryset = self.queryset.exclude(id=request.user.id)
         return super(UserModelViewSet, self).list(request, *args, **kwargs)
