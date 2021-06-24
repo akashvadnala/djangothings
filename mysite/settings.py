@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 
-import django_heroku
-import dj_database_url
+#import django_heroku
+#import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -102,7 +102,8 @@ DATABASES['default'].update(db_from_env)'''
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS = []
+'''
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -116,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+'''
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -134,7 +135,7 @@ MESSAGES_TO_LOAD = 15
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "asgiref.inmemory.ChannelLayer",
-        "ROUTING": "core.routing.channel_routing",
+        "ROUTING": "blog.routing.channel_routing",
     },
 }
 
@@ -170,6 +171,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media/img')
 
 
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+
 ASGI_APPLICATION = 'mysite.routing.application'
 
 CHANNEL_LAYERS = {
@@ -179,7 +185,6 @@ CHANNEL_LAYERS = {
             "hosts": [('127.0.0.1', 6379)],
         },
     },
-    'ROUTING': 'my_site.routing.application',
 }
 
 # Default primary key field type
