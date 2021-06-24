@@ -8,7 +8,7 @@ from rest_framework.authentication import SessionAuthentication
 
 from mysite import settings
 from blog.serializers import MessageModelSerializer, UserModelSerializer
-from blog.models import MessageModel, register_table
+from blog.models import MessageModel, register_table,chatters
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -65,11 +65,10 @@ class UserModelViewSet(ModelViewSet):
     def list(self, request, *args, **kwargs):
         # Get all users except yourself
         self.queryset = []
-        iamuser = register_table.objects.get(user=request.user)
-        users = User.objects.all()
-        for user in users:
-            if user in iamuser.users.all():
-                self.queryset.append(user)
+        users = chatters.objects.filter(user=request.user).order_by('-num')
+        #users = User.objects.all()
+        for u in users:
+            self.queryset.append(User.objects.get(user=u.recipient))
         print('queryset',self.queryset)
         #self.queryset = self.queryset.exclude(id=request.user.id)
         return super(UserModelViewSet, self).list(request, *args, **kwargs)

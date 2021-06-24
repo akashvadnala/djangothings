@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-from blog.models import MessageModel, register_table
+from blog.models import MessageModel, chatters, register_table
 from rest_framework.serializers import ModelSerializer, CharField
 
 
@@ -25,5 +25,5 @@ class MessageModelSerializer(ModelSerializer):
 
 class UserModelSerializer(ModelSerializer):
     class Meta:
-        model = User
-        fields = ('username',)
+        model = chatters
+        fields = ('recipient',)

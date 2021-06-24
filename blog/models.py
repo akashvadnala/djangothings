@@ -22,11 +22,18 @@ class register_table(models.Model):
     users = models.ManyToManyField(User,related_name='fellows',blank=True)
     darkmode = models.BooleanField(default=False)
     chats = models.ManyToManyField(User,related_name='chat_users',blank=True)
+    chat_time = models.DateTimeField(auto_now_add=True,null=True)
     def __str__(self):
         return self.user.username
     class Meta:
         verbose_name_plural = "Register Table"
 
+class chatters(models.Model):
+    user = models.ForeignKey(User,related_name="chatter1", on_delete=models.CASCADE,null=True)
+    recipient = models.ForeignKey(User,related_name="chatter2", on_delete=models.CASCADE,null=True)
+    num = models.IntegerField(default=0)
+    def __str__(self):
+        return str(self.recipient)
 
 class Post(models.Model):
     uname = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
