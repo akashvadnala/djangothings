@@ -53,6 +53,7 @@ class Post(models.Model):
     desc = models.TextField(null=True)
     category = models.CharField(max_length=50)
     place = models.CharField(max_length=1000, null=True)
+    Institute = models.CharField(max_length=1000,null=True)
     price = models.CharField(max_length=100, null=True)
     sha = models.CharField(max_length=100,null=True)
     likes = models.ManyToManyField(User,related_name='likes',blank=True)

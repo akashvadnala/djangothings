@@ -289,6 +289,7 @@ def sel_submit(request):
         if "comp" in request.POST:
             comp = request.POST['comp']
         place = data.place
+        Institute = data.Institute
         price = request.POST['price']
         if "desc" in request.POST:
             desc = request.POST['desc']
@@ -304,7 +305,7 @@ def sel_submit(request):
         inp2 = None
         if "inp2" in request.POST:
             inp2 = request.POST['inp2']
-        upload = Post(uname=request.user,post_title=post_title,category=category,author=author,comp=comp,place=place,price=price,desc=desc,label1=label1,inp1=inp1,label2=label2,inp2=inp2)
+        upload = Post(uname=request.user,post_title=post_title,category=category,author=author,comp=comp,place=place,Institute=Institute,price=price,desc=desc,label1=label1,inp1=inp1,label2=label2,inp2=inp2)
         upload.save()
         images = request.FILES.getlist('cover')
         for img in images:
@@ -337,6 +338,7 @@ def prof_update(request):
             posts = Post.objects.filter(uname=request.user)
             for post in posts:
                 post.place = place
+                post.Institute = inst
                 post.save()
 
             data.contact_number = con
@@ -959,4 +961,16 @@ class chat_user(View):
         else:
             data['all']=True
         print(data)
+        return JsonResponse(data)
+
+class send_request(View):
+    def get(self, request):
+        rec = request.GET.get('rec',None)
+        id = request.Get.get('id',None)
+        user = request.user.username
+        data={}
+        if len(chatters.objects.filter(user=User.objects.get(username=user),recipient=User.objects.get(username=rec)))>0:
+            rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
+        else:
+            rec_c = chatters.objects.create(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
         return JsonResponse(data)

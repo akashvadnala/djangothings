@@ -7,6 +7,8 @@
 
 
 {% block container-box %}
+    {% include 'blog/buy.html' %}
+    <div class="msg-box"><span class="msg-span"></span><span class="msg-link"></span></div>
     <div class="post-show">
         <div class="post-pic">
             <div class="swiper-container gallery-top">
@@ -60,7 +62,7 @@
                 <div class="det-val">{{ post.desc }}</div>
             </div>
             <div class="but">
-                <button>Contact</button>
+                <button onclick="onContact()">Contact</button>
             </div>
         </div>
     </div>
@@ -127,5 +129,32 @@
             swiper: galleryThumbs
         }
         });
+        
+        function onContact(){
+            $('.buy').css('display','block');
+            $('body').css('overflow-y','hidden');
+        }
+        function del_sel(){
+            $('.buy').css('display','none');
+            $('body').css('overflow-y','');
+        }
+        function sendrequest(rec,id){
+            $('.msg-box').css('display','block');
+            $('.msg-span').text('Request has been sent. To further chat open Messages Section.');
+            $('.msg-link').html(`<a href="{% url 'base' 'notifications' %}" onclick="">Messages/Notificaions</a>`);
+            $.ajax({
+                type:'GET',
+                url: "{% url 'send-request' post.sha %}",
+                data:{
+                    'rec':rec,
+                    'id':id,
+                },
+                dataType:'json',
+                success: function(data){
+                    
+                }
+            });
+            del_sel();
+        }
     </script>
 {% endblock %}

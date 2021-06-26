@@ -98,7 +98,7 @@
             <form id="sea-{{s.id}}" action="{% url 'search' %}" method="GET">
                 <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="{{s}}">
                 <button class="subm" type="submit">{{s}}</button>
-                <button class="subc" type="reset" onclick="delsea({{s.id}})"><i class="fa fa-close"></i></button>
+                <button class="subc" type="reset" onclick="delsea({{s.id}})"></button>
             </form>
             {% endfor %}
         {% else %}

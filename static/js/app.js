@@ -152,6 +152,14 @@ function getConversation(recipient) {
 
 }
 
+function contactOwner(recipient,body,name){
+    var action = confirm("Please confirm to send message to the seller regarding this product..");
+    if(action!=false)
+    {
+        
+    }
+}
+
 function sendMessage(recipient, body) {
     $.post('api/v1/message/', {
         recipient: recipient,

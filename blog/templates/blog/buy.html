@@ -1,0 +1,26 @@
+<div class="buy">
+    <div class="buy-can">  </div>
+    <div class="seller-det">
+        <div class="seller-det-s">
+            <div class="sell-head">
+                <div>Seller Details:</div>
+                <div type="button" onclick="del_sel()">&times;</div>
+            </div>
+            <div class="sell-det">
+                <div><span>Seller: </span>{{post.uname}}</div>
+                <div>{% if post.Institute %}<span>Institute: </span>{{post.Institute}} {% endif %}</div>
+            </div>
+            <div class="sell-msg">
+                <div>
+                    Confirm the product request to seller to buy this product
+                </div>
+                <div>
+                    <button onclick="sendrequest()">Send Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    
+</script>
