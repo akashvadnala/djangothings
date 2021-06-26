@@ -145,6 +145,10 @@ def user_login(request):
         user = authenticate(username=un,password=pwd)
         if user:
             login(request,user)
+            if len(register_table.objects.filter(user=request.user))>0:
+                reg = register_table.objects.get(user=request.user)
+                reg.login=True
+                reg.save()
             if user.is_superuser:
                 return redirect('/')
             else:
@@ -162,6 +166,10 @@ def user_login(request):
 
 def logout(request):
     print('logout')
+    if len(register_table.objects.filter(user=request.user))>0:
+        reg = register_table.objects.get(user=request.user)
+        reg.login=False
+        reg.save()
     auth.logout(request)
     return redirect('/')  
 
@@ -223,7 +231,10 @@ def about(request):
 def base(request,sec):
     context={}
     context['sec'] = sec
-    context['chatters'] = chatters.objects.filter(user=request.user).order_by('-num')
+    try:
+        context['chatters'] = chatters.objects.filter(user=request.user).order_by('-num')
+    except:
+        pass
     context['users'] = User.objects.all()
     dashboard = {'n':'Dashboard','w':'dashboard'}
     posts = {'n': 'Products','w':'posts'}
@@ -841,11 +852,11 @@ class get_users(View):
                     chat_det = chat_det1
                 else:
                     chat_det = chat_det2
-            print(chat_det)
+            print('chat_det',chat_det)
             det={}
             det['username']=user.recipient.username
             det['notif']='&#9679;'
-            det['backcolor']='green'
+            det['backcolor']='#16C79A'
             det['color']='white'
             det['msg_count']=str(user.msg_count)
             if user.msg_count==0:
@@ -873,33 +884,39 @@ class put_notif(View):
         print('rec user sender',rec,user,sender)
         data={}
         #if len(chatters.objects.filter(user=User.objects.get(username=user),recipient=User.objects.get(username=rec)))>0:
-        
-        if rec!=user and rec!='':
-            rec_c = chatters.objects.get(user=User.objects.get(username=rec),recipient=User.objects.get(username=sender))
-            if rec_c.notification:
-                rec_c.msg_count+=1
-            else:
-                rec_c.notification=True
-                rec_c.msg_count=0
-            print('notif',True)
-            rec_c.save()
-            if rec_c.msg_count>0:
-                data['msg_count'] = rec_c.msg_count
-            print('msg_count',data['msg_count'])
-            data['notif']=True
+        rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=sender))
         if rec!=sender and user!=sender:
-            rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=sender))
             if rec_c.notification:
                 rec_c.msg_count+=1
             else:
                 rec_c.notification=True
-                rec_c.msg_count=0
+                rec_c.msg_count=1
             print('notif',True)
             rec_c.save()
             if rec_c.msg_count>0:
                 data['msg_count'] = rec_c.msg_count
             print('msg_count',data['msg_count'])
             data['notif']=True
+        else:
+            rec_c.notification=False
+            rec_c.save()
+        #print('user_active rec','akash admin',rec,register_table.objects.get(user=User.objects.get(username=rec)).login)
+        rec_c = chatters.objects.get(user=User.objects.get(username=rec),recipient=User.objects.get(username=sender))
+        if rec!='' and user==sender and register_table.objects.get(user=User.objects.get(username=rec)).login==False:
+            if rec_c.notification:
+                rec_c.msg_count+=1
+            else:
+                rec_c.notification=True
+                rec_c.msg_count=1
+            print('notif',True)
+            rec_c.save()
+            if rec_c.msg_count>0:
+                data['msg_count'] = rec_c.msg_count
+            print('msg_count',data['msg_count'])
+            data['notif']=True
+        else:
+            rec_c.notification=False
+            rec_c.save()
         return JsonResponse(data)
 
 class remove_notif(View):
@@ -912,6 +929,7 @@ class remove_notif(View):
         else:
             rec_c = chatters.objects.create(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
         rec_c.notification=False
+        rec_c.msg_count=0
         rec_c.save()
         print('notif',False)
         print(rec_c.notification)
@@ -927,15 +945,18 @@ class chat_user(View):
         data['got'] = False
         data['created'] = False
         data['all'] = False
-        if len(User.objects.filter(username=rec))==0:
-            data['all'] = True
-        elif len(chatters.objects.filter(user=User.objects.get(username=user),recipient=User.objects.get(username=rec)))>0:
-            rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
-            data['got'] = True
-            data['username'] = rec_c.recipient.username
+        if rec!=user:
+            if len(User.objects.filter(username=rec))==0:
+                data['all'] = True
+            elif len(chatters.objects.filter(user=User.objects.get(username=user),recipient=User.objects.get(username=rec)))>0:
+                rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
+                data['got'] = True
+                data['username'] = rec_c.recipient.username
+            else:
+                rec_c = chatters.objects.create(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
+                data['created'] = True
+                data['username'] = rec_c.recipient.username
         else:
-            rec_c = chatters.objects.create(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
-            data['created'] = True
-            data['username'] = rec_c.recipient.username
+            data['all']=True
         print(data)
         return JsonResponse(data)

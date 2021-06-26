@@ -24,6 +24,7 @@ class register_table(models.Model):
     chats = models.ManyToManyField(User,related_name='chat_users',blank=True)
     chat_time = models.DateTimeField(auto_now_add=True,null=True)
     max_num = models.BigIntegerField(default=2)
+    login = models.BooleanField(default=True)
     def __str__(self):
         return self.user.username
     class Meta:

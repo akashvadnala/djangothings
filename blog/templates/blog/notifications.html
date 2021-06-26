@@ -29,14 +29,16 @@
                 <div id="user-list" class="user-list">
                     {% for c in chatters %}
                     <div type="button" onclick="get_user('{{c.recipient}}')" class="user-one user" id="user-one {{c.recipient}}">
-                        {{c.recipient}}
-                        {% if c.notification %}
-                        <span style="background:green;color:white;">
-                            {% if c.msg_count %}
-                                {{c.msg_count}}
-                            {% endif %}
-                        </span>
-                        {% endif %}
+                        <div class="user-s">
+                            <Span>{{c.recipient}}</Span>                        
+                            <span class="msg_not" style="background:#16C79A;color:white;">
+                                {% if c.notification %}
+                                    {% if c.msg_count %}
+                                        {{c.msg_count}}
+                                    {% endif %}
+                                {% endif %}
+                            </span>
+                        </div>
                     </div>
                     {% endfor %}
                     {# Users go here #}

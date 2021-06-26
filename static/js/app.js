@@ -74,10 +74,12 @@ function updateUserList() {
             for (let i = 0; i < data.length; i++) {
                 const userItem = `
                     <div type="button" onclick="get_user('${data[i]['username']}')" class="user-one user ${data[i]['username']}" id="user-one ${data[i]['username']}">
-                        ${data[i]['username']}
-                        <span style="display:${data[i]['display']};background:${data[i]['backcolor']}; color:${data[i]['color']};">${data[i]['msg_count']}</span>
+                        <div class="user-s">    
+                            <span>${data[i]['username']}</span>
+                            <span class="msg_not" style="display:${data[i]['display']};background:${data[i]['backcolor']}; color:${data[i]['color']};">${data[i]['msg_count']}</span>
+                        </div>
                         <div class="last_msg">
-                        ${data[i]['last_msg']}
+                            ${data[i]['last_msg']}
                         </div>
                     </div>
                 `;
