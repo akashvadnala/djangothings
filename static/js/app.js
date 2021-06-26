@@ -4,14 +4,41 @@ let chatButton = $('#btn-send');
 let userList = $('#user-list');
 let messageList = $('#messages');
 let con = $('#side-container-box');
+let activeUser = $('.active');
 
-function get_user(user){
-    userList.children('.active').removeClass('active');
-    $('#'+user).addClass('active');
-    $('.msg-list').css('display','block');
-    $('#msg-head').text(user);
-    setCurrentRecipient(user);
+
+function putnotification(rec,sender){
+    $.ajax({
+        type:'GET',
+        url: 'chat/putnotif/',
+        data:{
+            'rec':rec,
+            'sender':sender,
+        },
+        dataType:'json',
+        success: function(data){
+            updateUserList();
+        }
+    });
 }
+
+function removenotification(rec){
+    $.ajax({
+        type:'GET',
+        url: 'chat/removenotif/',
+        data:{
+            'rec':rec,
+        },
+        dataType:'json',
+        success: function(data){
+            updateUserList();
+        }
+    });
+}
+
+
+
+
 /*
 $(document).ready(function(){
     //setInterval(function(){
@@ -38,6 +65,31 @@ $(document).ready(function(){
 
 
 function updateUserList() {
+    $.ajax({
+        type:'GET',
+        url: 'chat/getusers/',
+        success: function(data){
+            userList.children('.user').remove();
+            $('#user-list').empty();
+            for (let i = 0; i < data.length; i++) {
+                const userItem = `
+                    <div type="button" onclick="get_user('${data[i]['username']}')" class="user-one user ${data[i]['username']}" id="user-one ${data[i]['username']}">
+                        ${data[i]['username']}
+                        <span style="display:${data[i]['display']};background:${data[i]['backcolor']}; color:${data[i]['color']};">${data[i]['msg_count']}</span>
+                        <div class="last_msg">
+                        ${data[i]['last_msg']}
+                        </div>
+                    </div>
+                `;
+                $(userItem).appendTo('#user-list');
+        }
+        let user = $('#msg-head').text();
+        userList.children(".active").removeClass("active");
+        $('.'+user).addClass("active");
+    }
+    
+});
+    /*
     $.getJSON('api/v1/user/', function (data) {
         userList.children('.user').remove();
         
@@ -49,7 +101,7 @@ function updateUserList() {
             `;
             $(userItem).appendTo('#user-list');
         }
-/*
+
         $('#user-one').click(function (event) {
             userList.children('.active').removeClass('active');
             let selected = event.target;
@@ -57,7 +109,18 @@ function updateUserList() {
             $('#msg-head').text(selected.text);
             setCurrentRecipient(selected.text);
         });*/
-    });
+   
+}
+
+
+function get_user(user){
+    userList.children(".active").removeClass("active");
+    $('.'+user).addClass("active");
+    $(".msg-list").css('display','block');
+    $('#msg-head').text(user);
+    removenotification(user);
+    updateUserList();
+    setCurrentRecipient(user);
 }
 
 function drawMessage(message) {
@@ -87,6 +150,22 @@ function getConversation(recipient) {
 
 }
 
+function sendMessage(recipient, body) {
+    $.post('api/v1/message/', {
+        recipient: recipient,
+        body: body,
+    }).fail(function () {
+        alert('Hello Error! Check console!');
+    });
+    updateUserList();
+}
+
+function setCurrentRecipient(username) {
+    currentRecipient = username;
+    getConversation(currentRecipient);
+    enableInput();
+}
+
 function getMessageById(message) {
     id = JSON.parse(message).message
     $.getJSON(`api/v1/message/${id}/`, function (data) {
@@ -96,24 +175,10 @@ function getMessageById(message) {
         }
         messageList.animate({scrollTop: messageList.prop('scrollHeight')});
         con.animate({scrollTop: con.prop('scrollHeight')});
+        putnotification(currentRecipient,data.user);
+        updateUserList();
     });
 }
-
-function sendMessage(recipient, body) {
-    $.post('api/v1/message/', {
-        recipient: recipient,
-        body: body
-    }).fail(function () {
-        alert('Hello Error! Check console!');
-    });
-}
-
-function setCurrentRecipient(username) {
-    currentRecipient = username;
-    getConversation(currentRecipient);
-    enableInput();
-}
-
 
 function enableInput() {
     chatInput.prop('disabled', false);
@@ -127,6 +192,59 @@ function disableInput() {
     $('.msg-list').css('display','block');
 }
 
+function inc_num(rec,user){
+    $.ajax({
+        type:'GET',
+        url: 'chat/incnum/',
+        data:{
+            'rec':rec,
+            'user':user,
+        },
+        dataType:'json',
+        success: function(){
+
+        }
+    });
+}
+
+$('#userChat').keypress(function (e) {
+    let rec = $('#userChat').val();
+    if (e.keyCode == 13){
+        $.ajax({
+            type:'GET',
+            url: 'chat/userinp/',
+            data:{
+                'rec':rec,
+            },
+            dataType:'json',
+            success: function(data){
+                if(data.all){
+
+                }
+                else if(data.created)
+                {
+                    const userItem = `
+                        <div type="button" onclick="get_user('${data['username']}')" class="user-one user ${data['username']}" id="user-one ${data['username']}">
+                            ${data['username']}
+                        </div>
+                    `;
+                    $(userItem).appendTo('#user-list');
+                }
+                else if(data.got){
+                    userList.children('.user').remove();
+                    const userItem = `
+                        <div type="button" onclick="get_user('${data['username']}')" class="user-one user ${data['username']}" id="user-one ${data['username']}">
+                            ${data['username']}
+                        </div>
+                    `;
+                    $(userItem).appendTo('#user-list');
+                }
+            }
+        });
+    }            
+});
+
+
 $(document).ready(function () {
     updateUserList();
     disableInput();
@@ -138,18 +256,21 @@ $(document).ready(function () {
 
     chatInput.keypress(function (e) {
         if (e.keyCode == 13)
-            chatButton.click();
+            chatButton.click();            
     });
 
     chatButton.click(function () {
         if (chatInput.val().length > 0) {
+            inc_num(currentRecipient,currentUser)
             sendMessage(currentRecipient, chatInput.val());
             chatInput.val('');
+            updateUserList();
         }
     });
 
     socket.onmessage = function (e) {
         getMessageById(e.data);
+        updateUserList();
     };
 });
 

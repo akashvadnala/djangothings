@@ -68,7 +68,7 @@ class UserModelViewSet(ModelViewSet):
         users = chatters.objects.filter(user=request.user).order_by('-num')
         #users = User.objects.all()
         for u in users:
-            self.queryset.append(User.objects.get(user=u.recipient))
+            self.queryset.append(User.objects.get(username=u.recipient))
         print('queryset',self.queryset)
         #self.queryset = self.queryset.exclude(id=request.user.id)
         return super(UserModelViewSet, self).list(request, *args, **kwargs)

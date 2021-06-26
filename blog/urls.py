@@ -10,6 +10,11 @@ router.register(r'user', UserModelViewSet, basename='user-api')
 
 urlpatterns = [
     path(r'notifications/api/v1/', include(router.urls)),
+    path('notifications/chat/incnum/',views.inc_num.as_view(),name="inc-num"),
+    path('notifications/chat/getusers/',views.get_users.as_view(),name="get-users"),
+    path('notifications/chat/putnotif/',views.put_notif.as_view(),name="put-notif"),
+    path('notifications/chat/removenotif/',views.remove_notif.as_view(),name="remove-notif"),
+    path('notifications/chat/userinp/',views.chat_user.as_view(),name="user-inp"),
     path('',views.home,name="home"), #home includes header, container-box,modal
     path('search/',views.search, name="search"),
     path('search/delete',views.sea_delete.as_view(),name="delete_sea"),

@@ -16,6 +16,8 @@ class MessageModelAdmin(admin.ModelAdmin):
     list_filter = ('user', 'recipient')
     date_hierarchy = 'timestamp'
 
+class ChattersAdmin(admin.ModelAdmin):
+    list_display = ('id','user','recipient','num','notification','msg_count')
 
 
 admin.site.register(Post)
@@ -25,4 +27,4 @@ admin.site.register(feedback,FeedbackAdmin)
 admin.site.register(Seainp)
 admin.site.register(Search)
 admin.site.register(MessageModel, MessageModelAdmin)
-admin.site.register(chatters)
+admin.site.register(chatters,ChattersAdmin)

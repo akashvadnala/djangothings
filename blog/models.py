@@ -23,6 +23,7 @@ class register_table(models.Model):
     darkmode = models.BooleanField(default=False)
     chats = models.ManyToManyField(User,related_name='chat_users',blank=True)
     chat_time = models.DateTimeField(auto_now_add=True,null=True)
+    max_num = models.BigIntegerField(default=2)
     def __str__(self):
         return self.user.username
     class Meta:
@@ -31,7 +32,11 @@ class register_table(models.Model):
 class chatters(models.Model):
     user = models.ForeignKey(User,related_name="chatter1", on_delete=models.CASCADE,null=True)
     recipient = models.ForeignKey(User,related_name="chatter2", on_delete=models.CASCADE,null=True)
-    num = models.IntegerField(default=0)
+    num = models.BigIntegerField(default=0)
+    notification = models.BooleanField(default=False)
+    last_msg = TextField(null=True,blank=True)
+    last_time = DateTimeField(null=True,blank=True)
+    msg_count = models.BigIntegerField(default=0)
     def __str__(self):
         return str(self.recipient)
 

@@ -25,5 +25,5 @@ class MessageModelSerializer(ModelSerializer):
 
 class UserModelSerializer(ModelSerializer):
     class Meta:
-        model = chatters
-        fields = ('recipient',)
+        model = User
+        fields = ('username',)

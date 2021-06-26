@@ -11,14 +11,36 @@
     </div>
     <div class="noti">
         <div class="noti-s">
-            <div id="user-list" class="user-list">
-                <div onclick="disableInput()" class="user-one disabled">Users</div>
-                {% for c in chatters %}
-                <div type="button" onclick="get_user('{{c.recipient}}')" class="user-one user" id="user-one {{c.recipient}}">
-                    {{c.recipient}}
+            <div class="users-list">
+                <div class="user-head">
+                    <div class="user-head-s">
+                        <div class="user-sea">
+                            {% if data.darkmode %}
+                            <img src="{% static 'images/search_icon_dark.png' %}" alt="search_icon" >
+                            {% else %}
+                            <img src="{% static 'images/search_icon.png' %}" alt="search_icon" >
+                            {% endif %}
+                        </div>
+                        <div class="user-inp">
+                                <input id="userChat" type="search" placeholder="Search User..">
+                        </div>
+                    </div>
                 </div>
-                {% endfor %}
-                {# Users go here #}
+                <div id="user-list" class="user-list">
+                    {% for c in chatters %}
+                    <div type="button" onclick="get_user('{{c.recipient}}')" class="user-one user" id="user-one {{c.recipient}}">
+                        {{c.recipient}}
+                        {% if c.notification %}
+                        <span style="background:green;color:white;">
+                            {% if c.msg_count %}
+                                {{c.msg_count}}
+                            {% endif %}
+                        </span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    {# Users go here #}
+                </div>
             </div>
             <div class="msg-list">
                 <div class="msg-head" id="msg-head">
@@ -30,8 +52,10 @@
                     </ul>
                 </div>
                <div class="msg-input">
-                    <input id="chat-input" type="text" class="form-control input" placeholder="Type your message here ..." maxlength="1000">
+                   <div class="msg-input-s">
+                    <input id="chat-input" type="text" class="form-control input" placeholder="Type your message here ...">
                     <button class="btn btn-info btn" id="btn-send">Send</button>
+                   </div>
                </div>
             </div>
         </div>

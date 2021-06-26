@@ -788,3 +788,154 @@ class sea_delete(View):
         data['deleted']=True
         print(data)
         return JsonResponse(data)
+
+class inc_num(View):
+    def get(self, request):
+        rec = request.GET.get('rec',None)
+        user = request.GET.get('user',None)
+        print('rec, user',rec,user)
+        rec_r = register_table.objects.get(user=User.objects.get(username=rec))
+        if len(chatters.objects.filter(user=User.objects.get(username=rec),recipient=User.objects.get(username=user)))>0:
+            rec_c = chatters.objects.get(user=User.objects.get(username=rec),recipient=User.objects.get(username=user))
+        else:
+            rec_c = chatters.objects.create(user=User.objects.get(username=rec),recipient=User.objects.get(username=user))
+            rec_c.notification=True
+            rec_c.save()
+        print('rec_c')
+        if rec_r.max_num!=rec_c.num+1:
+            rec_c.num=rec_r.max_num
+            rec_r.max_num+=1
+            rec_c.save()
+            rec_r.save()
+
+        rec_r = register_table.objects.get(user=User.objects.get(username=user))
+        if len(chatters.objects.filter(user=User.objects.get(username=user),recipient=User.objects.get(username=rec)))>0:
+            rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
+        else:
+            rec_c = chatters.objects.create(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
+        print('rec_c')
+        if rec_r.max_num!=rec_c.num+1:
+            rec_c.num=rec_r.max_num
+            rec_r.max_num+=1
+            rec_c.save()
+            rec_r.save()
+        print('increased')
+        data={}
+        return JsonResponse(data)
+
+class get_users(View):
+    def get(self, request):
+        users = list(chatters.objects.filter(user=request.user).order_by('-num'))
+        print('users',users)
+        data=[]
+        iam = request.user
+        for user in users:
+            if len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0:
+                chat_det1 = list(MessageModel.objects.filter(user=iam,recipient=user.recipient).order_by('-timestamp'))[0]
+                chat_det = chat_det1
+            if len(MessageModel.objects.filter(user=user.recipient,recipient=iam))>0:
+                chat_det2 = list(MessageModel.objects.filter(user=user.recipient,recipient=iam).order_by('-timestamp'))[0]
+                chat_det = chat_det2
+            if len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0 and len(MessageModel.objects.filter(user=user.recipient,recipient=iam))>0:
+                if chat_det1.timestamp>chat_det2.timestamp:
+                    chat_det = chat_det1
+                else:
+                    chat_det = chat_det2
+            print(chat_det)
+            det={}
+            det['username']=user.recipient.username
+            det['notif']='&#9679;'
+            det['backcolor']='green'
+            det['color']='white'
+            det['msg_count']=str(user.msg_count)
+            if user.msg_count==0:
+                det['display']='none'
+            else:
+                det['display']='block'
+            if chat_det.user.username==request.user.username:
+                det['last_msg']=('You: '+str(chat_det.body))[:50]
+            else:
+                det['last_msg']=(str(chat_det.user.username)+': '+str(chat_det.body))[:50]
+            '''if user.notification:
+                det['color']='red'
+                '''
+            data.append(det)
+        
+        print('users',data)
+        #data={'users':users}
+        return JsonResponse(data,safe=False)
+
+class put_notif(View):
+    def get(self, request):
+        rec = request.GET.get('rec',None)
+        sender = request.GET.get('sender',None)
+        user = request.user.username
+        print('rec user sender',rec,user,sender)
+        data={}
+        #if len(chatters.objects.filter(user=User.objects.get(username=user),recipient=User.objects.get(username=rec)))>0:
+        
+        if rec!=user and rec!='':
+            rec_c = chatters.objects.get(user=User.objects.get(username=rec),recipient=User.objects.get(username=sender))
+            if rec_c.notification:
+                rec_c.msg_count+=1
+            else:
+                rec_c.notification=True
+                rec_c.msg_count=0
+            print('notif',True)
+            rec_c.save()
+            if rec_c.msg_count>0:
+                data['msg_count'] = rec_c.msg_count
+            print('msg_count',data['msg_count'])
+            data['notif']=True
+        if rec!=sender and user!=sender:
+            rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=sender))
+            if rec_c.notification:
+                rec_c.msg_count+=1
+            else:
+                rec_c.notification=True
+                rec_c.msg_count=0
+            print('notif',True)
+            rec_c.save()
+            if rec_c.msg_count>0:
+                data['msg_count'] = rec_c.msg_count
+            print('msg_count',data['msg_count'])
+            data['notif']=True
+        return JsonResponse(data)
+
+class remove_notif(View):
+    def get(self,request):
+        rec = request.GET.get('rec',None)
+        user = request.user.username
+        data={}
+        if len(chatters.objects.filter(user=User.objects.get(username=user),recipient=User.objects.get(username=rec)))>0:
+            rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
+        else:
+            rec_c = chatters.objects.create(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
+        rec_c.notification=False
+        rec_c.save()
+        print('notif',False)
+        print(rec_c.notification)
+        data['notif']=False
+        print('removed')
+        return JsonResponse(data)
+
+class chat_user(View):
+    def get(self, request):
+        rec = request.GET.get('rec',None)
+        user = request.user.username
+        data={}
+        data['got'] = False
+        data['created'] = False
+        data['all'] = False
+        if len(User.objects.filter(username=rec))==0:
+            data['all'] = True
+        elif len(chatters.objects.filter(user=User.objects.get(username=user),recipient=User.objects.get(username=rec)))>0:
+            rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
+            data['got'] = True
+            data['username'] = rec_c.recipient.username
+        else:
+            rec_c = chatters.objects.create(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
+            data['created'] = True
+            data['username'] = rec_c.recipient.username
+        print(data)
+        return JsonResponse(data)
