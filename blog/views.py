@@ -904,23 +904,26 @@ class put_notif(View):
                 rec_c.notification=False
                 rec_c.save()
         #print('user_active rec','akash admin',rec,register_table.objects.get(user=User.objects.get(username=rec)).login)
-        if sender!=user:
+        #if sender!=user and rec!='':
+        if rec!='' and user==sender:
             rec_c = chatters.objects.get(user=User.objects.get(username=rec),recipient=User.objects.get(username=sender))
-            if rec!='' and user==sender and register_table.objects.get(user=User.objects.get(username=rec)).login==False:
-                if rec_c.notification:
-                    rec_c.msg_count+=1
-                else:
-                    rec_c.notification=True
-                    rec_c.msg_count=1
-                print('notif',True)
-                rec_c.save()
-                if rec_c.msg_count>0:
-                    data['msg_count'] = rec_c.msg_count
-                print('msg_count',data['msg_count'])
-                data['notif']=True
+            #if rec!='' and user==sender and register_table.objects.get(user=User.objects.get(username=rec)).login==False:
+            if rec_c.notification:
+                rec_c.msg_count+=1
             else:
-                rec_c.notification=False
-                rec_c.save()
+                rec_c.notification=True
+                rec_c.msg_count=1
+            print('notif',True)
+            rec_c.save()
+            if rec_c.msg_count>0:
+                data['msg_count'] = rec_c.msg_count
+            print('msg_count',data['msg_count'])
+            data['notif']=True
+        if rec==sender:
+            rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=sender))
+            rec_c.notification=False
+            rec_c.msg_count=0
+            rec_c.save()
         return JsonResponse(data)
 
 class remove_notif(View):
