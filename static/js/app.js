@@ -78,7 +78,7 @@ function updateUserList() {
                             <span>${data[i]['username']}</span>
                             <span class="msg_not" style="display:${data[i]['display']};background:${data[i]['backcolor']}; color:${data[i]['color']};">${data[i]['msg_count']}</span>
                         </div>
-                        <div class="last_msg">
+                        <div class="last_msg" style="display:${data[i]['atuser']};">
                             ${data[i]['last_msg']}
                         </div>
                     </div>
@@ -129,15 +129,43 @@ function drawMessage(message) {
     let position = 'left';
     const date = new Date(message.timestamp);
     if (message.user === currentUser) position = 'right';
-    const messageItem = `
-            <li class="message ${position}">
+    if (message.body === ''){
+        if(message.user === currentUser){
+            const messageItem = `
+            <li class="message mid">
                 <div class="avatar">
-                    <span>${message.body}</span>
+                    <span>${message.msg2}</span>
                     <!--span>${message.user}</span>
                     <span class="small">${date}</span-->
                 </div>
             </li>`;
-    $(messageItem).appendTo('#messages');
+            $(messageItem).appendTo('#messages');
+        }
+        else{
+            const messageItem = `
+            <li class="message mid">
+                <div class="avatar">
+                    <span>${message.msg1}</span>
+                    <!--span>${message.user}</span>
+                    <span class="small">${date}</span-->
+                </div>
+            </li>`;
+            $(messageItem).appendTo('#messages');
+        }
+        
+    }
+    else{
+        const messageItem = `
+        <li class="message ${position}">
+            <div class="avatar">
+                <span>${message.body}</span>
+                <!--span>${message.user}</span>
+                <span class="small">${date}</span-->
+            </div>
+        </li>`;
+        $(messageItem).appendTo('#messages');
+    }
+    
 }
 
 function getConversation(recipient) {

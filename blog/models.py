@@ -135,7 +135,7 @@ class MessageModel(Model):
                            related_name='to_user', db_index=True, null=True)
     timestamp = DateTimeField('timestamp', auto_now_add=True, editable=False,
                               db_index=True)
-    body = TextField('body', null=True)
+    body = TextField('body', null=True, blank=True)
 
     user1 = ForeignKey(User, on_delete=CASCADE, verbose_name='user1',
                       related_name='user1', db_index=True, null=True,blank=True)
@@ -143,6 +143,8 @@ class MessageModel(Model):
     user2 = ForeignKey(User, on_delete=CASCADE, verbose_name='user2',
                       related_name='user2', db_index=True, null=True,blank=True)
 
+    msg1 = TextField('msg1', null=True, blank=True)
+    msg2 = TextField('msg2', null=True, blank=True)
     def __str__(self):
         return str(self.id)
 

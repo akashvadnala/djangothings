@@ -843,19 +843,47 @@ class get_users(View):
         data=[]
         iam = request.user
         for user in users:
-            if len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0:
+            det={}
+            exist = len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0 and len(MessageModel.objects.filter(user=user.recipient,recipient=iam))>0
+            print('exist',exist)
+            print('exist',len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0)
+            print('exist',len(MessageModel.objects.filter(user=user.recipient,recipient=iam))>0)
+            if exist:
                 chat_det1 = list(MessageModel.objects.filter(user=iam,recipient=user.recipient).order_by('-timestamp'))[0]
-                chat_det = chat_det1
-            if len(MessageModel.objects.filter(user=user.recipient,recipient=iam))>0:
                 chat_det2 = list(MessageModel.objects.filter(user=user.recipient,recipient=iam).order_by('-timestamp'))[0]
-                chat_det = chat_det2
-            if len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0 and len(MessageModel.objects.filter(user=user.recipient,recipient=iam))>0:
                 if chat_det1.timestamp>chat_det2.timestamp:
                     chat_det = chat_det1
                 else:
                     chat_det = chat_det2
-            print('chat_det',chat_det)
-            det={}
+            elif len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0:
+                chat_det1 = list(MessageModel.objects.filter(user=iam,recipient=user.recipient).order_by('-timestamp'))[0]
+                chat_det = chat_det1
+            elif len(MessageModel.objects.filter(user=user.recipient,recipient=iam))>0:
+                chat_det2 = list(MessageModel.objects.filter(user=user.recipient,recipient=iam).order_by('-timestamp'))[0]
+                chat_det = chat_det2
+            
+            try:
+                print('chat_det',chat_det)
+                if chat_det.body=='' and chat_det.msg1=='' and chat_det.msg2=='':
+                    det['atuser'] = 'none'
+                else:
+                    if chat_det.user.username==request.user.username:
+                        if chat_det.body=='':
+                            det['last_msg']=(str(chat_det.msg2))[:50]
+                        else:
+                            det['last_msg']=('You: '+str(chat_det.body))[:50]
+                    else:
+                        if chat_det.body=='':
+                            det['last_msg']=(str(chat_det.msg1))[:50]
+                        else:
+                            det['last_msg']=(str(chat_det.user.username)+': '+str(chat_det.body))[:50]
+                    det['atuser'] = 'block'
+            except:
+                pass
+            
+            if exist==False:
+                det['atuser'] = 'none'
+            
             det['username']=user.recipient.username
             det['notif']='&#9679;'
             det['backcolor']='#16C79A'
@@ -865,10 +893,6 @@ class get_users(View):
                 det['display']='none'
             else:
                 det['display']='block'
-            if chat_det.user.username==request.user.username:
-                det['last_msg']=('You: '+str(chat_det.body))[:50]
-            else:
-                det['last_msg']=(str(chat_det.user.username)+': '+str(chat_det.body))[:50]
             '''if user.notification:
                 det['color']='red'
                 '''
@@ -979,11 +1003,11 @@ class send_request(View):
             rec_u = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
         else:
             rec_u = chatters.objects.create(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
-        if rec_u.notification:
+        '''if rec_u.notification:
             rec_u.msg_count+=1
         else:
             rec_u.notification=True
-            rec_u.msg_count=1
+            rec_u.msg_count=1'''
         if rec_r.max_num!=rec_u.num+1:
             rec_u.num=rec_r.max_num
             rec_r.max_num+=1
@@ -994,17 +1018,18 @@ class send_request(View):
             rec_u = chatters.objects.get(user=User.objects.get(username=rec),recipient=User.objects.get(username=user))
         else:
             rec_u = chatters.objects.create(user=User.objects.get(username=rec),recipient=User.objects.get(username=user))
-        '''if rec_r.notification:
-            rec_r.msg_count+=1
+        '''if rec_u.notification:
+            rec_u.msg_count+=1
         else:
-            rec_r.notification=True
-            rec_r.msg_count=1
-        rec_r.save()'''
+            rec_u.notification=True
+            rec_u.msg_count=1'''
         if rec_r.max_num!=rec_u.num+1:
             rec_u.num=rec_r.max_num
             rec_r.max_num+=1
         rec_r.save()
         rec_u.save()
-        body = str(user)+' requested you to buy your product <a target="_blank" href="/post/'+Post.objects.get(id=id).sha+'/">'+str(Post.objects.get(id=id).post_title)+'</a>'
-        msg = MessageModel.objects.create(user=User.objects.get(username=user),recipient=User.objects.get(username=rec),body=body)
+        msg1 = 'You requested '+str(rec)+' to buy their product <a target="_blank" href="/post/'+Post.objects.get(id=id).sha+'/">'+str(Post.objects.get(id=id).post_title)+'</a>'
+        msg2 = str(user)+' requested you to buy your product <a target="_blank" href="/post/'+Post.objects.get(id=id).sha+'/">'+str(Post.objects.get(id=id).post_title)+'</a>'
+        msg = MessageModel.objects.create(user=User.objects.get(username=rec),recipient=User.objects.get(username=user),body='',msg1=msg1,msg2=msg2)
+        print('msg',msg)
         return JsonResponse(data)

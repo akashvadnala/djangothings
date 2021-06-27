@@ -20,7 +20,7 @@ class MessageModelSerializer(ModelSerializer):
 
     class Meta:
         model = MessageModel
-        fields = ('id', 'user', 'recipient', 'timestamp', 'body','user1','user2')
+        fields = ('id', 'user', 'recipient', 'timestamp', 'body','user1','user2','msg1','msg2')
 
 
 class UserModelSerializer(ModelSerializer):

@@ -214,6 +214,36 @@
     border-bottom-right-radius: 0;
     float: right;
 }
+
+.messages .message.mid{
+    text-align: center;
+    
+}
+
+
+.messages .message.mid .avatar {
+    background-color: rgba(100,200,150,.7);
+    border: solid 1px rgba(100,200,150,.9);
+    border-radius: 5px;
+    color: rgb(70,70,70);
+    font-size: 13px;
+    max-width: 60%;
+    text-align: center;
+    padding: 5px 7px 5px 7px;
+    line-height: 17px;
+}
+
+.messages .message.mid .avatar a{
+    color: blue;
+    text-decoration: none;
+    font-family:-apple-system,SF Pro Text,Helvetica Neue,HelveticaNeue,Helvetica,Arial,sans-serif;
+    letter-spacing:0.3px;
+}
+
+.messages .message.mid .avatar a:hover{
+    text-decoration: underline;
+}
+
 /*
 .messages .message.right .text_wrapper {
     background-color: #c7eafc;
