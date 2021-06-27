@@ -144,7 +144,7 @@
             $('.msg-link').html(`<a href="{% url 'base' 'notifications' %}" onclick="">Messages/Notificaions</a>`);
             $.ajax({
                 type:'GET',
-                url: "{% url 'send-request' post.sha %}",
+                url: "{% url 'send-request' %}",
                 data:{
                     'rec':rec,
                     'id':id,

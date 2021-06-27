@@ -58,7 +58,7 @@
                     <div class="prof-inp"><input type="email" value="{{user.email}}" name="email" placeholder="Email"></div>
                 </div>
                 {% if data.profile_pic %}
-                <div style="margin-left: 15px;" id="dp-{{data.id}}" class="img-inp" type="button" onclick="deldp({{data.id}})">
+                <div style="margin-left: 15px;" id="dp-{{data.id}}" class="img-inp" type="button" onclick="deldp('{{data.id}}')">
                     <div class="overlay">
                         <div class="text">x</div>
                     </div>

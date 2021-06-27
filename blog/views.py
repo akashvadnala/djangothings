@@ -886,39 +886,41 @@ class put_notif(View):
         print('rec user sender',rec,user,sender)
         data={}
         #if len(chatters.objects.filter(user=User.objects.get(username=user),recipient=User.objects.get(username=rec)))>0:
-        rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=sender))
-        if rec!=sender and user!=sender:
-            if rec_c.notification:
-                rec_c.msg_count+=1
+        if sender!=user:
+            rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=sender))
+            if rec!=sender and user!=sender:
+                if rec_c.notification:
+                    rec_c.msg_count+=1
+                else:
+                    rec_c.notification=True
+                    rec_c.msg_count=1
+                print('notif',True)
+                rec_c.save()
+                if rec_c.msg_count>0:
+                    data['msg_count'] = rec_c.msg_count
+                print('msg_count',data['msg_count'])
+                data['notif']=True
             else:
-                rec_c.notification=True
-                rec_c.msg_count=1
-            print('notif',True)
-            rec_c.save()
-            if rec_c.msg_count>0:
-                data['msg_count'] = rec_c.msg_count
-            print('msg_count',data['msg_count'])
-            data['notif']=True
-        else:
-            rec_c.notification=False
-            rec_c.save()
+                rec_c.notification=False
+                rec_c.save()
         #print('user_active rec','akash admin',rec,register_table.objects.get(user=User.objects.get(username=rec)).login)
-        rec_c = chatters.objects.get(user=User.objects.get(username=rec),recipient=User.objects.get(username=sender))
-        if rec!='' and user==sender and register_table.objects.get(user=User.objects.get(username=rec)).login==False:
-            if rec_c.notification:
-                rec_c.msg_count+=1
+        if sender!=user:
+            rec_c = chatters.objects.get(user=User.objects.get(username=rec),recipient=User.objects.get(username=sender))
+            if rec!='' and user==sender and register_table.objects.get(user=User.objects.get(username=rec)).login==False:
+                if rec_c.notification:
+                    rec_c.msg_count+=1
+                else:
+                    rec_c.notification=True
+                    rec_c.msg_count=1
+                print('notif',True)
+                rec_c.save()
+                if rec_c.msg_count>0:
+                    data['msg_count'] = rec_c.msg_count
+                print('msg_count',data['msg_count'])
+                data['notif']=True
             else:
-                rec_c.notification=True
-                rec_c.msg_count=1
-            print('notif',True)
-            rec_c.save()
-            if rec_c.msg_count>0:
-                data['msg_count'] = rec_c.msg_count
-            print('msg_count',data['msg_count'])
-            data['notif']=True
-        else:
-            rec_c.notification=False
-            rec_c.save()
+                rec_c.notification=False
+                rec_c.save()
         return JsonResponse(data)
 
 class remove_notif(View):
@@ -966,11 +968,40 @@ class chat_user(View):
 class send_request(View):
     def get(self, request):
         rec = request.GET.get('rec',None)
-        id = request.Get.get('id',None)
+        id = request.GET.get('id',None)
         user = request.user.username
-        data={}
+        data={'sender':user}
+        rec_r = register_table.objects.get(user=User.objects.get(username=user))
         if len(chatters.objects.filter(user=User.objects.get(username=user),recipient=User.objects.get(username=rec)))>0:
-            rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
+            rec_u = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
         else:
-            rec_c = chatters.objects.create(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
+            rec_u = chatters.objects.create(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
+        if rec_u.notification:
+            rec_u.msg_count+=1
+        else:
+            rec_u.notification=True
+            rec_u.msg_count=1
+        if rec_r.max_num!=rec_u.num+1:
+            rec_u.num=rec_r.max_num
+            rec_r.max_num+=1
+        rec_r.save()
+        rec_u.save()
+        rec_r = register_table.objects.get(user=User.objects.get(username=rec))
+        if len(chatters.objects.filter(user=User.objects.get(username=rec),recipient=User.objects.get(username=user)))>0:
+            rec_u = chatters.objects.get(user=User.objects.get(username=rec),recipient=User.objects.get(username=user))
+        else:
+            rec_u = chatters.objects.create(user=User.objects.get(username=rec),recipient=User.objects.get(username=user))
+        '''if rec_r.notification:
+            rec_r.msg_count+=1
+        else:
+            rec_r.notification=True
+            rec_r.msg_count=1
+        rec_r.save()'''
+        if rec_r.max_num!=rec_u.num+1:
+            rec_u.num=rec_r.max_num
+            rec_r.max_num+=1
+        rec_r.save()
+        rec_u.save()
+        body = str(user)+' requested you to buy your product <a target="_blank" href="/post/'+Post.objects.get(id=id).sha+'/">'+str(Post.objects.get(id=id).post_title)+'</a>'
+        msg = MessageModel.objects.create(user=User.objects.get(username=user),recipient=User.objects.get(username=rec),body=body)
         return JsonResponse(data)
