@@ -299,8 +299,8 @@ $(document).ready(function () {
 
 //    let socket = new WebSocket(`ws://127.0.0.1:8000/?session_key=${sessionKey}`);
     var socket = new WebSocket(
-        'ws://' + window.location.host +
-        '/notifications/ws?session_key=${sessionKey}')
+        'wss://' + window.location.host +
+        '/notifications/wss?session_key=${sessionKey}')
 
     chatInput.keypress(function (e) {
         if (e.keyCode == 13)
