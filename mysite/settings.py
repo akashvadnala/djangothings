@@ -91,7 +91,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER':'postgres',
         'PASSWORD':'1323',
-        'HOST':'localhost',
+        'HOST':'lincart.herokuapp.com',
     }
 }
 
