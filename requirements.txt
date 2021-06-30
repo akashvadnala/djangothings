@@ -44,4 +44,3 @@ txaio==18.8.1
 urllib3==1.22
 whitenoise==5.2.0
 wrapt==1.10.11
-zope.interface==4.6.0
