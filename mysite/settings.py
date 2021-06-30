@@ -85,13 +85,25 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER':'postgres',
         'PASSWORD':'1323',
         'HOST':'lincart.herokuapp.com',
+    }
+}
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ddjtkhq7n5pegl',
+        'USER':'uvsakrvcfkvnek',
+        'PASSWORD':'5efdbbb43aa86bbab717ad4977cd26443392b4c26f5193fa619477c1f8a38f8d',
+        'HOST':'ec2-52-4-111-46.compute-1.amazonaws.com',
+        'URI':'postgres://uvsakrvcfkvnek:5efdbbb43aa86bbab717ad4977cd26443392b4c26f5193fa619477c1f8a38f8d@ec2-52-4-111-46.compute-1.amazonaws.com:5432/ddjtkhq7n5pegl',
+        'PORT':'5432',
     }
 }
 
