@@ -298,8 +298,9 @@ $(document).ready(function () {
     disableInput();
 
 //    let socket = new WebSocket(`ws://127.0.0.1:8000/?session_key=${sessionKey}`);
-    var socket = new WebSocket(
-        'wss://' + window.location.host +
+    ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+    var socket = new ReconnectingWebSocket(
+        ws_scheme + '://' + window.location.host +
         '/notifications/ws?session_key=${sessionKey}')
 
     chatInput.keypress(function (e) {
