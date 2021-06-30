@@ -102,7 +102,7 @@ DATABASES = {
         'USER':'uvsakrvcfkvnek',
         'PASSWORD':'5efdbbb43aa86bbab717ad4977cd26443392b4c26f5193fa619477c1f8a38f8d',
         'HOST':'ec2-52-4-111-46.compute-1.amazonaws.com',
-        'URI':'postgres://uvsakrvcfkvnek:5efdbbb43aa86bbab717ad4977cd26443392b4c26f5193fa619477c1f8a38f8d@ec2-52-4-111-46.compute-1.amazonaws.com:5432/ddjtkhq7n5pegl',
+        'URL':'postgres://uvsakrvcfkvnek:5efdbbb43aa86bbab717ad4977cd26443392b4c26f5193fa619477c1f8a38f8d@ec2-52-4-111-46.compute-1.amazonaws.com:5432/ddjtkhq7n5pegl',
         'PORT':'5432',
     }
 }
