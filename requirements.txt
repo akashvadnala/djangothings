@@ -8,6 +8,7 @@ Automat==0.7.0
 beautifulsoup4==4.9.3
 certifi==2018.10.15
 channels==2.1.5
+channel-redis
 chardet==3.0.4
 constantly==15.1.0
 daphne==2.2.2
