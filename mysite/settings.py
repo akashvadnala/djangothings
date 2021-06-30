@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
         'HOST':'lincart.herokuapp.com',
     }
 }
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -113,7 +113,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'db.sqlite3',
     }
-}
+}'''
 '''
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)'''
