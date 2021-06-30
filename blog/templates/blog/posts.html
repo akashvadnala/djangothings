@@ -1,6 +1,8 @@
 {% load static %}
 {% static "images" as baseUrl %}
+<div class="msgbox">
 
+</div>
 <div class="con-inside">
     <div class="con-heading">
         {% for nav in navss %}
@@ -82,6 +84,8 @@
             success:function(data){
               if(data.deleted){
                 $("#post-"+id).remove();
+                $('.msgbox').html('<span>Post has been deleted..</span>');
+                $('.hh:last-child').css('display','none');
               }
             }
           });

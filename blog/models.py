@@ -24,7 +24,7 @@ class register_table(models.Model):
     chats = models.ManyToManyField(User,related_name='chat_users',blank=True)
     chat_time = models.DateTimeField(auto_now_add=True,null=True)
     max_num = models.BigIntegerField(default=2)
-    login = models.BooleanField(default=True)
+    login = models.IntegerField(default=1)
     def __str__(self):
         return self.user.username
     class Meta:
@@ -37,7 +37,7 @@ class chatters(models.Model):
     notification = models.BooleanField(default=False)
     last_msg = TextField(null=True,blank=True)
     last_time = DateTimeField(null=True,blank=True)
-    msg_count = models.BigIntegerField(default=0)
+    msg_count = models.FloatField(default=0)
     def __str__(self):
         return str(self.recipient)
 

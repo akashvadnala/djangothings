@@ -4,6 +4,9 @@
     background: rgba(0,0,0,.05);
     border: solid 1px rgba(200,200,200,.7);
     color: rgb(50,50,50);
+    position: sticky;
+    position: -webkit-sticky;
+    top: 1000px;
 }
 
 .footer a{

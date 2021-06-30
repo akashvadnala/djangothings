@@ -20,26 +20,51 @@ body{
     border: solid 1px rgba(200,200,200,.3);
 }
 
+
+.post-pic .gallery-top .swiper-wrapper{
+  display: flex;
+  align-items: center;
+  height: 300px;
+  border: none;
+}
+
 .post-pic .gallery-top .swiper-slide{
-    border-radius: 7px;
+  max-width:100%;
+    max-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
 }
 
 .post-pic .gallery-top .swiper-slide img{
-    max-width: 100%;
-    max-height: 400px;
-    object-fit: cover;
+  max-width: 400px;
+  max-height:300px;
+  object-fit: cover;
     border-radius: 5px;
 }
+
+.post-pic .gallery-thumbs .swiper-wrapper{
+  display: flex;
+  align-items: center;
+  height: 120px;
+  border: none;
+}
+
 .post-pic .gallery-thumbs .swiper-slide{
-    max-width: 16.66%;
-    max-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
     margin: 4px;
     margin-top: 10px;
     border-radius: 5px;
+    background: transparent;
+    border: none;
 }
 .post-pic .gallery-thumbs .swiper-slide img{
-    max-width: 100%;
-    max-height:100%;
+    max-width: 100px;
+    max-height:100px;
     object-fit: cover;
     cursor: pointer;
     border-radius: 5px;
@@ -192,6 +217,8 @@ body{
   }
 
   .msg-box{
+    position: sticky;
+    top: 50px;
     display: none;
     border-bottom: solid 1px rgba(192,192,192,.3);
     background: rgba(240,240,240,.7);
@@ -199,6 +226,8 @@ body{
     font-size: 13px;
     text-align: center;
     line-height: 20px;
+    z-index: 100000;
+    backdrop-filter: blur(15px);
   }
   
   .msg-link{

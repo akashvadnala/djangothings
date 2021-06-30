@@ -291,8 +291,8 @@ box-shadow: 0 0 14px rgb( 5,5,10);
 
 
 .darkmode .swiper-container{
-    border: rgba(240,240,240,.5) solid 1px;
-    background-color: rgba(50,50,50,.5);
+    border:solid 1px transparent;
+    background-color: transparent;
 }
 
 .darkmode .swiper-slide{

@@ -4,6 +4,7 @@
     background: rgba(240,240,240,.3);
 }
 
+
 .container-box .con-swiper{
   margin-top: 10px;
     width: 100%;
@@ -13,22 +14,26 @@
     background: rgba(255,255,255,.9);
 }
 
-.swiper-slide {
+.conswiper .swiper-slide {
   text-align: center;
-
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
   justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
   align-items: center;
-  align-content: center;
+  border: none;
+}
+
+.noproductfound{
+  display: flex;
+  justify-content: center;
+  margin: 40px;
+}
+
+.noproductfound img{
+  height: 250px;
+  width: 250px;
 }
 
 .stack{

@@ -62,7 +62,11 @@
                 <div class="det-val">{{ post.desc }}</div>
             </div>
             <div class="but">
+                {% if post.uname == request.user %}
+                <button ><a style="color: white;text-decoration: none;" target="_blank" href="{% url 'edit' post.sha %}">Edit</a></button>
+                {% else %}
                 <button onclick="onContact()">Contact</button>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -114,7 +118,7 @@
     <script>
         var galleryThumbs = new Swiper('.gallery-thumbs', {
         spaceBetween: 0,
-        slidesPerView: 6,
+        slidesPerView: 4,
         freeMode: true,
         watchSlidesVisibility: true,
         watchSlidesProgress: true,

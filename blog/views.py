@@ -60,6 +60,7 @@ def search(request):
     if sea=='':
         return redirect('/')
     else:
+        rejec = ['','a','an','the','is','are','or','and','can','could','may','might','then','if','this','that','these','those','it','he','she','to','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','as','you','of','in','has','will','we','by','us','our','its''your','all','for','on','at','his']
         sea_split = re.findall(r'[a-z0-9]*',sea.lower())
         while '' in sea_split:
             sea_split.remove('')
@@ -70,7 +71,11 @@ def search(request):
         for post in posts:
             post_tit_spl = re.findall(r'[a-z0-9]*',post.post_title.lower())
             post_desc_spl = re.findall(r'[a-z0-9]*',post.desc.lower())
-            post_tit_sql = post_tit_spl + post_desc_spl
+            all_post_words = post_tit_spl + post_desc_spl
+            post_tit_spl = []
+            for w in all_post_words:
+                if w not in rejec:
+                    post_tit_spl.append(w)
             while('' in post_tit_spl):
                 post_tit_spl.remove('')
             print('post_tit_spl',post_tit_spl)
@@ -147,7 +152,7 @@ def user_login(request):
             login(request,user)
             if len(register_table.objects.filter(user=request.user))>0:
                 reg = register_table.objects.get(user=request.user)
-                reg.login=True
+                reg.login+=1
                 reg.save()
             if user.is_superuser:
                 return redirect('/')
@@ -168,7 +173,7 @@ def logout(request):
     print('logout')
     if len(register_table.objects.filter(user=request.user))>0:
         reg = register_table.objects.get(user=request.user)
-        reg.login=False
+        reg.login-=1
         reg.save()
     auth.logout(request)
     return redirect('/')  
@@ -394,10 +399,13 @@ def open_post(request,sha):
     context['imgs'] = imgs
     check=Post.objects.filter(sha=sha)
     if len(check)>0:
-        post_main = Post.objects.get(sha = sha)
+        if sha=='lastpost':
+            post_main = Post.objects.get(uname=request.user)[-1]
+        else:
+            post_main = Post.objects.get(sha = sha)
         context['post'] = post_main
         post_sec = []
-        rejec = ['','a','an','the','is','are','or','and','can','could','may','might','then','if','this','that','these','those','it','he','she','to','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','as','you','of','in','has','will','we','by','us','our','its''your','all','for','on']
+        rejec = ['','a','an','the','is','are','or','and','can','could','may','might','then','if','this','that','these','those','it','he','she','to','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','as','you','of','in','has','will','we','by','us','our','its''your','all','for','on','at','his']
         post_tit = re.findall(r'[a-z0-9]*',post_main.post_title.lower())
         post_des = re.findall(r'[a-z0-9]*',post_main.desc.lower())
         post_spl = post_tit + post_des
@@ -417,12 +425,14 @@ def open_post(request,sha):
                             while i in reg:
                                 reg.remove(i)
                         if len(reg)>0:
+                            print('reg',reg)
                             post_sec.append(post)
                         reg = re.findall(post.post_title.lower(),spl.lower())
                         for i in rejec:
                             while i in reg:
                                 reg.remove(i)
                         if len(reg)>0:
+                            print('reg',reg)
                             post_sec.append(post)
                     for oth_post_desc in oth_post_desc_spl:
                         reg = re.findall(spl,oth_post_desc)
@@ -430,18 +440,21 @@ def open_post(request,sha):
                             while i in reg:
                                 reg.remove(i)
                         if len(reg)>0:
+                            print('reg',reg)
                             post_sec.append(post)
                         reg = re.findall(oth_post_desc,spl)
                         for i in rejec:
                             while i in reg:
                                 reg.remove(i)
                         if len(reg)>0:
+                            print('reg',reg)
                             post_sec.append(post)
                         reg = re.findall(spl.lower(),post.category.lower())
                         for i in rejec:
                             while i in reg:
                                 reg.remove(i)
                         if len(reg)>0:
+                            print('reg',reg)
                             post_sec.append(post)
                     
                     
@@ -459,6 +472,7 @@ def open_post(request,sha):
                 k = post_sec.count(post)
                 post_cou[post.id] = k
             max_cou = max(list(post_cou.values()))
+            print('max_cou',max_cou)
             post_cou = sorted(post_cou.items(),key=lambda kv: kv[1],reverse=True)
             post_fin = []
             for post in post_cou:
@@ -846,24 +860,27 @@ class get_users(View):
             det={}
             exist = len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0 and len(MessageModel.objects.filter(user=user.recipient,recipient=iam))>0
             print('exist',exist)
-            print('exist',len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0)
             print('exist',len(MessageModel.objects.filter(user=user.recipient,recipient=iam))>0)
-            if exist:
+            print('exist',len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0)
+            if len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0 and len(MessageModel.objects.filter(user=user.recipient,recipient=iam))>0:
                 chat_det1 = list(MessageModel.objects.filter(user=iam,recipient=user.recipient).order_by('-timestamp'))[0]
                 chat_det2 = list(MessageModel.objects.filter(user=user.recipient,recipient=iam).order_by('-timestamp'))[0]
                 if chat_det1.timestamp>chat_det2.timestamp:
                     chat_det = chat_det1
                 else:
                     chat_det = chat_det2
-            elif len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0:
-                chat_det1 = list(MessageModel.objects.filter(user=iam,recipient=user.recipient).order_by('-timestamp'))[0]
-                chat_det = chat_det1
-            elif len(MessageModel.objects.filter(user=user.recipient,recipient=iam))>0:
-                chat_det2 = list(MessageModel.objects.filter(user=user.recipient,recipient=iam).order_by('-timestamp'))[0]
-                chat_det = chat_det2
-            
-            try:
-                print('chat_det',chat_det)
+                    print('chat_det',chat_det.user)
+            else:
+                if len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0:
+                    chat_det1 = list(MessageModel.objects.filter(user=iam,recipient=user.recipient).order_by('-timestamp'))[0]
+                    chat_det = chat_det1
+                    print('chat_det',chat_det.user)
+                elif len(MessageModel.objects.filter(user=user.recipient,recipient=iam))>0:
+                    chat_det2 = list(MessageModel.objects.filter(user=user.recipient,recipient=iam).order_by('-timestamp'))[0]
+                    chat_det = chat_det2
+                    print('chat_det',chat_det.user)
+            if len(MessageModel.objects.filter(user=iam,recipient=user.recipient))>0 or len(MessageModel.objects.filter(user=user.recipient,recipient=iam))>0:    
+                
                 if chat_det.body=='' and chat_det.msg1=='' and chat_det.msg2=='':
                     det['atuser'] = 'none'
                 else:
@@ -872,23 +889,22 @@ class get_users(View):
                             det['last_msg']=(str(chat_det.msg2))[:50]
                         else:
                             det['last_msg']=('You: '+str(chat_det.body))[:50]
-                    else:
+                    if chat_det.recipient.username==request.user.username:
                         if chat_det.body=='':
                             det['last_msg']=(str(chat_det.msg1))[:50]
                         else:
                             det['last_msg']=(str(chat_det.user.username)+': '+str(chat_det.body))[:50]
                     det['atuser'] = 'block'
-            except:
-                pass
             
-            if exist==False:
+            else:
+                print('atuser none')
                 det['atuser'] = 'none'
             
             det['username']=user.recipient.username
             det['notif']='&#9679;'
             det['backcolor']='#16C79A'
             det['color']='white'
-            det['msg_count']=str(user.msg_count)
+            det['msg_count']=str(int(user.msg_count))
             if user.msg_count==0:
                 det['display']='none'
             else:
@@ -897,7 +913,6 @@ class get_users(View):
                 det['color']='red'
                 '''
             data.append(det)
-        
         print('users',data)
         #data={'users':users}
         return JsonResponse(data,safe=False)
@@ -907,10 +922,53 @@ class put_notif(View):
         rec = request.GET.get('rec',None)
         sender = request.GET.get('sender',None)
         user = request.user.username
-        print('rec user sender',rec,user,sender)
+        reciver = request.GET.get('reciver',None)
+        print('rec user sender reciver',rec,user,sender,reciver)
         data={}
+        notif_count = register_table.objects.get(user=User.objects.get(username=reciver)).login
+        if user!=sender:
+            if register_table.objects.get(user=User.objects.get(username=reciver)).login==0:
+                rec_c = chatters.objects.get(user=User.objects.get(username=reciver),recipient=User.objects.get(username=sender))
+                if rec_c.notification:
+                    rec_c.msg_count+=1/notif_count
+                else:
+                    rec_c.notification=True
+                    rec_c.msg_count=1
+                rec_c.save()
+                print('notif1',1/notif_count)
+            elif reciver==user and sender==rec:
+                rec_c = chatters.objects.get(user=User.objects.get(username=reciver),recipient=User.objects.get(username=sender))
+                rec_c.notification=False
+                rec_c.msg_count=0
+                print('notif',False)
+                rec_c.save()
+            else:
+                rec_c = chatters.objects.get(user=User.objects.get(username=reciver),recipient=User.objects.get(username=sender))
+                if rec_c.notification:
+                    rec_c.msg_count+=1/notif_count
+                else:
+                    rec_c.notification=True
+                    rec_c.msg_count=1
+                print('notif2',1/notif_count)
+                rec_c.save()
+        else:
+            if sender==user and rec!=reciver:
+                rec_c = chatters.objects.get(user=User.objects.get(username=sender),recipient=User.objects.get(username=reciver))
+                if rec_c.notification:
+                    rec_c.msg_count+=1/notif_count
+                else:
+                    rec_c.notification=True
+                    rec_c.msg_count=1
+                print('notif3',1/notif_count)
+                rec_c.save()
+            else:
+                rec_c = chatters.objects.get(user=User.objects.get(username=sender),recipient=User.objects.get(username=reciver))
+                rec_c.notification=False
+                rec_c.msg_count=0
+                print('notif',False)
+                rec_c.save()
         #if len(chatters.objects.filter(user=User.objects.get(username=user),recipient=User.objects.get(username=rec)))>0:
-        if sender!=user:
+        '''if sender!=user:
             rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=sender))
             if rec!=sender and user!=sender:
                 if rec_c.notification:
@@ -926,10 +984,11 @@ class put_notif(View):
                 data['notif']=True
             else:
                 rec_c.notification=False
+                rec_c.msg_count=0
                 rec_c.save()
         #print('user_active rec','akash admin',rec,register_table.objects.get(user=User.objects.get(username=rec)).login)
         #if sender!=user and rec!='':
-        if rec!='' and user==sender:
+        elif rec!='' and user==sender:
             rec_c = chatters.objects.get(user=User.objects.get(username=rec),recipient=User.objects.get(username=sender))
             #if rec!='' and user==sender and register_table.objects.get(user=User.objects.get(username=rec)).login==False:
             if rec_c.notification:
@@ -947,7 +1006,7 @@ class put_notif(View):
             rec_c = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=sender))
             rec_c.notification=False
             rec_c.msg_count=0
-            rec_c.save()
+            rec_c.save()'''
         return JsonResponse(data)
 
 class remove_notif(View):
@@ -998,6 +1057,7 @@ class send_request(View):
         id = request.GET.get('id',None)
         user = request.user.username
         data={'sender':user}
+        print('data sender',user)
         rec_r = register_table.objects.get(user=User.objects.get(username=user))
         if len(chatters.objects.filter(user=User.objects.get(username=user),recipient=User.objects.get(username=rec)))>0:
             rec_u = chatters.objects.get(user=User.objects.get(username=user),recipient=User.objects.get(username=rec))
@@ -1030,6 +1090,83 @@ class send_request(View):
         rec_u.save()
         msg1 = 'You requested '+str(rec)+' to buy their product <a target="_blank" href="/post/'+Post.objects.get(id=id).sha+'/">'+str(Post.objects.get(id=id).post_title)+'</a>'
         msg2 = str(user)+' requested you to buy your product <a target="_blank" href="/post/'+Post.objects.get(id=id).sha+'/">'+str(Post.objects.get(id=id).post_title)+'</a>'
-        msg = MessageModel.objects.create(user=User.objects.get(username=rec),recipient=User.objects.get(username=user),body='',msg1=msg1,msg2=msg2)
+        msg = MessageModel.objects.create(user=User.objects.get(username=user),recipient=User.objects.get(username=rec),body='',msg1=msg2,msg2=msg1)
         print('msg',msg)
         return JsonResponse(data)
+
+
+class get_messages(View):
+    def get(self, request):
+        rec = request.GET.get('rec',None)
+        user = request.user.username
+        data=[]
+        msgs1 = MessageModel.objects.filter(user=User.objects.get(username=user),recipient=User.objects.get(username=rec)).order_by('-timestamp')
+        msgs2 = MessageModel.objects.filter(user=User.objects.get(username=rec),recipient=User.objects.get(username=user)).order_by('-timestamp')
+        i=0
+        j=0
+        if len(msgs1)==0 and len(msgs2)==0:
+            pass
+        elif len(msgs1)==0:
+            for msg in msgs2:
+                det={}
+                det['body']=msg.body
+                det['user']=msg.user.username
+                det['recipient']=msg.recipient.username
+                det['timestamp']=msg.timestamp
+                det['msg1']=msg.msg1
+                det['msg2']=msg.msg2
+                data.append(det)
+        elif len(msgs2)==0:
+            for msg in msgs1:
+                det={}
+                det['body']=msg.body
+                det['user']=msg.user.username
+                det['recipient']=msg.recipient.username
+                det['timestamp']=msg.timestamp
+                det['msg1']=msg.msg1
+                det['msg2']=msg.msg2
+                data.append(det)
+        else:
+            while i<=len(msgs1) or j<=len(msgs2):
+                det={}
+                if i==len(msgs1):
+                    for msg in msgs2:
+                        det={}
+                        det['body']=msg.body
+                        det['user']=msg.user.username
+                        det['recipient']=msg.recipient.username
+                        det['timestamp']=msg.timestamp
+                        det['msg1']=msg.msg1
+                        det['msg2']=msg.msg2
+                        data.append(det)
+                elif j==len(msgs2):
+                    for msg in msgs1:
+                        det={}
+                        det['body']=msg.body
+                        det['user']=msg.user.username
+                        det['recipient']=msg.recipient.username
+                        det['timestamp']=msg.timestamp
+                        det['msg1']=msg.msg1
+                        det['msg2']=msg.msg2
+                        data.append(det)
+                else:
+                    if msgs1[i].timestamp>msgs2[j].timestamp:
+                        det['body']=msgs1[i].body
+                        det['user']=msgs1[i].user.username
+                        det['recipient']=msgs2[i].recipient.username
+                        det['timestamp']=msgs2[i].timestamp
+                        det['msg1']=msgs2[i].msg1
+                        det['msg2']=msgs2[i].msg2
+                        i+=1
+                    else:
+                        det['body']=msgs2[i].body
+                        det['user']=msgs2[i].user.username
+                        det['recipient']=msgs2[i].recipient.username
+                        det['timestamp']=msgs2[i].timestamp
+                        det['msg1']=msgs2[i].msg1
+                        det['msg2']=msgs2[i].msg2
+                        j+=1
+                    data.append(det)
+        
+        print('data',data)
+        return JsonResponse(data,safe=False)

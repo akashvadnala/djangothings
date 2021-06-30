@@ -7,13 +7,14 @@ let con = $('#side-container-box');
 let activeUser = $('.active');
 
 
-function putnotification(rec,sender){
+function putnotification(rec,sender,reciver){
     $.ajax({
         type:'GET',
         url: 'chat/putnotif/',
         data:{
             'rec':rec,
             'sender':sender,
+            'reciver':reciver,
         },
         dataType:'json',
         success: function(data){
@@ -152,7 +153,6 @@ function drawMessage(message) {
             </li>`;
             $(messageItem).appendTo('#messages');
         }
-        
     }
     else{
         const messageItem = `
@@ -165,13 +165,12 @@ function drawMessage(message) {
         </li>`;
         $(messageItem).appendTo('#messages');
     }
-    
 }
 
 function getConversation(recipient) {
     $.getJSON(`api/v1/message/?target=${recipient}`, function (data) {
         messageList.children('.message').remove();
-        for (let i = data['results'].length - 1; i >= 0; i--) {
+        for (let i = data['results']['length'] - 1; i >= 0; i--) {
             drawMessage(data['results'][i]);
         }
         messageList.animate({scrollTop: messageList.prop('scrollHeight')});
@@ -179,14 +178,25 @@ function getConversation(recipient) {
     });
 
 }
-
-function contactOwner(recipient,body,name){
-    var action = confirm("Please confirm to send message to the seller regarding this product..");
-    if(action!=false)
-    {
-        
-    }
-}
+/*
+function getConversation(rec){
+    $.ajax({
+        type:'GET',
+        url: 'chat/getmessages/',
+        data:{
+            'rec':rec,
+        },
+        dataType:'json',
+        success: function(data){
+            messageList.children('.message').remove();
+            for (let i = data.length - 1; i >= 0; i--) {
+                drawMessage(data[i]);
+            }
+            messageList.animate({scrollTop: messageList.prop('scrollHeight')});
+            con.animate({scrollTop: con.prop('scrollHeight')});
+        }
+    });
+}*/
 
 function sendMessage(recipient, body) {
     $.post('api/v1/message/', {
@@ -213,7 +223,7 @@ function getMessageById(message) {
         }
         messageList.animate({scrollTop: messageList.prop('scrollHeight')});
         con.animate({scrollTop: con.prop('scrollHeight')});
-        putnotification(currentRecipient,data.user);
+        putnotification(currentRecipient,data.user,data.recipient);
         updateUserList();
     });
 }
