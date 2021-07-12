@@ -77,6 +77,15 @@
 .con-inside .noti .noti-s .users-list .user-list .user .user-s{
     display: flex;
     align-items: center;
+    font-weight: bolder;
+}
+
+.con-inside .noti .noti-s .users-list .user-list .user .user-s span:nth-child(1){
+    font-size: 16px;
+}
+
+.con-inside .noti .noti-s .users-list .user-list .user .user-s span:nth-child(2){
+    float: right;
 }
 
 .con-inside .noti .noti-s .users-list .user-list .user .last_msg{
@@ -94,6 +103,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border: solid 1px cornflowerblue;
 }
 
 .con-inside .noti .noti-s .users-list .user-list .active{

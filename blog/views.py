@@ -19,7 +19,7 @@ def get_sea(request):
 
 def home(request):
     context={}
-    context['page_title'] = 'lincart'
+    context['page_title'] = 'lincart.in'
     dashboard = {'n':'Dashboard','w':'dashboard'}
     posts = {'n': 'Products','w':'posts'}
     uploadpost = {'n': 'Sell Products', 'w':'uploadpost'}
@@ -902,8 +902,7 @@ class get_users(View):
             
             det['username']=user.recipient.username
             det['notif']='&#9679;'
-            det['backcolor']='#16C79A'
-            det['color']='white'
+            det['color']='cornflowerblue'
             det['msg_count']=str(int(user.msg_count))
             if user.msg_count==0:
                 det['display']='none'
@@ -930,7 +929,7 @@ class put_notif(View):
             if register_table.objects.get(user=User.objects.get(username=reciver)).login==0:
                 rec_c = chatters.objects.get(user=User.objects.get(username=reciver),recipient=User.objects.get(username=sender))
                 if rec_c.notification:
-                    rec_c.msg_count+=1/notif_count
+                    rec_c.msg_count+=1
                 else:
                     rec_c.notification=True
                     rec_c.msg_count=1
@@ -945,7 +944,7 @@ class put_notif(View):
             else:
                 rec_c = chatters.objects.get(user=User.objects.get(username=reciver),recipient=User.objects.get(username=sender))
                 if rec_c.notification:
-                    rec_c.msg_count+=1/notif_count
+                    rec_c.msg_count+=1
                 else:
                     rec_c.notification=True
                     rec_c.msg_count=1
@@ -955,7 +954,7 @@ class put_notif(View):
             if sender==user and rec!=reciver:
                 rec_c = chatters.objects.get(user=User.objects.get(username=sender),recipient=User.objects.get(username=reciver))
                 if rec_c.notification:
-                    rec_c.msg_count+=1/notif_count
+                    rec_c.msg_count+=1
                 else:
                     rec_c.notification=True
                     rec_c.msg_count=1
@@ -1169,4 +1168,21 @@ class get_messages(View):
                     data.append(det)
         
         print('data',data)
+        return JsonResponse(data,safe=False)
+
+class get_search(View):
+    def get(self, request):
+        sea = request.GET.get('sea',None)
+        search = Search.objects.get(id=id)
+        seain = Seainp.objects.get(inp=search.inp)
+        data=[]
+        sea_split = re.findall(r'[a-z0-9]*',sea.lower())
+        while '' in sea_split:
+            sea_split.remove('')
+        print(sea_split)
+        c=0
+        for sea in sea_split:
+            for i in seain:
+                if c<10:
+                    reg = re.findall(sea,i)
         return JsonResponse(data,safe=False)

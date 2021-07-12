@@ -41,6 +41,12 @@
                     <div class="det-val">{{ post.inp1 }}</div>
                 </div>
             {% endif %}
+            {% if post.label2 and post.inp2 %}
+                <div class="det-each">
+                    <div class="det-lab">{{post.label2}} : </div>
+                    <div class="det-val">{{ post.inp2 }}</div>
+                </div>
+            {% endif %}
             {% if post.author %}
                 <div class="det-each">
                     <div class="det-lab">Author : </div>

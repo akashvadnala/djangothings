@@ -11,7 +11,7 @@
         <link href="{% static 'styles/edit_post.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'styles/darkmode.css' %}" rel="stylesheet" type="text/css">
         <script src="{% static 'js/base.js' %}"></script>
-        
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <link rel="stylesheet" href="{% static 'styles/font-awesome.min.css' %}"/>
@@ -35,13 +35,36 @@
                         {% else%}
                             <div class="lii">
                         {% endif %}
+                               <div class="limg">
+                                    <i class="fa">
+                                        {% if nav.w == 'dashboard' %}
+                                        &#xf2bd;
+                                        {% elif nav.w == 'posts' %}
+                                        &#xf288;
+                                        {% elif nav.w == 'uploadpost' %}
+                                        &#xf093;
+                                        {% elif nav.w == 'notifications' %}
+                                        &#xf086;
+                                        {% elif nav.w == 'settings' %}
+                                        &#xf013;
+                                        {% endif %}
+                                    </i>
+                                </div>
                                 <div>{{nav.n}}</div>
                             </div>
                         </a>
                     {% endfor %}
                     {% if user.is_superuser %}
                         <a title="Admin Panel" href="/admin/" target="_blank">
-                            <div class="lii">Admin Panel</div>
+                            
+                            <div class="lii">
+                                <div class="limg">
+                                    <i class='fa'>&#xf2bd;</i>
+                                </div>  
+                                <div>
+                                    Admin Panel
+                                </div>  
+                            </div>
                         </a>
                     {% endif %}
                 </div>
@@ -49,10 +72,24 @@
                 
                 <div class="ull">
                     <a title="About" href="{% url 'about' %}">
-                        <div class="lii">About</div>
+                        <div class="lii">
+                            <div class="limg">
+                                <i class='fa'>&#xf05a;</i>
+                            </div>  
+                            <div>
+                                About
+                            </div>  
+                        </div>
                     </a>
                     <a title="Logout" href="{% url 'logout' %}">
-                        <div class="lii">Logout</div>
+                        <div class="lii">
+                            <div class="limg">
+                                <i class='fa'>&#xf08b;</i>
+                            </div>  
+                            <div>
+                                Logout
+                            </div> 
+                        </div>
                     </a>
                 </div>
             </div>

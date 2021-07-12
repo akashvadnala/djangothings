@@ -26,7 +26,7 @@ class MessagePagination(PageNumberPagination):
     """
     Limit message prefetch to one page.
     """
-    page_size = settings.MESSAGES_TO_LOAD
+    page_size = 15#settings.MESSAGES_TO_LOAD
 
 
 class MessageModelViewSet(ModelViewSet):

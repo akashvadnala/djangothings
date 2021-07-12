@@ -35,7 +35,6 @@
     <body id="body">
         {% endif %}
         {% block home %}
-
             {% block header %}
                 {% include 'blog/header.html' %}
             {% endblock %}
@@ -52,48 +51,66 @@
                 {% include 'blog/footer.html' %}
             {% endblock %}
 
+
+<div class="div-max">
+
+</div>
         {% endblock %}
     
             <script>
                 $(".inn input").focus(function() {
                     $(".expand").css('display','block');
-                    $(".search_in").css('border-bottom-left-radius','0');
-                    $(".search_in").css('border-bottom-right-radius','0');
+                    $('.div-max').css('display','block');
+                    $('.search').css('display','block');
+                    $('.search_in').css('border-bottom-right-radius','0');
+                    $('.search_in').css('border-bottom-left-radius','0');
+                    $('body').css('overflow','hidden');
+                    $("body .search").css('z-index','100000000');
+                    $(".bac").css('display','flex');
                 });
-                $('body .header .logo').click(function(){
-                    $(".expand").css('display','none');
-                    $(".search_in").css('border-bottom-left-radius','5px');
-                    $(".search_in").css('border-bottom-right-radius','5px');
-                });
-                $('body .header .mnu').click(function(){
-                    $(".expand").css('display','none');
-                    $(".search_in").css('border-bottom-left-radius','5px');
-                    $(".search_in").css('border-bottom-right-radius','5px');
-                });
-                $('body .post-show').click(function(){
-                    $(".expand").css('display','none');
-                    $(".search_in").css('border-bottom-left-radius','5px');
-                    $(".search_in").css('border-bottom-right-radius','5px');
-                });
-                $('body .faqs').click(function(){
-                    $(".expand").css('display','none');
-                    $(".search_in").css('border-bottom-left-radius','5px');
-                    $(".search_in").css('border-bottom-right-radius','5px');
-                });
-                $('body .contact').click(function(){
-                    $(".expand").css('display','none');
-                    $(".search_in").css('border-bottom-left-radius','5px');
-                    $(".search_in").css('border-bottom-right-radius','5px');
-                });
-                $('body .container-box').click(function(){
-                    $(".expand").css('display','none');
-                    $(".search_in").css('border-bottom-left-radius','5px');
-                    $(".search_in").css('border-bottom-right-radius','5px');
-                });
-                $('body .footer').click(function(){
-                    $(".expand").css('display','none');
-                    $(".search_in").css('border-bottom-left-radius','5px');
-                    $(".search_in").css('border-bottom-right-radius','5px');
+            $(".div-max").click(function(){
+                $('.div-max').css('display','none');
+                $('.expand').css('display','none');
+                $('.search_in').css('border-radius','5px');
+                $('body').css('overflow','');
+                $(".bac").css('display','none');
+            });
+            function sea_can(){
+                $('.div-max').css('display','none');
+                $('.expand').css('display','none');
+                $('.search_in').css('border-radius','5px');
+                $('body').css('overflow','');
+                $(".bac").css('display','none');
+            }
+            $(".sea_sg input").click(function(){
+                $('.div-max').css('display','none');
+                $('.expand').css('display','none');
+                $('.search_in').css('border-radius','5px');
+                $('body').css('overflow','');
+                $(".bac").css('display','none');
+            });
+            $(".logo").click(function(){
+                $('.div-max').css('display','none');
+                $('.expand').css('display','none');
+                $('.search_in').css('border-radius','5px');
+                $('body').css('overflow','');
+            });
+            $(".mnu").click(function(){
+                $('.div-max').css('display','none');
+                $('.expand').css('display','none');
+                $('.search_in').css('border-radius','5px');
+                $('body').css('overflow','');
+            });
+            
+
+            </script>
+            <script id="rendered-js">
+
+                $(function () {
+                    $('.klik').on('click', function (e) {
+                        $('body').toggleClass('navigation-show');
+                        $(".bac").css('display','none');
+                    });
                 });
             </script>
     </body>

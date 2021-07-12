@@ -3,8 +3,9 @@ body{
     padding:0;
     margin:0;
     font-family:-apple-system,SF Pro Text,Helvetica Neue,HelveticaNeue,Helvetica,Arial,sans-serif;
-    letter-spacing:0.3px;
+    letter-spacing:0.7px;
     background: rgba(240,240,240,.2);
+    overflow:auto;
 }
 
 *{
@@ -22,7 +23,7 @@ body{
     background: rgba(240,240,240,.5);
     backdrop-filter: blur(15px);
     align-items: center;
-    z-index: 100000;
+    z-index: 10000000;
     border-bottom: solid .6px rgba(192,192,192,.3);
 }
 
@@ -43,6 +44,36 @@ body{
   font-size: 25px;
 }
 
+.bac{
+  display: none;
+  font-size: 12px;
+  margin-bottom: 5px;
+  font-weight: lighter;
+}
+
+.bac span{
+  border: solid 1px rgba(150,150,150,.5);
+  padding: 3px;
+  color: rgb(100,100,100);
+  border-radius: 5px;
+}
+
+.bac span:hover{
+  cursor: pointer;
+  background: rgba(150,150,150,.5);
+  color: white;
+}
+
+.div-max{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 100000;
+}
+
 .expand{
   display: none;
   position: fixed;
@@ -55,7 +86,7 @@ body{
   color: black;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  z-index: 100000;
+  z-index: 10000000;
   font-size: 14px;
 }
 
@@ -91,11 +122,15 @@ body{
 
 }
 
+.header .search form{
+  z-index: 100000000000;
+}
 
 .search form .search_in{
     display: flex;
     flex-direction: row;
     align-items: center;
+    z-index: 100000000;
 }
 .search_in{
     background-color: rgb(225,225,225);
@@ -119,6 +154,7 @@ body{
     background-color: transparent;
     border: none;
     font-size: 14px;
+    z-index: 100000000;
 }
 
 .im img{
@@ -269,7 +305,7 @@ body{
 
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 7px;
 }
 
 ::-webkit-scrollbar-track {
@@ -278,7 +314,7 @@ body{
  
 ::-webkit-scrollbar-thumb {
   background: rgb(200,200,200,.9); 
-  border-radius:10px;
+  border-radius:0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -470,6 +506,43 @@ body{
   .search input{
     font-size: 12.7px;
 
+  }
+
+  .expand{
+    margin-left: 15px;
+    top:126px;
+    width:calc(100% - 30px);
+  }
+  
+  .expand .expand-s button{
+    margin-bottom: 5px;
+    padding: 12px 10px 12px 25px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: transparent;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family:-apple-system,SF Pro Text,Helvetica Neue,HelveticaNeue,Helvetica,Arial,sans-serif;
+    letter-spacing:0.5px;
+  }
+
+  .expand .expand-s .subm{
+    padding: 10px 10px 10px 25px;
+    width: calc(100% - 30px);
+  }
+  
+  .expand .expand-s .subc{
+    padding: 0 10px 10px 10px;
+    width: 20px;
+  }
+
+  .div-max{
+    z-index: 10;
+  }
+
+  .search, .inn input[type=search]{
+    z-index: 10000000;
   }
 
 }

@@ -41,13 +41,24 @@ body{
     margin-left: 8px;
     margin-right: 21px;
     margin-bottom: 6px;
-    height: 32px; 
+    height: 35px; 
     display: flex;
     align-items: center;
     width: calc(100% - 31px);
     border-radius: 6px;
     padding-left: 13px;
+    color: rgb(70,70,70);
     transition: .3s;
+}
+
+.side-header .nav .ull a .lii .limg,.header .nav .uli a .lii .limg{
+  margin-right: 9px;
+  display: flex;
+  align-items: center;
+}
+
+.side-header .nav .ull a .lii .limg i,.header .nav .uli a .lii .limg i{
+  font-size: 18px;
 }
 
 .side-header .nav .ull a,.header .nav .uli a{
@@ -126,7 +137,7 @@ body{
     border-bottom: solid .6px rgba(192,192,192,.9);
     z-index: 100000;
     }
-  
+    
     .logo{
         margin-left: 32px;
         display: flex;

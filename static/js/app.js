@@ -77,7 +77,7 @@ function updateUserList() {
                     <div type="button" onclick="get_user('${data[i]['username']}')" class="user-one user ${data[i]['username']}" id="user-one ${data[i]['username']}">
                         <div class="user-s">    
                             <span>${data[i]['username']}</span>
-                            <span class="msg_not" style="display:${data[i]['display']};background:${data[i]['backcolor']}; color:${data[i]['color']};">${data[i]['msg_count']}</span>
+                            <span class="msg_not" style="display:${data[i]['display']}; color:cornflowerblue; border:solid 1px cornflowerblue;">${data[i]['msg_count']}</span>
                         </div>
                         <div class="last_msg" style="display:${data[i]['atuser']};">
                             ${data[i]['last_msg']}
@@ -299,7 +299,7 @@ $(document).ready(function () {
 
 //    let socket = new WebSocket(`ws://127.0.0.1:8000/?session_key=${sessionKey}`);
     ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-    var socket = new ReconnectingWebSocket(
+    var socket = new WebSocket(
         ws_scheme + '://' + window.location.host +
         '/notifications/ws?session_key=${sessionKey}')
 
