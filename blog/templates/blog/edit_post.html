@@ -161,8 +161,20 @@
                 <input type="text" name="id" value="{{post.id}}" style="display: none;">
                 <div class="con-main-sel-inp sel-inp">
                     <div class="lab">Category :</div>
-                    <div class="inp"><input value="{{post.category}}" type="text" name="cate" placeholder="Author"></div>
+                    <div class="inp"><input value="{{post.category}}" type="text" name="cate" placeholder="Category"></div>
                 </div>
+                {% if post.label1 and post.inp1 %}
+                <div class="con-main-sel-inp sel-inp">
+                    <div class="lab"><input value="{{post.label1}}" type="text" name="author" placeholder="Label 1"></div>
+                    <div class="inp"><input value="{{post.author}}" type="text" name="author" placeholder="Input 1"></div>
+                </div>
+                {% endif %}
+                {% if post.label2 and post.inp2 %}
+                <div class="con-main-sel-inp sel-inp">
+                    <div class="lab"><input value="{{post.label2}}" type="text" name="author" placeholder="Label 2"></div>
+                    <div class="inp"><input value="{{post.inp2}}" type="text" name="author" placeholder="Input 2"></div>
+                </div>
+                {% endif %}
                 {% if post.author %}
                 <div class="con-main-sel-inp sel-inp">
                     <div class="lab">Author :</div>
