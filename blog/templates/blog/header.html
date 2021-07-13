@@ -25,7 +25,7 @@
                 {% endif %}
             </div>
             <div class="inn">
-                <input title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="{{sea}}">
+                <input onkeyup="max_get_sea()" id="max_sea_val" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="{{sea}}">
             </div>
         </div>
         </form>
@@ -113,6 +113,29 @@
     </div>
 </div>
 
+
+<div class="expand-min">
+    <div class="expand-s">
+        {% if user.is_authenticated %}
+            {% for s in seas_ind %}
+            <form class="sea_sg" id="sea-{{s.id}}" action="{% url 'search' %}" method="GET">
+                <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="{{s}}">
+                <button class="subm" type="submit">{{s}}</button>
+                <button class="subc" type="reset" onclick="delsea({{s.id}})">&times;</button>
+            </form>
+            {% endfor %}
+        {% else %}
+            {% for s in seas_all %}
+            <form class="sea_sg" action="{% url 'search' %}" method="GET">
+                <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="{{s}}">
+                <button type="submit">{{s}}</button>
+            </form>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+
 <div class="min-header">
     <div class="logo">
         <div>
@@ -135,6 +158,7 @@
 </div>
 
 <div class="navigation">
+    
     <div class="ull">
     <div class="bac">
         <span onclick="sea_can()">Cancel</span> 
@@ -150,7 +174,7 @@
                     {% endif %}
                 </div>
                 <div class="inn">
-                    <input title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="{{sea}}">
+                    <input onkeyup="get_sea()" id="sea_val" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="{{sea}}">
                 </div>
             </div>
             </form>
@@ -205,21 +229,7 @@
 </div>
 
 <script>
-    function get_sea(sea){
-        $.ajax({
-            url: '{% url "get-sea" %}',
-            data:{
-                'sea' : sea,
-            },
-            dataType:'json',
-            success:function(data){
-                if(data.there){
-                
-                
-                }
-            }
-        });
-    }
+    
     function delsea(id){
         $.ajax({
             url: '{% url "delete_sea" %}',
@@ -229,7 +239,8 @@
             dataType:'json',
             success:function(data){
                 if(data.deleted){
-                $("#sea-"+id).remove();
+                $(".expand .expand-s #sea-"+id).remove();
+                $(".expand-min .expand-s #sea-"+id).remove();
                 if(data.st){
                     appendToSea(data);
                 }
@@ -239,7 +250,14 @@
         });
     }
     function appendToSea(data){
-        $(".expand-s:last-child").append(`
+        $(".expand .expand-s:last-child").append(`
+            <form id="sea-${data.sid}" action="{% url 'search' %}" method="GET">
+                <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="${data.sinp}">
+                <button class="subm" type="submit">${data.sinp}</button>
+                <button class="subc" type="reset" onclick="delsea(${data.sid})"><i class="fa fa-close"></i></button>
+            </form>
+        `);
+        $(".expand-min .expand-s:last-child").append(`
             <form id="sea-${data.sid}" action="{% url 'search' %}" method="GET">
                 <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="${data.sinp}">
                 <button class="subm" type="submit">${data.sinp}</button>
@@ -248,4 +266,118 @@
         `);
       }
 
+      function max_get_sea(){
+                let sea = $("#max_sea_val").val();
+                $("#sea_val").val(sea);
+                $.ajax({
+                    url: '{% url "get-sea" %}',
+                    data:{
+                        'sea' : sea,
+                    },
+                    dataType:'json',
+                    success:function(data){
+                        $(".expand .expand-s").empty();
+                        $(".expand-min .expand-s").empty();
+                        if(data.length>0){
+                            for(var i=0;i<data.length;i++){
+                                if(data[i].me){
+                                    $(".expand .expand-s:last-child").append(`
+                                        <form class="sea_sg" id="sea-${data[i].id}" action="{% url 'search' %}" method="GET">
+                                            <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="${data[i].inp}">
+                                            <button class="subm" type="submit">${data[i].inp}</button>
+                                            <button class="subc" type="reset" onclick="delsea(${data[i].id})">&times;</button>
+                                        </form>
+                                    `);
+                                    $(".expand-min .expand-s:last-child").append(`
+                                        <form class="sea_sg" id="sea-${data[i].id}" action="{% url 'search' %}" method="GET">
+                                            <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="${data[i].inp}">
+                                            <button class="subm" type="submit">${data[i].inp}</button>
+                                            <button class="subc" type="reset" onclick="delsea(${data[i].id})">&times;</button>
+                                        </form>
+                                    `);
+                                }
+                                else{
+                                    $(".expand .expand-s:last-child").append(`
+                                        <form class="sea_sg" action="{% url 'search' %}" method="GET">
+                                            <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="${data[i].inp}">
+                                            <button type="submit">${data[i].inp}</button>
+                                        </form>
+                                    `);
+                                    $(".expand-min .expand-s:last-child").append(`
+                                        <form class="sea_sg" action="{% url 'search' %}" method="GET">
+                                            <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="${data[i].inp}">
+                                            <button type="submit">${data[i].inp}</button>
+                                        </form>
+                                    `);
+                                }
+                            }
+                                   
+                                
+                           
+                        }
+                    }
+                });
+            }
+      function get_sea(){
+                let sea = $("#sea_val").val();
+                $("#max_sea_val").val(sea);
+                $.ajax({
+                    url: '{% url "get-sea" %}',
+                    data:{
+                        'sea' : sea,
+                    },
+                    dataType:'json',
+                    success:function(data){
+                        $(".expand .expand-s").empty();
+                        $(".expand-min .expand-s").empty();
+                        if(data.length>0){
+                            for(var i=0;i<data.length;i++){
+                                if(data[i].me){
+                                    $(".expand .expand-s:last-child").append(`
+                                        <form class="sea_sg" id="sea-${data[i].id}" action="{% url 'search' %}" method="GET">
+                                            <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="${data[i].inp}">
+                                            <button class="subm" type="submit">${data[i].inp}</button>
+                                            <button class="subc" type="reset" onclick="delsea(${data[i].id})">&times;</button>
+                                        </form>
+                                    `);
+                                    $(".expand-min .expand-s:last-child").append(`
+                                        <form class="sea_sg" id="sea-${data[i].id}" action="{% url 'search' %}" method="GET">
+                                            <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="${data[i].inp}">
+                                            <button class="subm" type="submit">${data[i].inp}</button>
+                                            <button class="subc" type="reset" onclick="delsea(${data[i].id})">&times;</button>
+                                        </form>
+                                    `);
+                                }
+                                else{
+                                    $(".expand .expand-s:last-child").append(`
+                                        <form class="sea_sg" action="{% url 'search' %}" method="GET">
+                                            <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="${data[i].inp}">
+                                            <button type="submit">${data[i].inp}</button>
+                                        </form>
+                                    `);
+                                    $(".expand-min .expand-s:last-child").append(`
+                                        <form class="sea_sg" action="{% url 'search' %}" method="GET">
+                                            <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="${data[i].inp}">
+                                            <button type="submit">${data[i].inp}</button>
+                                        </form>
+                                    `);
+                                }
+                            }
+                                   
+                                
+                           
+                        }
+                    }
+                });
+            }
+
+</script>
+<script id="rendered-js">
+
+    $(function () {
+        $('.klik').on('click', function (e) {
+            $('body').toggleClass('navigation-show');
+            $(".bac").css('display','none');
+        });
+    });
 </script>

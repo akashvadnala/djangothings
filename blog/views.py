@@ -1172,12 +1172,12 @@ class get_messages(View):
 
 class get_search(View):
     def get(self, request):
-        sea = request.GET.get('sea',None)
-        search = Search.objects.get(id=id)
-        seain = Seainp.objects.get(inp=search.inp)
+        sea = request.GET.get('sea',None).lower()
+        search = Search.objects.filter(user=request.user).order_by('-sea_date')
+        sea_all = Search.objects.all().order_by('-sea_date')
         data=[]
-        sea_split = re.findall(r'[a-z0-9]*',sea.lower())
-        while '' in sea_split:
+        #sea_split = re.findall(r'[a-z0-9]*',sea.lower())
+        '''while '' in sea_split:
             sea_split.remove('')
         print(sea_split)
         c=0
@@ -1185,4 +1185,50 @@ class get_search(View):
             for i in seain:
                 if c<10:
                     reg = re.findall(sea,i)
+                    c+=1'''
+        c=0
+        sealist=[]
+        if len(sea)>0:
+            for s in search:
+                for i in range(len(s.inp)):
+                    inp=s.inp
+                    det={}
+                    if sea==inp[i:i+len(sea)].lower() and s.inp not in sealist:
+                        det['inp']=s.inp
+                        det['id']=s.id
+                        det['me']=True
+                        data.append(det)
+                        sealist.append(s.inp)
+                        c+=1
+                if c==10:
+                    break
+            if c<10:
+                for s in sea_all:
+                    for i in range(len(s.inp)):
+                        inp=s.inp
+                        det={}
+                        if sea==inp[i:i+len(sea)].lower() and s.inp not in sealist:
+                            det['inp']=s.inp
+                            det['id']=s.id
+                            det['me']=False
+                            data.append(det)
+                            sealist.append(s.inp)
+                            c+=1
+                    if c==10:
+                        break
+        else:
+            for s in search:
+                det={}
+                det['inp']=s.inp
+                det['id']=s.id
+                det['me']=True
+                data.append(det)
+                c+=1
+                if c==10:
+                    break
+
+        print(data)
+        
         return JsonResponse(data,safe=False)
+
+
