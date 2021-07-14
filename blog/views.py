@@ -8,6 +8,7 @@ import datetime
 import re
 from django.http import JsonResponse
 from django.views.generic import ListView,View
+from django.contrib import messages
 
 def get_sea(request):
     seas_all = Seainp.objects.all().order_by('-all')[:10]
@@ -145,6 +146,7 @@ def search(request):
 def user_login(request):
     print('user_login')
     if request.method=="POST":
+        loc = request.POST["loc"]
         un = request.POST["username"]
         pwd = request.POST["password"]
         user = authenticate(username=un,password=pwd)
@@ -154,14 +156,25 @@ def user_login(request):
                 reg = register_table.objects.get(user=request.user)
                 reg.login+=1
                 reg.save()
+                context = {'log_data':'Logged in Successfully'}
+                messages.success(request, 'Logged in Successfully')
             if user.is_superuser:
-                return redirect('/')
+                if loc=='home':
+                    return redirect('/')
+                else:
+                    print('post')
+                    return redirect('/post/'+loc)
             else:
-                res = redirect('/')
+                if loc=='home':
+                    return redirect('/')
+                else:
+                    print('post')
+                    return redirect('/post/'+loc)
+                '''res = redirect('/')
                 if "rememberme" in request.POST:
                     res.set_cookie("user_id",user.id)
                     res.set_cookie("date_login",datetime.now())
-                return res
+                return res'''
             # if user.is_active:
             #     return HttpResponseRedirect("/cust_dashboard")
                 
@@ -204,14 +217,16 @@ def register(request):
         else:
             return redirect('/')
 
-def check_user(request):
-    print('check_user')
-    if request.method=="GET":
-        un = request.GET["usern"]
-        print(un)
-        if User.objects.filter(username=un):
-            return HttpResponse("The username exists")
-    return HttpResponse("")
+class check_user(View):
+    def get(self,request):
+        cname = request.GET.get('cname',None)
+        data = {}
+        print(cname)
+        data['sen'] = ''
+        if User.objects.filter(username=cname):
+            data['sen'] = 'The username exists'
+        return JsonResponse(data)
+
 
 def about(request):
     context={}
@@ -1193,12 +1208,12 @@ class get_search(View):
                 for i in range(len(s.inp)):
                     inp=s.inp
                     det={}
-                    if sea==inp[i:i+len(sea)].lower() and s.inp not in sealist:
+                    if sea==inp[i:i+len(sea)].lower() and s.inp.lower() not in sealist:
                         det['inp']=s.inp
                         det['id']=s.id
                         det['me']=True
                         data.append(det)
-                        sealist.append(s.inp)
+                        sealist.append(s.inp.lower())
                         c+=1
                 if c==10:
                     break
@@ -1207,12 +1222,12 @@ class get_search(View):
                     for i in range(len(s.inp)):
                         inp=s.inp
                         det={}
-                        if sea==inp[i:i+len(sea)].lower() and s.inp not in sealist:
+                        if sea==inp[i:i+len(sea)].lower() and s.inp.lower() not in sealist:
                             det['inp']=s.inp
                             det['id']=s.id
                             det['me']=False
                             data.append(det)
-                            sealist.append(s.inp)
+                            sealist.append(s.inp.lower())
                             c+=1
                     if c==10:
                         break

@@ -1,6 +1,18 @@
 {% load static %}
 {% static "images" as baseUrl %}
 <div class="container-box">
+    {% if messages %}
+    <div class="log_data">
+        <div>
+            {% for message in messages %}
+               <span>{{message}}</span> 
+            {% endfor %}
+        </div>
+        <div>
+            <button onclick="close_log()">&#x2715;</button>
+        </div>
+    </div>
+    {% endif %}
     <div class="swiper-container con-swiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">Slide 1</div>
@@ -81,4 +93,7 @@
         clickable: true,
       },
     });
+    function close_log(){
+        $(".log_data").remove();
+    }
 </script>

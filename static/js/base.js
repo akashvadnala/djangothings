@@ -1,10 +1,3 @@
-function modaldel()
-{
-    document.getElementById('id01').style.display='none';
-    document.getElementById('id02').style.display='none';
-    document.getElementById('modal-del').style.display='none';
-}
-
   var swiper = new Swiper('.swiper-container', {
     navigation: {
       nextEl: '.swiper-button-next',

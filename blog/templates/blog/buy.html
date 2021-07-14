@@ -3,7 +3,7 @@
     <div class="seller-det">
         <div class="seller-det-s">
             <div class="sell-head">
-                <div>Seller Details:</div>
+                <div><span>Seller Details:</span></div>
                 <div type="button" onclick="del_sel()">&times;</div>
             </div>
             <div class="sell-det">
@@ -11,12 +11,21 @@
                 <div>{% if post.Institute %}<span>Institute: </span>{{post.Institute}} {% endif %}</div>
             </div>
             <div class="sell-msg">
+            {% if user.is_authenticated %}
                 <div>
                     Confirm the product request to seller to buy this product
                 </div>
                 <div>
                     <button onclick="sendrequest('{{post.uname}}','{{post.id}}')">Send Request</button>
                 </div>
+            {% else %}
+                <div>
+                    Please do Login to Contact
+                </div>
+                <div>
+                    <button onclick="dologin()">Login</button>
+                </div>
+            {% endif %}
             </div>
         </div>
     </div>

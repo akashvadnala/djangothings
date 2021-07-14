@@ -83,15 +83,14 @@
             </div>
             <div class="mn"><a title="Logout" href="{% url 'logout' %}">Logout</a></div>
         {% else %}
-            <div class="mn"><a title="Register" type="button" onclick="document.getElementById('id02').style.display='block';document.getElementById('modal-del').style.display='block'">Register</a></div>
-            <div class="mn"><a title="Login" type="button" onclick="document.getElementById('id01').style.display='block';document.getElementById('modal-del').style.display='block'">Login</a></div>                   
+            <div class="mn"><a title="Register" type="button" onclick="login()">Register</a></div>
+            <div class="mn"><a title="Login" type="button" onclick="register()">Login</a></div>                   
         {% endif %}
             <div class="mn"><a title="About" href="{% url 'about' %}">About</a></div>             
 
         </div>
     </div>
 </div>
-
 <div class="expand">
     <div class="expand-s">
         {% if user.is_authenticated %}

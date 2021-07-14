@@ -121,8 +121,47 @@
                 $('body').css('overflow','');
             });
             
-            
-            
+            function register(){
+                $("#id02").css('display','none');
+                $("#id03").css('display','none');
+                $("#id04").css('display','none');
+                $("#id01").css('display','block');
+                $("#model-del").css('display','block');
+                $('body').css('overflow-y','hidden');
+            }
+            function login(){
+                $("#id01").css('display','none');
+                $("#id03").css('display','none');
+                $("#id04").css('display','none');
+                $("#id02").css('display','block');
+                $("#model-del").css('display','block');
+                $('body').css('overflow-y','hidden');
+            }
+            function dologin(){
+                del_sel();
+                $("#id01").css('display','none');
+                $("#id02").css('display','none');
+                $("#id04").css('display','none');
+                $("#id03").css('display','block');
+                $("#model-del").css('display','block');
+            }
+            function doregister(){
+                del_sel();
+                $("#id01").css('display','none');
+                $("#id02").css('display','none');
+                $("#id03").css('display','none');
+                $("#id04").css('display','block');
+                $("#model-del").css('display','block');
+            }
+            function modaldel()
+            {
+                $("#id01").css('display','none');
+                $("#id02").css('display','none');
+                $("#id03").css('display','none');
+                $("#id04").css('display','none');
+                $("#model-del").css('display','none');
+                $('body').css('overflow-y','');
+            }
 
             </script>
     </body>

@@ -299,6 +299,12 @@ $(document).ready(function () {
 
 //    let socket = new WebSocket(`ws://127.0.0.1:8000/?session_key=${sessionKey}`);
     ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+    var loc = window.location
+    var ws_start = 'ws://'
+    if (loc.protocol == 'https:'){
+        ws_start = 'wss://'
+    }
+    var endpoint = ws_start + loc.host + loc.pathname
     var socket = new WebSocket(
         ws_scheme + '://' + window.location.host +
         '/notifications/ws?session_key=${sessionKey}')

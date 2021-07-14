@@ -8,6 +8,7 @@
 
 {% block container-box %}
     {% include 'blog/buy.html' %}
+    {% include 'blog/dologin.html' %}
     <div class="msg-box"><span class="msg-span"></span><span class="msg-link"></span></div>
     <div class="post-show">
         <div class="post-pic">
@@ -68,11 +69,15 @@
                 <div class="det-val">{{ post.desc }}</div>
             </div>
             <div class="but">
+            {% if user.is_authenticated %}
                 {% if post.uname == request.user %}
                 <button ><a style="color: white;text-decoration: none;" target="_blank" href="{% url 'edit' post.sha %}">Edit</a></button>
                 {% else %}
                 <button onclick="onContact()">Contact</button>
                 {% endif %}
+            {% else %}
+                <button onclick="onContact()">Contact</button>
+            {% endif %}
             </div>
         </div>
     </div>

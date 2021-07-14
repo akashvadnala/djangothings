@@ -1,7 +1,7 @@
 {% load static %}
 {% static "images" as baseUrl %}
 
-<div id="id01" class="modal">
+<div id="id03" class="modal">
     <div onclick="modaldel()" class="modal-del del-max animate1" id="modal-del1">
        
     </div>
@@ -17,8 +17,7 @@
                     {% csrf_token %}
                     <div class="block-main">
                         <div style="display: none;" class="block-main-inp">
-                            <!--div class="block-lab">Username</div-->
-                            <div class="block-inp"><input type="text" name="loc" value="home"></div>
+                            <div class="block-inp"><input type="text" name="loc" value="{{post.sha}}"></div>
                         </div>
                         <div class="block-main-inp">
                             <!--div class="block-lab">Username</div-->
@@ -37,7 +36,7 @@
             <div class="oth">
                 <div>
                     Create an account?
-                    <input type="submit" onclick="login()" value="Register">
+                    <input type="submit" onclick="doregister()" value="Register">
                 </div>
             </div>
         </div>
@@ -45,7 +44,7 @@
 </div>
 
 
-<div id="id02" class="modal modal1">
+<div id="id04" class="modal modal1">
     <div onclick="modaldel()" class="modal-del del-max animate1" id="modal-del2"></div>
     <div class="modal-content animate">
         <div onclick="modaldel()" class="model-del-min">
@@ -58,9 +57,9 @@
                 <form action="{% url 'register' %}" method="post">
                     {% csrf_token %}
                     <div class="block-main">
-                        <div style="display: none;" class="block-main-inp">
+                        <div style="display:none;" class="block-main-inp">
                             <!--div class="block-lab">First Name</div-->
-                            <div class="block-inp"><input type="text" name="loc" value="home"></div>
+                            <div class="block-inp"><input type="text" name="loc" value="{{post.sha}}"></div>
                         </div>
                         <div class="block-main-inp">
                             <!--div class="block-lab">First Name</div-->
@@ -76,8 +75,7 @@
                         </div>
                         <div class="block-main-inp">
                             <!--div class="block-lab">Username</div-->
-                            <div class="block-inp"> <input onkeyup="checkuser()" class="cname" type="text" id="username" name="username" placeholder="Username" autocomplete="off" required/></div>
-                            <div id="telluser"></div>
+                            <div class="block-inp"> <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" required/></div>
                         </div>
                         <div class="block-main-inp">
                             <!--div class="block-lab">Password</div-->
@@ -96,24 +94,12 @@
             <div class="oth">
                 <div>
                     Already have an account?
-                    <input type="submit" onclick="register()" value="Login"></p>
+                    <input type="submit" onclick="dologin()" value="Login"></p>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        function checkuser(){
-            let cname = $(".cname").val();
-            $.ajax({
-                url: "{% url 'check-user' %}",
-                data:{
-                    'cname' : cname,
-                },
-                dataType:'json',
-                success:function(data){
-                    $("#telluser").text(data.sen);
-                }
-            });
-        }
+
     </script>
 </div> 

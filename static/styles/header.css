@@ -121,7 +121,7 @@ width: 20px;
 
 }
 
-.expand-min{
+.expand ,.expand-min{
   display: none;
 }
 
@@ -340,7 +340,7 @@ display: grid;
 grid-template-columns: calc(100% - 75px) 75px;
 backdrop-filter: blur(25px);
 border-bottom: solid .6px rgba(192,192,192,.9);
-z-index: 1000;
+z-index: 10000;
 }
 
 .logo{
@@ -449,7 +449,6 @@ z-index: 1000;
 /* navigation po pokazaniu */
 .navigation {
   display: block;
-  z-index: 100;
   min-height: 100%;
   position: fixed;
   background:rgba(240,240,240,.7);
@@ -465,6 +464,7 @@ z-index: 1000;
   -ms-transition: 0.6s ;
   -o-transition: 0.6s ;
   transition: 0.6s ;  
+  z-index: 1000;
 } 
 .navigation a {
   color:#42505A;
