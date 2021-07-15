@@ -183,8 +183,8 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
-'''
-STATICFILES_DIRS = [
+
+'''STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]'''
 
@@ -204,7 +204,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("*", 6379)],
+            "hosts": [("127.0.0.1", 6379)],
         },
     },
 }
