@@ -64,7 +64,7 @@
                     {% endif %}
                 </div>
             </div>
-            <hr class="hh">
+            <hr id="msg-{{post.id}}" class="hh">
         {% endfor %}
     </div>
 </div>
@@ -84,8 +84,10 @@
             success:function(data){
               if(data.deleted){
                 $("#post-"+id).remove();
+                $("#hh"+id)
+                $('.msgbox').css('display','flex');
                 $('.msgbox').html('<span>Post has been deleted..</span>');
-                $('.hh:last-child').css('display','none');
+                $("#msg-"+id).remove();
               }
             }
           });

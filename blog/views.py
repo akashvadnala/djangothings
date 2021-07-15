@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import login, authenticate, logout
+from django.contrib import sessions
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404, reverse,HttpResponse,HttpResponseRedirect
 from .models import *
@@ -149,6 +150,15 @@ def user_login(request):
         loc = request.POST["loc"]
         un = request.POST["username"]
         pwd = request.POST["password"]
+        print(pwd)
+        if request.POST.get('remember_me', None):
+            request.session['usern'] = un
+            request.session['pwd'] = pwd
+            print('sessions')
+        else:
+            request.session.set_expiry(0)
+            print('sessions out')
+        
         user = authenticate(username=un,password=pwd)
         if user:
             login(request,user)
@@ -194,6 +204,7 @@ def logout(request):
 def register(request):
     print('register')
     if request.method=="POST":
+        loc = request.POST["loc"]
         first_name = request.POST["first_name"]
         last_name = request.POST["last_name"]
         username = request.POST["username"]
@@ -202,8 +213,10 @@ def register(request):
         email = request.POST["email"]
         if password1==password2:
             if User.objects.filter(username=username).exists():
+                messages.success(request, 'Username already exists')
                 return redirect('/')
             elif User.objects.filter(email=email).exists():
+                messages.success(request, 'Email already exists')
                 return redirect('/')
             else:
                 user = User.objects.create_user(username = username, password = password1, email = email,first_name = first_name, last_name = last_name)
@@ -213,20 +226,46 @@ def register(request):
                 user = authenticate(username=username,password=password1)
                 if user:
                     login(request,user)
-                    return redirect('/')
+                    messages.success(request, 'Registered Successfully')
+                    if loc=='home':
+                        return redirect('/')
+                    else:
+                        return redirect('/post/'+loc)
         else:
-            return redirect('/')
+            messages.success(request, 'Confirm Password not matched')
+            if loc=='home':
+                return redirect('/')
+            else:
+                return redirect('/post/'+loc)
 
 class check_user(View):
     def get(self,request):
         cname = request.GET.get('cname',None)
+        email = request.GET.get('email',None)
         data = {}
         print(cname)
-        data['sen'] = ''
+        data['usersen'] = ''
+        data['emailsen'] = ''
+        data['yes'] = False
         if User.objects.filter(username=cname):
-            data['sen'] = 'The username exists'
+            data['usersen'] = 'Username already exists'
+            data['yes'] = True
+        if register_table.objects.filter(email=email):
+            data['emailsen'] = 'Email already exists'
+            data['yes'] = True
         return JsonResponse(data)
 
+class check_password(View):
+    def get(self,request):
+        pwd = request.POST.get('pwd',None)
+        print(pwd)
+        data = {}
+        data['pwd1'] = False
+        data['pwd2'] = False
+        data['pwd3'] = False
+        if len(pwd)>=8:
+            data['pwd1'] = True
+        return JsonResponse(data)
 
 def about(request):
     context={}
@@ -333,6 +372,8 @@ def sel_submit(request):
             image.save()
         upload.sha = hashlib.sha1(str(upload.id).encode()).hexdigest()
         upload.save()
+        messages.success(request, "Product has been uploaded.. To view ")
+        messages.success(request, upload.sha)
     return redirect('/uploadpost/')
 
 def prof_update(request):
@@ -380,6 +421,7 @@ def change_password(request):
     if request.method=="POST":
         current = request.POST["cpassword"]
         new_pas = request.POST["npassword"]
+        print(current)
         user = User.objects.get(id=request.user.id)
         uname = user.username
         check1 = user.check_password(current)
@@ -501,6 +543,22 @@ def open_post(request,sha):
     context['con'] = 'No post available'
     context['page_title'] = 'Error - 404'
     return render(request,'blog/error.html',context)
+
+class like_post(View):
+    def get(self, request):
+        id = request.GET.get('id',None)
+        data={}
+        print('like')
+        post = Post.objects.get(id=id)
+        if register_table.objects.filter(user=request.user).exists():
+            if request.user in post.likes.all():
+                post.likes.remove(request.user)
+                data['like'] = False
+            else:
+                post.likes.add(request.user)
+                data['like'] = True
+        print(data)
+        return JsonResponse(data)
 
 def post_edit(request,sha):
     context={}

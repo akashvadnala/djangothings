@@ -1,8 +1,18 @@
 {% load static %}
 {% static "images" as baseUrl %}
-<div class="msgbox">
-
-</div>
+{% if messages %}
+    <div class="post_data">
+        <div>
+            {% for message in messages %}
+                <span class="spn2"><a target="_blank" href="{% url 'open-post' message %}">Click Here</a></span>
+                <span class="spn1">{{message}} </span>
+            {% endfor %}
+        </div>
+        <div>
+            <button onclick="close_log()">&#x2715;</button>
+        </div>
+    </div>
+{% endif %}
 <div class="con-inside">
     <div class="con-heading">
         {% for nav in navss %}
@@ -45,7 +55,7 @@
                 <div class="lab tex">About :</div>
                 <div class="inp"><textarea title="About"  name="desc" placeholder="About" rows="10" style="resize: none;"></textarea></div>
             </div>
-            <div class="but"><button onclick="submsg()">Submit</button></div>
+            <div class="but"><button>Submit</button></div>
         </form>
     </div>
     <div class="con-main-sel bicycle-sel">
@@ -72,7 +82,7 @@
                 <div class="lab tex">About :</div>
                 <div class="inp"><textarea title="About"  name="desc" placeholder="About" rows="10" style="resize: none;"></textarea></div>
             </div>
-            <div class="but"><button onclick="submsg()">Submit</button></div>
+            <div class="but"><button>Submit</button></div>
         </form>
     </div>
     <div class="con-main-sel calculator-sel">
@@ -99,7 +109,7 @@
                 <div class="lab tex">About :</div>
                 <div class="inp"><textarea title="About"  name="desc" placeholder="About" rows="10" style="resize: none;"></textarea></div>
             </div>
-            <div class="but"><button onclick="submsg()">Submit</button></div>
+            <div class="but"><button>Submit</button></div>
         </form>
     </div>
     <div class="con-main-sel drawing-sel">
@@ -126,7 +136,7 @@
                 <div class="lab tex">About :</div>
                 <div class="inp"><textarea title="About"  name="desc" placeholder="About" rows="10" style="resize: none;"></textarea></div>
             </div>
-            <div class="but"><button onclick="msgbox()">Submit</button></div>
+            <div class="but"><button>Submit</button></div>
         </form>
     </div>
     <div class="con-main-sel others-sel">
@@ -155,16 +165,16 @@
             </div>
             <div class="con-main-sel-inp tex">
                 <div class="lab tex">About :</div>
-                <div class="inp"><textarea title="About"  name="desc" placeholder="About" rows="10" style="resize: none;"></textarea></div>
+                <div class="inp"><textarea title="About"  name="desc" placeholder="About" rows="10" style="resize: none;" required></textarea></div>
             </div>
-            <div class="but"><button onclick="submsg()">Submit</button></div>
+            <div class="but"><button>Submit</button></div>
         </form>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        function submsg(){
-            $('.msgbox').html("<span>Post has been uploaded.. To view click</a target=`_blank` href=`{% url 'open-post' 'lastpost' %}`>Open</a></span>");
-        }
+        
+        
+        
         (function(){
             $('.book').click(function(){
                 $('.con-inside').find('.con-main-sel').each(function(){

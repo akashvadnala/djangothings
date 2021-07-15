@@ -204,5 +204,9 @@
                 {% include 'blog/edit_post.html' %}
             {% endif %}
         </div>
-
+        <script>
+            function close_log(){
+                $(".post_data").remove();
+            }
+        </script>
         {% endblock %}

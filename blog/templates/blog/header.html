@@ -253,14 +253,14 @@
             <form id="sea-${data.sid}" action="{% url 'search' %}" method="GET">
                 <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="${data.sinp}">
                 <button class="subm" type="submit">${data.sinp}</button>
-                <button class="subc" type="reset" onclick="delsea(${data.sid})"><i class="fa fa-close"></i></button>
+                <button class="subc" type="reset" onclick="delsea(${data.sid})">&times;</button>
             </form>
         `);
         $(".expand-min .expand-s:last-child").append(`
             <form id="sea-${data.sid}" action="{% url 'search' %}" method="GET">
                 <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="${data.sinp}">
                 <button class="subm" type="submit">${data.sinp}</button>
-                <button class="subc" type="reset" onclick="delsea(${data.sid})"><i class="fa fa-close"></i></button>
+                <button class="subc" type="reset" onclick="delsea(${data.sid})">&times;</button>
             </form>
         `);
       }

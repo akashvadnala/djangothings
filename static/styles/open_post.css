@@ -140,81 +140,6 @@ body{
  .other-items .stack{
     margin-top: 15px;
   }
-  .stack .lmr{
-    display: grid;
-    grid-template-columns: 25% 50% 25%;
-  }
-  
-  .stack .lmr .m .even{
-    display: grid;
-    grid-template-columns: 120px calc(100% - 120px);
-    margin:10px;
-    border-radius: 15px;
-    background: white;
-    box-sizing: border-box;
-    padding:15px;
-    font-size: 15px;
-    border: solid .5px rgba(240,240,240,.9);
-  }
-  
-  .even .pic{
-    padding:5px;
-    height:110px;
-    border: solid 1px rgb(240,240,240);
-    border-radius: 5px;
-  }
-  
-  .even .pic img{
-    display: none;
-  }
-  
-  .even .pic img:nth-child(1){
-    display: block;
-  }
-  
-  .even .det{
-    display: grid;
-    grid-template-rows: auto auto auto;
-    color: rgba(50,50,50,.9);
-    font-size: 12px;
-    align-items: center;
-  }
-  
-  .even .ncc{
-    display: grid;
-    grid-template-columns: calc(100% - 55px) 55px;
-  }
-  
-  .even .det .name{
-    font-size: 14px;
-  }
-  
-  .det .price, .det .desc,.ncc .name{
-    padding-left: 10px;
-  }
-  
-  .det .ncc .name a{
-    text-decoration: none;
-    color: #007aff;
-    font-size:16px ;
-  }
-  
-  .det .ncc .name a:hover{
-    text-decoration: underline;
-    color: #007aff;
-  }
-  
-  .desc{
-    font-size: 13px;
-    align-content: center;
-    padding-right: 5%;
-    padding-top: 5px;
-  }
-  
-  .stack .lmr .m .even:hover{
-  box-shadow: 0 0 14px rgb( 200, 200, 205);
-  transition: .3s;
-  }
 
   .msg-box{
     position: sticky;
@@ -222,11 +147,12 @@ body{
     display: none;
     border-bottom: solid 1px rgba(192,192,192,.3);
     background: rgba(240,240,240,.7);
-    padding: 10px;
-    font-size: 13px;
+    padding: 5px;
+    font-size: 12px;
     text-align: center;
     line-height: 20px;
     z-index: 100000;
+    color: rgb(50,50,50);
     backdrop-filter: blur(15px);
   }
   

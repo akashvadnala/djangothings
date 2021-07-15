@@ -55,7 +55,13 @@
                                         <a href="{% url 'open-post' post.sha %}" title="{{post.post_title}}" target="_blank">{{post.post_title|truncatewords:25}}</a>
                                     </div>
                                     <div class="contact">
-                                        <a href="">contact</a>
+                                        <div type="button" id="like-{{post.id}}" onclick="likepost({{post.id}})">
+                                            {% if request.user in post.likes.all %}
+                                            <i class="fa fa-heart" style="font-size:18px;"></i>
+                                            {% else %}
+                                            <i class="fa fa-heart-o" style="font-size:18px;"></i>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="price">
@@ -83,6 +89,25 @@
 
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
+    function likepost(id){
+        $.ajax({
+            type:'GET',
+            url: "{% url 'like-post' %}",
+            data:{
+                'id':id,
+            },
+            dataType:'json',
+            success: function(data){
+                if(data.like){
+                    $("#like-"+id).html("<i class='fa fa-heart' style='font-size:18px;'></i>");
+                }
+                else{
+                    $("#like-"+id).html("<i class='fa fa-heart-o' style='font-size:18px;'></i>");
+                }
+            }
+        });
+    }
+
     var swiper = new Swiper('.swiper-container', {
       navigation: {
         nextEl: '.swiper-button-next',

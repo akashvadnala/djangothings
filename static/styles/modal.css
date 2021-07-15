@@ -83,6 +83,8 @@ display: none;
 
 .modal .modal-content .cent .login .block-main .block-main-inp{
   margin: 20px 0 20px 0;
+  display: flex;
+  align-items: center;
 }
 
 .modal .modal-content .cent .login .block-main .block-main-inp .block-inp input{
@@ -95,8 +97,45 @@ display: none;
   border: solid .5px rgb(192,192,192);
 }
 
+.modal .modal-content .cent .login .block-main .block-main-inp .rem_me{
+  display: flex;
+  align-items: center;
+}
+
+.modal .modal-content .cent .login .block-main .block-main-inp .rem_me input{
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+}
+
 .modal .modal-content .cent .login .submit-btn{
-  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+input[type="button"]{
+  display: none;
+  background: linear-gradient(rgba(240,240,240,.1),rgba(200,200,200,.3));
+    border: 1px solid rgba(220,220,220,.7);
+    padding: 8px 30px 8px 30px;
+    border-radius: 7px;
+    color: rgba(100,100,100,.7);
+    cursor: text;
+}
+
+#telluser, #tellemail{
+  margin-left: 10px;
+  margin-top: 3px;
+  color: rgba(255,50,50,.9);
+  font-size: 12px;
+}
+
+#tellpwd{
+  display: none;
+  margin-left: 10px;
+  margin-top: 3px;
+  color: rgba(100,100,100,.9);
+  font-size: 12px;
 }
 
 input[type="submit"]{

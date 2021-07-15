@@ -72,7 +72,6 @@
                     $(".bac").css('display','flex');
                 });
                 $(".navigation .inn input").focus(function() {
-
                     $(".expand-min").css('display','block');
                     $('.div-max').css('display','block');
                     $('.search').css('display','block');
@@ -80,46 +79,23 @@
                     $('.search_in').css('border-bottom-left-radius','0');
                     $('body').css('overflow','hidden');
                     $("body .search").css('z-index','100000000');
-                    $(".bac").css('display','flex');
                 });
-            $(".div-max").click(function(){
+            $(".header .inn input").focusout(function() {
                 $('.div-max').css('display','none');
                 $('.expand-min').css('display','none');
                 $('.expand').css('display','none');
                 $('.search_in').css('border-radius','5px');
                 $('body').css('overflow','');
                 $(".bac").css('display','none');
-            });
-            function sea_can(){
+            }); 
+            $(".navigation .inn input").focusout(function() {
                 $('.div-max').css('display','none');
                 $('.expand-min').css('display','none');
                 $('.expand').css('display','none');
                 $('.search_in').css('border-radius','5px');
                 $('body').css('overflow','');
                 $(".bac").css('display','none');
-            }
-            $(".sea_sg input").click(function(){
-                $('.div-max').css('display','none');
-                $('.expand-min').css('display','none');
-                $('.expand').css('display','none');
-                $('.search_in').css('border-radius','5px');
-                $('body').css('overflow','');
-                $(".bac").css('display','none');
-            });
-            $(".logo").click(function(){
-                $('.div-max').css('display','none');
-                $('.expand').css('display','none');
-                $('.expand-min').css('display','none');
-                $('.search_in').css('border-radius','5px');
-                $('body').css('overflow','');
-            });
-            $(".mnu").click(function(){
-                $('.div-max').css('display','none');
-                $('.expand').css('display','none');
-                $('.expand-min').css('display','none');
-                $('.search_in').css('border-radius','5px');
-                $('body').css('overflow','');
-            });
+            }); 
             
             function register(){
                 $("#id02").css('display','none');

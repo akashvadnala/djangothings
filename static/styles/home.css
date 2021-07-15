@@ -7,6 +7,82 @@ body{
     background: rgba(240,240,240,.15);
 }
 
+.msgbox{
+  position: sticky;
+  top: 0;
+  color: rgb(50,50,50);
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  border-bottom: solid .6px rgba(192,192,192,.3);
+  background: rgba(240,240,240,.7);
+  backdrop-filter: blur(15px);
+  z-index: 100;
+  display: none;
+}
+
+.post_data{
+  position: sticky;
+  top: 0;
+  color: rgb(50,50,50);
+  padding: 3px;
+  display: grid;
+  align-items: center;
+  grid-template-columns: calc(100% - 30px) 30px;
+  font-size: 12px;
+  border-bottom: solid .6px rgba(192,192,192,.3);
+  background: rgba(240,240,240,.7);
+  backdrop-filter: blur(15px);
+  z-index: 100;
+}
+
+.post_data div:first-child{
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}
+.post_data div:first-child span{
+  transform: translateX(15px);
+}
+
+.post_data div:nth-child(2) button{
+  border: solid 1px rgba(220,220,220,.7);
+  border-radius: 3px;
+  padding: 2px 3px 2px 3px;
+  background: rgba(220,220,220,.5);
+  cursor: pointer;
+  z-index: 100;
+}
+
+
+.post_data div:nth-child(2) button:hover{
+  background: rgba(220,220,220,.7);
+}
+
+.spn2:first-child{
+  display: none;
+}
+
+.spn1:last-child{
+  display: none;
+}
+
+.spn2 a{
+  color: rgb(50,50,50);
+  text-decoration: none;
+  border: solid .5px rgba(200,200,200,.9);
+  margin-left: 7px;
+  padding: 2px 4px 2px 4px;
+  border-radius:3px;
+  background: linear-gradient(rgba(220,220,220,.5),rgba(220,220,220,.7));
+}
+
+.spn2 a:hover{
+  background: linear-gradient(rgba(220,220,220,.7),rgba(220,220,220,.9));
+}
+
 .side-header{
     display: block;
     position: fixed;
@@ -117,7 +193,7 @@ body{
   .side-container-box{
     display: block;
     position: relative;
-    top: 60px;
+    top: 50px;
     left: 0;
     width: 100%;
   }

@@ -516,7 +516,7 @@ z-index: 10000;
 
 .expand,.expand-min{
   margin-left: 15px;
-  top:126px;
+  top:100px;
   width:calc(100% - 30px);
 }
 

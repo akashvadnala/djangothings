@@ -9,6 +9,18 @@
 {% block container-box %}
     {% include 'blog/buy.html' %}
     {% include 'blog/dologin.html' %}
+    {% if messages %}
+    <div class="log_data">
+        <div>
+            {% for message in messages %}
+               <span>{{message}}</span> 
+            {% endfor %}
+        </div>
+        <div>
+            <button onclick="close_log()">&#x2715;</button>
+        </div>
+    </div>
+    {% endif %}
     <div class="msg-box"><span class="msg-span"></span><span class="msg-link"></span></div>
     <div class="post-show">
         <div class="post-pic">
@@ -107,7 +119,7 @@
                                         <a href="{% url 'open-post' post.sha %}" title="{{post.post_title}}" target="_blank">{{post.post_title|truncatewords:25}}</a>
                                     </div>
                                     <div class="contact">
-                                        <a href="">contact</a>
+                                        <i class="fa fa-heart-o" style="font-size:18px;"></i>
                                     </div>
                                 </div>
                                 <div class="price">
@@ -153,6 +165,9 @@
             $('.buy').css('display','none');
             $('body').css('overflow-y','');
         }
+        function close_log(){
+            $(".log_data").remove();
+        }
         function sendrequest(rec,id){
             $('.msg-box').css('display','block');
             $('.msg-span').text('Request has been sent. To further chat open Messages Section.');
@@ -169,6 +184,7 @@
                     
                 }
             });
+            $(".log_data").remove();
             del_sel();
         }
     </script>

@@ -8,12 +8,12 @@
   position: sticky;
   top: 50px;
   color: rgb(50,50,50);
-  padding: 7px;
+  padding: 3px;
   display: grid;
   align-items: center;
   grid-template-columns: calc(100% - 30px) 30px;
-  font-size: 14px;
-  border-bottom: solid .6px rgba(192,192,192,.5);
+  font-size: 12px;
+  border-bottom: solid .6px rgba(192,192,192,.3);
   background: rgba(240,240,240,.7);
   backdrop-filter: blur(15px);
   z-index: 100;
@@ -133,7 +133,7 @@
 
 .even .ncc{
   display: grid;
-  grid-template-columns: calc(100% - 55px) 55px;
+  grid-template-columns: calc(100% - 30px) 30px;
 }
 
 .even .det .name{
@@ -142,6 +142,15 @@
 
 .det .price, .det .desc,.ncc .name{
   padding-left: 10px;
+}
+
+.det .ncc .contact{
+  display: flex;
+}
+
+.det .ncc .contact i{
+  color: cornflowerblue;
+  cursor: pointer;
 }
 
 .det .ncc .name a{
