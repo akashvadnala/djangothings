@@ -3,3 +3,5 @@ This is the code for ecommerce web application, where a student can decrease the
 This application is built using Django Framework, this application includes a chat section, where buyer and seller can interact easily.
 
 The chat application is built using python web sockets.
+
+This application can be opened at https://lincart.herokuapp.com
