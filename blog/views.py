@@ -735,7 +735,7 @@ def faqs_search(request):
         data = register_table.objects.get(user__id=request.user.id)
         context['data'] = data
     contacts = contact.objects.all()
-    context['contacts'] = contacts
+    context['contacts'] = []
 
     sea = request.GET['faq'] 
     sea = str(sea)

@@ -80,7 +80,7 @@ margin-left: 30%;
 top: 38.5px;
 width: 35%;
 margin-right: 35%;
-background: rgb(235,235,235);
+background: rgb(235,235,235,.5);
 backdrop-filter: blur(15px);
 color: black;
 border-bottom-left-radius: 5px;
@@ -134,9 +134,7 @@ z-index: 100000000000;
   flex-direction: row;
   align-items: center;
   z-index: 100000000;
-}
-.search_in{
-  background-color: rgb(225,225,225);
+  background-color: white;
   height: 30px;
   border-radius: 5px;
 }
@@ -516,7 +514,7 @@ z-index: 10000;
 
 .expand,.expand-min{
   margin-left: 15px;
-  top:100px;
+  top:126px;
   width:calc(100% - 30px);
 }
 

@@ -13,9 +13,9 @@
         </div>
     </div>
     {% endif %}
-    <div class="swiper-container con-swiper">
+    <div class="main-swiper-container con-swiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">Slide 1</div>
+            <div class="swiper-slide"></div>
             <div class="swiper-slide">Slide 2</div>
         </div>
         <div class="swiper-pagination"></div>
@@ -87,7 +87,7 @@
 </div>
 
 
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<!--script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script-->
 <script>
     function likepost(id){
         $.ajax({
@@ -107,8 +107,10 @@
             }
         });
     }
-
-    var swiper = new Swiper('.swiper-container', {
+</script>
+<script type="module">
+    import Swiper from 'https://unpkg.com/swiper@7/swiper-bundle.esm.browser.min.js'
+    const swiper = new Swiper('.main-swiper-container', {
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
@@ -118,6 +120,8 @@
         clickable: true,
       },
     });
+</script>
+<script>
     function close_log(){
         $(".log_data").remove();
     }
