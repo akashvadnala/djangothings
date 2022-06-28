@@ -93,7 +93,7 @@
             </div>
         </div>
     </div>
-    <div class="other-items">
+    {% comment %} <div class="other-items">
         <div class="heading">
             Related Products
         </div>
@@ -136,7 +136,7 @@
             </div>
             
         </div>
-    </div>
+    </div> {% endcomment %}
     <script> src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
         var galleryThumbs = new Swiper('.gallery-thumbs', {
@@ -170,8 +170,8 @@
         }
         function sendrequest(rec,id){
             $('.msg-box').css('display','block');
-            $('.msg-span').text('Request has been sent. To further chat open Messages Section.');
-            $('.msg-link').html(`<a href="{% url 'base' 'notifications' %}" onclick="">Messages/Notificaions</a>`);
+            $('.msg-span').text('Request has been sent to the seller through mail..');
+            {% comment %} $('.msg-link').html(`<a href="{% url 'base' 'notifications' %}" onclick="">Messages/Notificaions</a>`); {% endcomment %}
             $.ajax({
                 type:'GET',
                 url: "{% url 'send-request' %}",

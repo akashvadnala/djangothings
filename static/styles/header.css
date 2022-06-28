@@ -137,6 +137,7 @@ z-index: 100000000000;
   background-color: white;
   height: 30px;
   border-radius: 5px;
+  overflow: hidden;
 }
 .search_in .im{
   width: 15px;

@@ -29,11 +29,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         {% endblock %}
     </head>
-    {% if data.darkmode %}
-    <body class="darkmode" id="body">
-        {% else %}
     <body id="body">
-        {% endif %}
         {% block home %}
             {% block header %}
                 {% include 'blog/header.html' %}

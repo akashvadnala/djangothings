@@ -12,6 +12,7 @@ body{
     background:rgba(240,240,240,.3);
     border: solid 1px rgba(200,200,200,.3);
     margin-left: 15%;
+    margin-bottom: 15px;
     width: 70%;
 }
 
@@ -146,7 +147,7 @@ body{
     font-size: 13px;
   }
 
- .other-items .stack{
+ .stack{
     margin-top: 15px;
   }
 
@@ -164,7 +165,7 @@ body{
     color: rgb(50,50,50);
     backdrop-filter: blur(15px);
   }
-  
+/*   
   .msg-link{
     background: linear-gradient(rgba(220,220,220,.5),rgba(200,200,200,.5));
     padding: 5px 10px 5px 10px;
@@ -178,7 +179,8 @@ body{
       text-decoration: none;
       font-family:-apple-system,SF Pro Text,Helvetica Neue,HelveticaNeue,Helvetica,Arial,sans-serif;
       letter-spacing:0.3px;
-  }
+  } */
+  
   
   @media only screen and (max-width:1000px) {
     .post-show{
@@ -193,12 +195,6 @@ body{
       margin-left: 0;
       width: 100%;
   }
-   
-  
-    .stack .lmr{
-      display: grid;
-      grid-template-columns: 0% 100% 0%;
-    }
   
 
     .post-show{
