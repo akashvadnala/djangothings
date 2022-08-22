@@ -1,0 +1,221 @@
+
+
+
+.modal {
+    display: none; 
+    position: relative;
+    z-index: 10000000; 
+    left: 0px;
+    top: 0px;
+    width: 100%; 
+    height: 100%; 
+    font-size: 16px;
+    overflow: hidden;
+  }
+  
+  #dub{
+    display: none;
+}
+
+.modal-del{
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: rgba(240,240,240,.3);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  height: 100%;
+  z-index:100;
+  cursor: pointer;
+}
+
+  .modal .modal-content {
+    background-color:rgba(230,230,230,.5);
+    border: solid .5px rgba(220,220,220,.7);
+    box-shadow: 0 0 15px rgba(138, 138,138, 0.5);
+    position: fixed;
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    border-radius: 50px;
+    backdrop-filter: blur( 22.0px );
+    font-size: 14px;
+    z-index: 10000;
+    overflow-y:scroll;
+}
+
+
+
+
+
+.modal .modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+.modal .modal-content .cent{
+  position: relative;
+}
+
+.modal .modal-content .login-cent{
+  position: relative;
+  align-items: center;
+  align-content: center;
+}
+
+.modal .modal-content .model-del-min{
+display: none;
+}
+
+.modal .modal-content .cent .heading{
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin: 30px 0 30px 0;
+}
+
+.modal .modal-content .cent .login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px ;
+}
+
+.modal .modal-content .cent .login .block-main .block-main-inp{
+  margin: 20px 0 20px 0;
+  display: flex;
+  align-items: center;
+}
+
+.modal .modal-content .cent .login .block-main .block-main-inp .block-inp input{
+  height: 50px;
+  width: 280px;
+  border-radius: 7px;
+  border: none;
+  outline-color: rgb(50,50,50);
+  padding-left: 10px;
+  border: solid .5px rgb(192,192,192);
+}
+
+.modal .modal-content .cent .login .block-main .block-main-inp .rem_me{
+  display: flex;
+  align-items: center;
+}
+
+.modal .modal-content .cent .login .block-main .block-main-inp .rem_me input{
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+}
+
+.modal .modal-content .cent .login .submit-btn{
+  display: flex;
+  justify-content: center;
+}
+
+input[type="button"]{
+  display: none;
+  background: linear-gradient(rgba(240,240,240,.1),rgba(200,200,200,.3));
+    border: 1px solid rgba(220,220,220,.7);
+    padding: 8px 30px 8px 30px;
+    border-radius: 7px;
+    color: rgba(100,100,100,.7);
+    cursor: text;
+}
+
+#telluser, #tellemail{
+  margin-left: 10px;
+  margin-top: 3px;
+  color: rgba(255,50,50,.9);
+  font-size: 12px;
+}
+
+#tellpwd{
+  display: none;
+  margin-left: 10px;
+  margin-top: 3px;
+  color: rgba(100,100,100,.9);
+  font-size: 12px;
+}
+
+input[type="submit"]{
+  background: linear-gradient(rgba(240,240,240,.9),rgba(200,200,200,.9));
+    border: 1px solid rgba(220,220,220,.7);
+    padding: 8px 30px 8px 30px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover{
+  background: linear-gradient(rgba(240,240,240,.8),rgba(200,200,200,.8));
+}
+
+.modal .modal-content .cent .oth{
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.modal .modal-content .cent .oth input[type="submit"]{
+  padding: 5px 10px 5px 10px;
+  font-size: 12px;
+  border-radius: 10px;
+}
+
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+
+@media only screen and (max-width:500px) {
+
+    .modal .modal-content{
+      background-color:rgba(230,230,230,.005);
+      margin:0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      overflow-y: scroll;
+    }
+
+    .modal .modal-content::-webkit-scrollbar {
+      display: block;
+    }
+    
+    .modal .modal-content .model-del-min{
+
+      display:block;
+      padding: 7px 5px ;
+      z-index: 1000;
+      display: flex;
+      flex-direction: row;
+      cursor: pointer;
+      align-items: center;
+    }
+
+    .modal .modal-content .model-del-min img{
+      width: 15px;
+      height: 15px;
+      transform: rotate(90deg);
+    }
+    
+    .modal .modal-content .model-del-min:hover{
+      color:cornflowerblue ;
+    }
+
+
+    
+}

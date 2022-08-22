@@ -1,0 +1,145 @@
+.con-inside{
+    margin: 20px;
+    margin-top: 10px;
+}
+
+.con-heading-sel{
+    margin-bottom: 10px;
+    margin-top: 0px;
+    font-size: 30px;
+    font-weight: bolder;
+}
+.swiper-container{
+    font-size: 11px;
+    border: rgba(200,200,200,.3) solid 1px;
+    border-radius: 7px;
+    background-color: #f2f2f2;
+    display: flex;
+    -ms-flex-align: start;
+    flex-flow: row;
+    width: 100%;
+    overflow: hidden;
+}
+
+.swiper-wrapper{
+    display: flex;
+    flex-direction: row;
+    height:20px;
+    align-items: center;
+}
+
+.swiper-slide{
+    border: rgba(200,200,200,.5) solid 1px;
+    margin: 3px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 5px;
+    background: rgba(192,192,192,.5);
+    cursor: pointer;
+    box-sizing: border-box;
+    left: 0;
+    top: 0;
+    flex-shrink: 0;
+    height: 15px;
+    align-content: center;
+    font-size:11px ;
+}
+
+.book{
+    background: cornflowerblue;
+    color: white;
+}
+
+.con-main-sel{
+    display: none;
+    width: 100%;
+    margin-top: 25px;
+}
+
+.book-sel{
+    display: block;
+}
+
+.con-main-sel-inp{
+    display: grid;
+    grid-template-columns: 85px calc(100% - 85px);
+    margin-bottom:15px ;
+}
+
+.sel-inp{
+    align-items: center;
+}
+
+.lab{
+    text-align: end;
+    font-weight: lighter;
+    font-size: 13px;
+}
+
+.inp{
+    margin-left: 10px;
+}
+
+.inp input, .inp textarea, .lab input{
+    height: 38px;
+    width: 400px;
+    border-radius: 8px;
+    border: solid .7px rgba(100,100,100,.7);
+    outline-color: cornflowerblue;
+    padding-left: 7px;
+    font-size: 14px;
+    color: rgb(50,50,50);
+    font-family:-apple-system,SF Pro Text,Helvetica Neue,HelveticaNeue,Helvetica,Arial,sans-serif;
+    letter-spacing:0.5px;
+}
+
+.lab input{
+    width:60%;
+    height: 20px;
+    font-size: 13px;
+    padding-right: 4px;
+}
+
+.fil input{
+    border: none;
+    border-radius: 0;
+    background: transparent;
+}
+
+.inp textarea{
+    height: 120px;
+    padding: 7px;
+    line-height: 18px;
+}
+
+.but{
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.but button{
+    padding: 3.5px;
+    padding-left: 16px;
+    padding-right: 16px;
+    background-color: cornflowerblue;
+    color: white;
+    border-radius:12px;
+    border: solid 1px rgba(150,150,150,.3);
+    font-family:-apple-system,SF Pro Text,Helvetica Neue,HelveticaNeue,Helvetica,Arial,sans-serif;
+    letter-spacing:0.5px;
+}
+
+.but button:hover{
+    box-shadow: 0 0 2px cornflowerblue;
+    color: white;
+    cursor: pointer;
+    transition: .3s;
+    border: solid 1px cornflowerblue;
+}
+
+@media only screen and (max-width:500px) {
+
+    .inp input, .inp textarea{
+        width: calc(100% - 40px);
+    }
+}

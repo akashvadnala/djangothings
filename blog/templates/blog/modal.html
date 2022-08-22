@@ -1,0 +1,173 @@
+{% load static %}
+{% static "images" as baseUrl %}
+
+<div id="id01" class="modal">
+    <div onclick="modaldel()" class="modal-del del-max animate1" id="modal-del1">
+       
+    </div>
+    <div class="modal-content animate">
+        <div onclick="modaldel()" class="model-del-min">
+            <div style="font-weight: lighter;font-size: 9.5px;">&#10092;&nbsp;</div>
+            <div>back</div>
+        </div>
+        <div class="cent login-cent">
+            <div class="heading">Log In</div>
+            <div class="login">
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="block-main">
+                        <div style="display: none;" class="block-main-inp">
+                            <!--div class="block-lab">Username</div-->
+                            <div class="block-inp"><input type="text" name="loc" value="home"></div>
+                        </div>
+                        <div class="block-main-inp">
+                            <!--div class="block-lab">Username</div-->
+                            <div class="block-inp"><input type="text" name="username" placeholder="Username" value="{{request.session.usern}}" required></div>
+                        </div>
+                        <div class="block-main-inp">
+                            <!--div class="block-lab">Password</div-->
+                            <div class="block-inp"><input type="password" name="password" placeholder="Password" value="{{request.session.pwd}}" required></div>
+                        </div>
+                        <!--div class="block-main-inp">
+                            <div class="block-inp rem_me">
+                                <input id="remember_me" type="checkbox" name="remember_me" value="remember_me">
+                                <label for="remember_me">Remember me</label>
+                            </div>
+                        </div-->
+                    </div>
+                    <div class="submit-btn">
+                        <input value="Login" type="Submit">
+                    </div>
+                </form>
+            </div>
+            <div class="oth">
+                <div>
+                    Create an account?
+                    <input type="submit" onclick="login()" value="Register">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="id02" class="modal modal1">
+    <div onclick="modaldel()" class="modal-del del-max animate1" id="modal-del2"></div>
+    <div class="modal-content animate">
+        <div onclick="modaldel()" class="model-del-min">
+            <div style="font-weight: lighter;font-size: 9.5px;">&#10092;&nbsp;</div>
+            <div>back</div>
+        </div>
+        <div class="cent">
+            <div class="heading">Register</div>
+            <div class="login">
+                <form action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
+                    <div class="block-main">
+                        <div style="display: none;" class="block-main-inp">
+                            <!--div class="block-lab">First Name</div-->
+                            <div class="block-inp"><input type="text" name="loc" value="home"></div>
+                        </div>
+                        <div class="block-main-inp">
+                            <!--div class="block-lab">First Name</div-->
+                            <div class="block-inp"><input type="text" name="first_name" placeholder="First Name" autocomplete="off" required></div>
+                        </div>
+                        <div class="block-main-inp">
+                            <!--div class="block-lab">Last Name</div-->
+                            <div class="block-inp"><input type="text" name="last_name" placeholder="Last Name" autocomplete="off"></div>
+                        </div>
+                        <div class="block-main-inp">
+                            <!--div class="block-lab">Email</div-->
+                            <div class="block-inp"><input onkeyup="checkuser()" class="email" type="email" name="email" placeholder="email" autocomplete="off" required/></div>
+                            <div id="tellemail"></div>
+                        </div>
+                        <div class="block-main-inp">
+                            <!--div class="block-lab">Username</div-->
+                            <div class="block-inp"> <input onkeyup="checkuser()" class="cname" type="text" id="username" name="username" placeholder="Username" autocomplete="off" required/></div>
+                            <div id="telluser"></div>
+                        </div>
+                        <div class="block-main-inp">
+                            <!--div class="block-lab">Password</div-->
+                            <div class="block-inp"><input onkeyup="checkpassword()" class="pwd" type="password" name="password1" placeholder="Password" autocomplete="off" required/></div>
+                            <div id="tellpwd">
+                                <div id="tellpwd1">More than 8 characters</div>
+                                <div id="tellpwd2">Upper and lower cases</div>
+                                <div id="tellpwd3">Numbers and Special Characters</div>
+                            </div>
+                        </div>
+                        <div class="block-main-inp">
+                            <!--div class="block-lab"> Confirm Password</div-->
+                            <div class="block-inp"><input type="password" name="password2" placeholder="Confirm Password" autocomplete="off" required/></div>
+                        </div>
+                    </div>
+                    <div class="submit-btn">
+                        <input id="regclose" value="Register" type="button">
+                        <input id="regopen" value="Register" type="Submit">
+                    </div>
+                </form>
+            </div>
+            <div class="oth">
+                <div>
+                    Already have an account?
+                    <input type="submit" onclick="register()" value="Login"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function checkuser(){
+            let cname = $(".cname").val();
+            let email = $(".email").val();
+            $.ajax({
+                url: "{% url 'check-user' %}",
+                data:{
+                    'cname' : cname,
+                    'email' : email,
+                },
+                dataType:'json',
+                success:function(data){
+                    $("#telluser").text(data.usersen);
+                    $("#tellemail").text(data.emailsen);
+                    if(data.yes){
+                        $("#regclose").css('display','block');
+                        $("#regopen").css('display','none');
+                    }
+                    else{
+                        $("#regopen").css('display','block');
+                        $("#regclose").css('display','none');
+                    }
+                }
+            });
+        }
+
+        $(".pwd").focus(function(){
+            $("#tellpwd").css('display','block');
+        });
+
+        $(".pwd").focusout(function(){
+            $("#tellpwd").css('display','none');
+        });
+
+        function checkpassword(){
+            let pwd = $(".pwd").val();
+            if(pwd.length>7){
+                $("#tellpwd1").css('color','green');
+            }
+            else{
+                $("#tellpwd1").css('color','rgba(100,100,100,.9)');
+            }
+            if(pwd.match(/(.*[a-z].*[A-Z])|(.*[A-Z].*[a-z])/)){
+                $("#tellpwd2").css('color','green');
+            }
+            else{
+                $("#tellpwd2").css('color','rgba(100,100,100,.9)');
+            }
+            if(pwd.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[0,1,2,3,4,5,6,7,8,9])|(.*[0,1,2,3,4,5,6,7,8,9].*[!,%,&,@,#,$,^,*,?,_,~])/)){
+                $("#tellpwd3").css('color','green');
+            }
+            else{
+                $("#tellpwd3").css('color','rgba(100,100,100,.9)');
+            }
+        }
+    </script>
+</div> 

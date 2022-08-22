@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% static "images" as baseUrl %}
+
+{% block title %}{{page_title}}{% endblock %}
+
+{% block container-box %}
+<div class="about">
+    <div class="heading">
+        About
+    </div>   
+    <div class="content">
+       <p>Lincart is an web application used for the students who want to buy materials from other students 
+           who are having it or to sell their materials to other student who need it in their college. 
+           Not only materials but also can buy or sell the bicycles, scientific calculators, drafters, etc.
+       </p>
+       <p>
+            To buy a material or something needed from other students, find them on the home page of the website or search on the search input given on the top, which gives you the suggestions, which are entered by others, on entering each letter so that you cannot need to type all the sentence/word.
+            The products are filtered based on your search, so that you can the product that you needed.
+            Click on the name of the product that you needed that takes you the page of the product which contains the details of the product and contact option of the owner.
+            After click on the contact option, it asks you for the confirmation to send the mail request to owner who is ready sell their material/something that you requested.
+       </p>
+       <p> 
+           Instead of asking many people, whether they have the product or not or ready to sell or not to them.
+           This app reduces your time and finds the person, who is ready to give the material/something that you needed.
+       </p>
+    </div>
+</div>
+{% endblock %}

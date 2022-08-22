@@ -1,0 +1,237 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% static "images" as baseUrl %}
+        {% block links %}
+        <link href="{% static 'styles/home.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/dashboard.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/posts.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/uploadpost.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/notifications.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/settings.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/edit_post.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/modal.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/darkmode.css' %}" rel="stylesheet" type="text/css">
+        <script src="{% static 'js/base.js' %}"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'styles/font-awesome.min.css' %}"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        {% endblock %}
+   
+        {% block home %}
+        <div class="side-header">
+            <div class="logo">
+                <div>
+                    <a href="/">lincart.in</a>
+                </div>
+            </div>
+            <div class="nav">
+                <div class="ull">
+                    {% for nav in navs %}
+                        <a title="{{nav.n}}" href="{% url 'base' nav.w %}">
+                        {% if nav.w == sec %}
+                            <div class="lii" style="background-color: cornflowerblue; color: white;">
+                        {% else%}
+                            <div class="lii">
+                        {% endif %}
+                               <div class="limg">
+                                    <i class="fa">
+                                        {% if nav.w == 'dashboard' %}
+                                        &#xf2bd;
+                                        {% elif nav.w == 'posts' %}
+                                        &#xf288;
+                                        {% elif nav.w == 'uploadpost' %}
+                                        &#xf093;
+                                        {% elif nav.w == 'notifications' %}
+                                        &#xf086;
+                                        {% elif nav.w == 'settings' %}
+                                        &#xf013;
+                                        {% endif %}
+                                    </i>
+                                </div>
+                                <div>{{nav.n}}</div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    {% if user.is_superuser %}
+                        <a title="Admin Panel" href="/admin/" target="_blank">
+                            
+                            <div class="lii">
+                                <div class="limg">
+                                    <i class='fa'>&#xf2bd;</i>
+                                </div>  
+                                <div>
+                                    Admin Panel
+                                </div>  
+                            </div>
+                        </a>
+                    {% endif %}
+                </div>
+                <hr/>
+                
+                <div class="ull">
+                    <a title="About" href="{% url 'about' %}">
+                        <div class="lii">
+                            <div class="limg">
+                                <i class='fa'>&#xf05a;</i>
+                            </div>  
+                            <div>
+                                About
+                            </div>  
+                        </div>
+                    </a>
+                    <a title="Logout" href="{% url 'logout' %}">
+                        <div class="lii">
+                            <div class="limg">
+                                <i class='fa'>&#xf08b;</i>
+                            </div>  
+                            <div>
+                                Logout
+                            </div> 
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        
+<div class="min-header">
+    <div class="logo">
+        <div>
+            <a href="{% url 'home' %}">
+                lincart.in
+            </a>
+       </div>
+    </div>
+    <div class="bars">
+        <div class="navigation-toggle klik">
+            <div class="bar bar1"></div>
+            <div class="bar bar2"></div>
+            <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+            <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+           
+        </div>
+    </div>
+</div>
+
+<div class="navigation">
+    <div class="ull">
+    <div class="bac">
+        <span onclick="sea_can()">Cancel</span> 
+    </div>
+        <div class="search">
+            <form action="{% url 'search' %}" method="GET">
+                <div id="search" class="search_in">
+                <div class="im">
+                    <img src="{% static 'images/search_icon.png' %}" alt="search_icon" >
+                </div>
+                <div class="inn">
+                    <input title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="{{sea}}">
+                </div>
+            </div>
+            </form>
+        </div>
+        {% for nav in navss %}
+            {% if user.is_authenticated %}
+                <a title="{{nav.n}}" href="{% url 'base' nav.w %}">
+            {% else %}
+                <a title="{{nav.n}}" style="color: rgba(192,192,192,1);">
+            {% endif %}
+            <div class="lii">
+                {{nav.n}}
+            </div>
+        </a>
+        {% endfor %}
+        <a title="About" href="{% url 'about' %}">
+            <div class="lii">
+                About
+            </div>
+        </a>
+        {% if user.is_authenticated %}
+        {% if user.is_superuser %}
+            <a title="Logout" href="{% url 'about' %}">
+        {% else %}
+            <a title="Logout" href="{% url 'logout' %}" style="border: none;">
+        {% endif %}            
+            <div class="lii">
+                Logout
+            </div>
+        </a>
+        {% else %}
+            <a title="Register" onclick="document.getElementById('id02').style.display='block';document.getElementById('modal-del').style.display='block'" style="cursor: pointer;">
+                <div class="lii">
+                    Register
+                </div>
+            </a>
+            <a title="Login" onclick="document.getElementById('id01').style.display='block';document.getElementById('modal-del').style.display='block'" style="border: none; cursor: pointer;">
+                <div class="lii">
+                    Login
+                </div>
+            </a>
+        {% endif %}
+        {% if user.is_superuser %}
+            <a title="Admin" href='/admin/' style="border: none;" target="_blank">
+                <div class="lii">
+                    Admin
+                </div>
+            </a>
+        {% endif %}
+    
+    </div>
+</div>
+
+<div class="expand-min">
+    <div class="expand-s">
+        {% if user.is_authenticated %}
+            {% for s in seas_ind %}
+            <form class="sea_sg" id="sea-{{s.id}}" action="{% url 'search' %}" method="GET">
+                <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="{{s}}">
+                <button class="subm" type="submit">{{s}}</button>
+                <button class="subc" type="reset" onclick="delsea({{s.id}})">&times;</button>
+            </form>
+            {% endfor %}
+        {% else %}
+            {% for s in seas_all %}
+            <form class="sea_sg" action="{% url 'search' %}" method="GET">
+                <input style="display: none;" title="Search here.." autocomplete="off" type="search" name="b" placeholder="Search here.." value="{{s}}">
+                <button type="submit">{{s}}</button>
+            </form>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+        <div class="side-container-box" id="side-container-box">
+            {% if sec == 'dashboard' %}
+                {% include 'blog/dashboard.html' %}
+            {% elif sec == 'posts' %}
+                {% include 'blog/posts.html' %}
+            {% elif sec == 'uploadpost' %}
+                {% include 'blog/uploadpost.html' %}
+            {% elif sec == 'notifications' %}
+            {% include 'blog/notifications.html' %}
+            {% elif sec == 'settings' %}
+                {% include 'blog/settings.html' %}
+            {% else %}
+                {% include 'blog/edit_post.html' %}
+            {% endif %}
+        </div>
+        <script>
+            function close_log(){
+                $(".post_data").remove();
+            }
+        </script>
+         <script id="rendered-js">
+            $(function () {
+                $(".klik").on('click', function (e) {
+                    $("body").toggleClass('navigation-show');
+                    $(".bac").css('display','none');
+                    $(".expand-min").css('display','none');
+                });
+            });
+        </script>
+        {% endblock %}

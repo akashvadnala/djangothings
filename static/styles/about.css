@@ -1,0 +1,13 @@
+.about{
+    margin: 25px 20% 25px 20%;
+}
+
+.about .heading{
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.about .content{
+    font-size: 14px;
+}
+

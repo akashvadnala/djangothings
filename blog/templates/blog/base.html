@@ -1,0 +1,164 @@
+{% load static %}
+{% static "images" as baseUrl %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <title>
+           {% block title %} {{page_title}} {% endblock %}
+        </title>
+        {% block links%}
+        <link href="{% static 'styles/header.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/modal.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/container-box.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/open_post.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/edit_post.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/footer.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/about.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/faqs.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'styles/contact.css' %}" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://fonticons-free-fonticons.netdna-ssl.com/kits/349cfdf6/publications/113224/woff2.css" media="all">
+        <link href="{% static 'styles/buy.css' %}" rel="stylesheet" type="text/css">        
+        <link href="{% static 'styles/darkmode.css' %}" rel="stylesheet" type="text/css">
+        <script src="{% static 'js/base.js' %}"></script>
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <script src="{% static 'js/jquery.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        {% endblock %}
+    </head>
+    <body id="body">
+        {% block home %}
+            {% block header %}
+                {% include 'blog/header.html' %}
+            {% endblock %}
+
+            {% block modal %}
+                {% include 'blog/modal.html' %}
+            {% endblock %}
+
+            {% block container-box %}
+                {% include 'blog/container-box.html' %}
+            {% endblock %}
+
+            {% block footer %}
+                {% include 'blog/footer.html' %}
+            {% endblock %}
+
+
+<div class="div-max">
+
+</div>
+        {% endblock %}
+    
+            <script>
+
+                $('.expand-min').css('display','none');
+                $('.expand').css('display','none');
+                $(".header .inn input").focus(function() {
+                    $(".expand").css('display','block');
+                    $('.div-max').css('display','block');
+                    $('.search').css('display','block');
+                    $('.search_in').css('border-bottom-right-radius','0');
+                    $('.search_in').css('border-bottom-left-radius','0');
+                    $('body').css('overflow','hidden');
+                    $("body .search").css('z-index','100000000');
+                    $(".bac").css('display','flex');
+                });
+                $(".navigation .inn input").focus(function() {
+                    $(".expand-min").css('display','block');
+                    $('.div-max').css('display','block');
+                    $('.search').css('display','block');
+                    $('.search_in').css('border-bottom-right-radius','0');
+                    $('.search_in').css('border-bottom-left-radius','0');
+                    $('body').css('overflow','hidden');
+                    $("body .search").css('z-index','100000000');
+                    $(".bac").css('display','flex');
+                });
+            $(".div-max").click(function(){
+                $('.div-max').css('display','none');
+                $('.expand-min').css('display','none');
+                $('.expand').css('display','none');
+                $('.search_in').css('border-radius','5px');
+                $('body').css('overflow','');
+                $(".bac").css('display','none');
+            });
+            function sea_can(){
+                $('.div-max').css('display','none');
+                $('.expand-min').css('display','none');
+                $('.expand').css('display','none');
+                $('.search_in').css('border-radius','5px');
+                $('body').css('overflow','');
+                $(".bac").css('display','none');
+            }
+            $(".sea_sg input").click(function(){
+                $('.div-max').css('display','none');
+                $('.expand-min').css('display','none');
+                $('.expand').css('display','none');
+                $('.search_in').css('border-radius','5px');
+                $('body').css('overflow','');
+                $(".bac").css('display','none');
+            });
+            $(".logo").click(function(){
+                $('.div-max').css('display','none');
+                $('.expand').css('display','none');
+                $('.expand-min').css('display','none');
+                $('.search_in').css('border-radius','5px');
+                $('body').css('overflow','');
+            });
+            $(".mnu").click(function(){
+                $('.div-max').css('display','none');
+                $('.expand').css('display','none');
+                $('.expand-min').css('display','none');
+                $('.search_in').css('border-radius','5px');
+                $('body').css('overflow','');
+            });
+            
+            function register(){
+                $("#id02").css('display','none');
+                $("#id03").css('display','none');
+                $("#id04").css('display','none');
+                $("#id01").css('display','block');
+                $("#model-del").css('display','block');
+                $('body').css('overflow-y','hidden');
+            }
+            function login(){
+                $("#id01").css('display','none');
+                $("#id03").css('display','none');
+                $("#id04").css('display','none');
+                $("#id02").css('display','block');
+                $("#model-del").css('display','block');
+                $('body').css('overflow-y','hidden');
+            }
+            function dologin(){
+                del_sel();
+                $("#id01").css('display','none');
+                $("#id02").css('display','none');
+                $("#id04").css('display','none');
+                $("#id03").css('display','block');
+                $("#model-del").css('display','block');
+            }
+            function doregister(){
+                del_sel();
+                $("#id01").css('display','none');
+                $("#id02").css('display','none');
+                $("#id03").css('display','none');
+                $("#id04").css('display','block');
+                $("#model-del").css('display','block');
+            }
+            function modaldel()
+            {
+                $("#id01").css('display','none');
+                $("#id02").css('display','none');
+                $("#id03").css('display','none');
+                $("#id04").css('display','none');
+                $("#model-del").css('display','none');
+                $('body').css('overflow-y','');
+            }
+
+            </script>
+    </body>
+</html>
+

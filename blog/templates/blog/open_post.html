@@ -1,0 +1,191 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% static "images" as baseUrl %}
+
+{% block title %} {{post.post_title}} {% endblock %}
+
+
+
+{% block container-box %}
+    {% include 'blog/buy.html' %}
+    {% include 'blog/dologin.html' %}
+    {% if messages %}
+    <div class="log_data">
+        <div>
+            {% for message in messages %}
+               <span>{{message}}</span> 
+            {% endfor %}
+        </div>
+        <div>
+            <button onclick="close_log()">&#x2715;</button>
+        </div>
+    </div>
+    {% endif %}
+    <div class="msg-box"><span class="msg-span"></span><span class="msg-link"></span></div>
+    <div class="post-show">
+        <div class="post-pic">
+            <div class="swiper-container gallery-top">
+                <div class="swiper-wrapper">
+                    {% for i in imgs %}
+                        {% if i.post.id == post.id %}
+                            <div class="swiper-slide"><img src="{{i.cover.url}}" alt=""></div>
+                        {% endif %}
+                    {% endfor %}
+                   </div>
+            </div>
+            <div class="swiper-container gallery-thumbs">
+                <div class="swiper-wrapper">
+                    {% for i in imgs %}
+                        {% if i.post.id == post.id %}
+                            <div class="swiper-slide"><img src="{{i.cover.url}}" alt=""></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="post-det">
+            <div class="name">
+                {{ post.post_title }}
+            </div>
+            <div class="hr"></div>
+            {% if post.label1 and post.inp1 %}
+                <div class="det-each">
+                    <div class="det-lab">{{post.label1}} : </div>
+                    <div class="det-val">{{ post.inp1 }}</div>
+                </div>
+            {% endif %}
+            {% if post.label2 and post.inp2 %}
+                <div class="det-each">
+                    <div class="det-lab">{{post.label2}} : </div>
+                    <div class="det-val">{{ post.inp2 }}</div>
+                </div>
+            {% endif %}
+            {% if post.author %}
+                <div class="det-each">
+                    <div class="det-lab">Author : </div>
+                    <div class="det-val">{{ post.author }}</div>
+                </div>
+            {% endif %}
+            {% if post.company %}
+                <div class="det-each">
+                    <div class="det-lab">Company : </div>
+                    <div class="det-val">{{ post.company }}</div>
+                </div>
+            {% endif %}
+            <div class="det-each">
+                <div class="det-lab">Price : </div>
+                <div class="det-val">Rs. {{ post.price }}/-</div>
+            </div>
+            <div class="det-each">
+                <div class="det-lab">About : </div>
+                <div class="det-val">{{ post.desc }}</div>
+            </div>
+            <div class="but">
+            {% if user.is_authenticated %}
+                {% if post.uname == request.user %}
+                <button ><a style="color: white;text-decoration: none;" target="_blank" href="{% url 'edit' post.sha %}">Edit</a></button>
+                {% else %}
+                <button onclick="onContact()">Contact</button>
+                {% endif %}
+            {% else %}
+                <button onclick="onContact()">Contact</button>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    {% comment %} <div class="other-items">
+        <div class="heading">
+            Related Products
+        </div>
+        <div class="stack">
+            <div class="lmr">
+                <div class="l"></div>
+                <div class="m">
+                    {% for post in oth_posts %}
+                        <div class="even">
+                            <div class="pic">
+                                {% for i in imgs %}
+                                    {% if i.post.id == post.id %}
+                                    <img  style="
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: contain;"  src="{{ i.cover.url }}" alt="{{ post.post_title }}">
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="det">
+                                <div class="ncc">
+                                    <div class="name">
+                                        <a href="{% url 'open-post' post.sha %}" title="{{post.post_title}}" target="_blank">{{post.post_title|truncatewords:25}}</a>
+                                    </div>
+                                    <div class="contact">
+                                        <i class="fa fa-heart-o" style="font-size:18px;"></i>
+                                    </div>
+                                </div>
+                                <div class="price">
+                                    Rs. {{post.price}}/-
+                                </div>
+                                <div class="desc">
+                                    {{post.desc|truncatewords:14}}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="r"></div>
+            </div>
+            
+        </div>
+    </div> {% endcomment %}
+    <script> src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var galleryThumbs = new Swiper('.gallery-thumbs', {
+        spaceBetween: 0,
+        slidesPerView: 4,
+        freeMode: true,
+        watchSlidesVisibility: true,
+        watchSlidesProgress: true,
+        });
+        var galleryTop = new Swiper('.gallery-top', {
+        spaceBetween: 10,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        thumbs: {
+            swiper: galleryThumbs
+        }
+        });
+        
+        function onContact(){
+            $('.buy').css('display','block');
+            $('body').css('overflow-y','hidden');
+        }
+        function del_sel(){
+            $('.buy').css('display','none');
+            $('body').css('overflow-y','');
+        }
+        function close_log(){
+            $(".log_data").remove();
+        }
+        function sendrequest(rec,id){
+            $('.msg-box').css('display','block');
+            $('.msg-span').text('Request has been sent to the seller through mail..');
+            {% comment %} $('.msg-link').html(`<a href="{% url 'base' 'notifications' %}" onclick="">Messages/Notificaions</a>`); {% endcomment %}
+            $.ajax({
+                type:'GET',
+                url: "{% url 'send-request' %}",
+                data:{
+                    'rec':rec,
+                    'id':id,
+                },
+                dataType:'json',
+                success: function(data){
+                    
+                }
+            });
+            $(".log_data").remove();
+            del_sel();
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,100 @@
+.faqs{
+    color: rgb(70,70,70);
+    font-size: 14px;
+}
+
+.faqs .faqs-s{
+    min-height: 550px;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.faqs .faqs-s .heading{
+    margin:15px ;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.faqs .faqs-s .heading .heading-s{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.faqs .faqs-s .heading .heading-s .icon img{
+    height: 60px;
+    width: 60px;
+    margin: 10px;
+}
+
+.faqs .faqs-s .search{
+    margin-left: 25%;
+    margin-right: 25%;
+    background: transparent;
+    border-radius: 0;
+    border-bottom: solid 1px rgba(200,200,200,.7);
+}
+
+.faqs .faqs-s .search .search_in{
+    background-color: transparent;
+    height: 30px;
+    border-radius: 5px;
+}
+.faqs .faqs-s .search .search_in .im{
+    width: 15px;
+    height: 15px;
+    margin:5px;
+}
+.faqs .faqs-s .search .search_in .in{
+    width: calc(100% - 20px);
+    height: 100%;
+}
+.faqs .faqs-s .search .in input{
+    width:100%;
+    height: 100%;
+    outline: none;
+    letter-spacing: 0.5px;
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+}
+
+.faqs .faqs-s .search .im img{
+    width: 100%;
+    height: 100%;
+}
+
+.faqs .faqs-s .que-ans{
+    margin: 30px;
+}
+
+.faqs .faqs-s .que-ans .que{
+    font-weight: bold;
+}
+
+.faqs .faqs-s .que-ans .ans{
+    margin-top: 7px;
+}
+
+.faqs .faqs-s .hr{
+    margin-top: 12px;
+    background: rgba(100,100,100,.7);
+}
+
+.faqs .faqs-s .hr:last-child{
+    background: transparent;
+}
+
+@media only screen and (max-width:800px) {
+
+    .faqs .faqs-s{
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    .faqs .faqs-s .search{
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+}

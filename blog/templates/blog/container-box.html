@@ -1,0 +1,124 @@
+{% load static %}
+{% static "images" as baseUrl %}
+<div class="container-box">
+    {% if messages %}
+    <div class="log_data">
+        <div>
+            {% for message in messages %}
+               <span>{{message}}</span> 
+            {% endfor %}
+        </div>
+        <div>
+            <button onclick="close_log()">&#x2715;</button>
+        </div>
+    </div>
+    {% endif %}
+    {% comment %} <div class="main-swiper-container con-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"></div>
+            <div class="swiper-slide">Slide 2</div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div> {% endcomment %}
+    <div class="stack">
+        {% comment %} <div class="location">
+            <span class="area">
+                Place : 
+                <input type="text" value="{{data.place}}">
+            </span>
+                <span class="radius">
+                    Over : 
+                    <input type="text" value="{{data.over}} kms">
+                </span>
+        </div> {% endcomment %}
+        <div class="lmr">
+            {% if posts %}
+                {% for post in posts %}
+                    <div class="even">
+                        <div class="pic">
+                            {% for i in imgs %}
+                                {% if i.post.id == post.id %}
+                                <img  style="
+                                width: 100%;
+                                height: 100%;
+                                object-fit: contain;"  src="{{ i.cover.url }}" alt="{{ post.post_title }}">
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="det">
+                            <div class="ncc">
+                                <div class="name">
+                                    <a href="{% url 'open-post' post.sha %}" title="{{post.post_title}}" target="_blank">{{post.post_title|truncatewords:25}}</a>
+                                </div>
+                                <div class="contact">
+                                    <div type="button" id="like-{{post.id}}" onclick="likepost({{post.id}})">
+                                        {% if request.user in post.likes.all %}
+                                        <i class="fa fa-heart" style="font-size:18px;"></i>
+                                        {% else %}
+                                        <i class="fa fa-heart-o" style="font-size:18px;"></i>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="price">
+                                Rs. {{post.price}}/-
+                            </div>
+                            <div class="desc">
+                                {{post.desc|truncatewords:14}}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+            <div class="noproductfound">
+                <img src="{% static 'images/noproductfound.jpeg' %}" alt="noproductfound">
+            </div>
+            {% endif %}
+        </div>
+        
+    </div>
+    
+</div>
+
+
+<!--script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script-->
+<script>
+    function likepost(id){
+        $.ajax({
+            type:'GET',
+            url: "{% url 'like-post' %}",
+            data:{
+                'id':id,
+            },
+            dataType:'json',
+            success: function(data){
+                if(data.like){
+                    $("#like-"+id).html("<i class='fa fa-heart' style='font-size:18px;'></i>");
+                }
+                else{
+                    $("#like-"+id).html("<i class='fa fa-heart-o' style='font-size:18px;'></i>");
+                }
+            }
+        });
+    }
+</script>
+<script type="module">
+    import Swiper from 'https://unpkg.com/swiper@7/swiper-bundle.esm.browser.min.js'
+    const swiper = new Swiper('.main-swiper-container', {
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }, 
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+</script>
+<script>
+    function close_log(){
+        $(".log_data").remove();
+    }
+</script>

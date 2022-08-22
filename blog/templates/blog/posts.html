@@ -1,0 +1,138 @@
+{% load static %}
+{% static "images" as baseUrl %}
+<div class="msgbox">
+
+</div>
+<div class="con-inside">
+    <div class="con-heading">
+        {% for nav in navss %}
+            {% if nav.w == sec %}
+                {{ nav.n }}
+            {% endif %}
+        {% endfor %}
+        
+    </div>
+
+    <div class="con-main-min">
+        {% for post in posts %}
+            <div id="post-{{post.id}}" class="post">
+                <div class="cover">
+                    {% for i in imgs %}
+                        {% if i.post.id == post.id %}
+                            <img  style="
+                            width: 100%;
+                            height: 100%;
+                            object-fit: contain;"  src="{{ i.cover.url }}" alt="{{ post.post_title }}">
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="det">
+                    <div class="nd">
+                        <div class="name">
+                            <a href="{% url 'open-post' post.sha %}" title="{{post.post_title}}" target="_blank">{{post.post_title|truncatewords:8}}</a>
+                        </div>
+                        <div class="dots">
+                            <div class="dotsin">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                            <div class="tog-con post.id" style="position: absolute;z-index:1000;transform: translate(-55%,50%);">
+                                <a href="{% url 'edit' post.sha %}"><div class="tog">Edit</div></a>
+                                <a><div type="button" onclick="dele({{post.id}})" class="tog">Delete</div></a>
+                                <a><div id="post-{{post.id}}-chan" type="button" onclick="chan({{post.id}})" class="tog">
+                                    {% if post.sell %}
+                                        Mark as Unsold
+                                    {% else %}
+                                        Mark as Sold
+                                    {% endif %}
+                                </div></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="price">
+                        Rs. {{post.price}}/-
+                    </div>
+                    {% if post.sell %}
+                        <div id="post-{{post.id}}-sell" class="sell" style="color: green;">
+                        Sold
+                        </div>
+                    {% else %}
+                        <div id="post-{{post.id}}-unsell" class="sell" style="color: red;">
+                        Not Sold
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <hr id="msg-{{post.id}}" class="hh">
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+
+    function dele(id){
+            var action = confirm("Are you sure you want to delete this post?");
+            if(action!=false)
+            {
+                $.ajax({
+            url: '{% url "delete_post" %}',
+            data:{
+              'id' : id,
+            },
+            dataType:'json',
+            success:function(data){
+              if(data.deleted){
+                $("#post-"+id).remove();
+                $("#hh"+id)
+                $('.msgbox').css('display','flex');
+                $('.msgbox').html('<span>Post has been deleted..</span>');
+                $("#msg-"+id).remove();
+              }
+            }
+          });
+            }
+      }
+
+      function chan(id){
+          var val= $("#post-"+id+"-sell").text();
+          var val1= $("#post-"+id+"-unsell").text();
+          $.ajax({
+            url: '{% url "chan_post" %}',
+            data:{
+              'id' : id,
+            },
+            dataType:'json',
+            success:function(data){
+              if(val=="Sold" || val1=="Not Sold"){
+                $("#post-"+id+"-chan").text("Mark as Unsold");
+                $("#post-"+id+"-sell").text("Not Sold");
+                $("#post-"+id+"-sell").css("color","red");
+                $("#post-"+id+"-unsell").text("Sold");
+                $("#post-"+id+"-unsell").css("color","green");
+              }
+              else if(val=="Not Sold" || val1=="Sold"){
+                $("#post-"+id+"-chan").text("Mark as Sold");
+                $("#post-"+id+"-sell").text("Sold");
+                $("#post-"+id+"-sell").css("color","green");
+                $("#post-"+id+"-unsell").text("Not Sold");
+                $("#post-"+id+"-unsell").css("color","red");
+              }
+              else if(data.chan==true){
+                $("#post-"+id+"-chan").text("Mark as UnSold");
+                $("#post-"+id+"-sell").text("Not Sold");
+                $("#post-"+id+"-sell").css("color","red");
+                $("#post-"+id+"-unsell").text("Sold");
+                $("#post-"+id+"-unsell").css("color","green");
+              }
+              else if(data.chan==false){
+                $("#post-"+id+"-chan").text("Mark as Sold");
+                $("#post-"+id+"-sell").text("Not Sold");
+                $("#post-"+id+"-sell").css("color","red");
+                $("#post-"+id+"-unsell").text("Sold");
+                $("#post-"+id+"-unsell").css("color","green");
+              }
+            }
+          });
+      }
+</script>

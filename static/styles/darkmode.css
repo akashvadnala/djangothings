@@ -1,0 +1,481 @@
+
+body.darkmode{
+    background: rgba(0,0,0,.91);
+}
+.darkmode .header{
+    background: rgba(0,0,0,.9);
+    border-bottom: solid .6px rgba(255,255,255,.5);
+}
+
+.darkmode .logo div a{
+    color:white;
+    text-decoration: none;
+    font-size: 25px;
+}
+
+
+.darkmode .search form .search_in{
+    background-color: rgba(100,100,100,.5); 
+}
+
+.darkmode .inn input{
+    color: rgb(240,240,240);
+}
+
+.darkmode .expand .expand-s button:hover, .darkmode .expand-min .expand-s button:hover{
+    background: rgba(100,100,100,1);
+}
+
+.darkmode .mnu .mn{
+    color:rgb(240,240,240);
+}
+
+.darkmode .mnu .mn:hover{
+    color:#0070c9;
+}
+
+.darkmode .mnu a{
+color: rgb(240,240,240);
+}
+
+.darkmode .mnu a:hover{
+color: #06c;
+}
+
+.darkmode .mnu .downkey .ull{
+    box-shadow: 10px 10px 20px rgba(50,50,50,.9);
+    background-color: black;
+    border: solid 1px rgba(15,15,15,.5);
+}
+
+.darkmode .mnu .downkey .ull a{
+    color: rgb(205,205,205);
+}
+
+.darkmode .mnu .downkey .ull a .lii{
+    border-bottom: solid 1px rgba( 200,200,200, 0.7);
+}
+
+.darkmode .mnu .downkey .ull a .lii:last-child{
+    border-bottom: none;
+}
+
+.darkmode .mnu .downkey .ull a:hover{
+    color: #0070c9;
+}
+
+.darkmode .side-header .nav .ull a .lii, .header .nav .uli a .lii{
+    color: white;
+}
+
+.darkmode .container-box .error .error-head{
+color: red;
+}
+
+.darkmode .container-box .error .con{
+border: 1px solid rgba( 55,55,55, 0.3);
+background-color: rgba(15,15,15,.3);
+}
+
+.darkmode .container-box .error .retrive a{
+color: #0070c9;
+}
+
+
+.darkmode ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .darkmode ::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+   
+  .darkmode ::-webkit-scrollbar-thumb {
+    background: transparent; 
+    border-radius:10px;
+  }
+  
+  .darkmode ::-webkit-scrollbar-thumb:hover {
+    background: transparent; 
+  }
+
+
+@media only screen and (max-width:800px) {
+
+    .darkmode .min-header{
+        background: rgba(0,0,0,.9);
+    border-bottom: solid .6px rgba(255,255,255,.5);
+    }
+
+    .darkmode .min-header .logo div a{
+        color: rgb(240,240,240);
+    }
+
+    .darkmode .bar-icon .bar{
+        background-color: white;
+    }
+
+    .darkmode .nav-toggle{
+        background-color: rgb(15,15,15);
+    }
+
+    .darkmode .navigation-toggle div {
+        background: white;
+    }
+    .darkmode .navigation-toggle div:hover{
+        background-color: white;
+    }
+
+    /* navigation po pokazaniu */
+    .darkmode .navigation {
+        background:rgba(15,15,15,.9);
+    } 
+    .darkmode .navigation a {
+        color:#42505A;
+    }
+    .darkmode .navigation .ull a {
+        color: rgba(215,215,215,1);
+        border-bottom: solid 1px rgba(100,100,100,1);
+    }
+    .darkmode .navigation .ull a:hover {
+        color: #06c;
+    }
+    .darkmode .navigation-show .navigation {
+        background:rgba(15,15,15,.3);
+    }
+
+    .darkmode .search_in{
+        background: rgba(50,50,50,1);
+    }
+
+
+}
+
+/* container box */
+
+.darkmode .container-box{
+    background: rgba(0,0,0,.5);
+}
+
+.darkmode .container-box .con-swiper{
+    border: solid 1px rgba(63,63,63,.7);
+    background: rgba(200,200,200,.9);
+}
+
+.darkmode .stack .lmr .even{
+    border: solid 1px rgba(50,50,50,.7);
+  background-color: black;
+}
+
+.darkmode .even .pic{
+    border: solid 1px rgba(63,63,63,.7);
+}
+
+.darkmode .even .det{
+  color: rgba(240,240,240,.9);
+}
+
+.darkmode .det .ncc .name a{
+  color: #007aff;
+}
+
+.darkmode .det .ncc .name a:hover{
+  color: #007aff;
+}
+
+.darkmode .stack .lmr .m .even:hover{
+box-shadow: 0 0 14px rgb( 5,5,10);
+}
+
+
+/* footer */
+
+.darkmode .footer{
+    background: rgba(40,40,40,.9);
+    border: solid 1px rgba(50,50,50,.7);
+    color: rgb(200,200,200);
+}
+
+.darkmode .footer a{
+    color: rgb(200,200,200);
+}
+
+.darkmode .footer .footer-f .hr{
+    background: rgba(100,100,100,.7);
+}
+
+.darkmode .footer .footer-f .det .name a{
+    color: rgb(200,200,200);
+}
+
+/* open post */
+
+.darkmode .post-show .post-pic{
+    background:rgba(15,15,15,.7);
+    border: solid 1px rgba(55,55,55,.7);
+}
+
+.darkmode .post-show .post-det{
+    color: rgb(205,205,205);
+    background:rgba(15,15,15,.7);
+    border: solid 1px rgba(55,55,55,.7);
+
+}
+
+.darkmode .post-det .name{
+    color: cornflowerblue;
+}
+
+.darkmode .but button{
+    color: black;
+    background: cornflowerblue;
+}
+
+.darkmode .but button:hover{
+    box-shadow: 0px 0px 7px cornflowerblue;
+}
+
+
+/* home */
+
+.darkmode .side-header{
+    background-color: rgba(100,100,100,.2);
+}
+
+.darkmode .side-header .logo div a{
+  color: rgb(240,240,240);
+}
+
+.darkmode .side-header .nav .ull a,.header .nav .uli a{
+    color:rgb(240,240,240);
+}
+
+
+.darkmode .side-header .nav .ull a .lii:hover ,.header .nav .uli a .lii:hover {
+    background-color: rgba(170,170,170,.3);
+}
+
+/* posts */
+
+.darkmode .con-inside .con-heading{
+    color: rgb(240,240,240);
+}
+
+.darkmode .post .cover{
+    border: solid 1px rgba(100,100,100,.8);
+}
+
+.darkmode .post:hover{
+    background-color: rgba(50,50,50,.9);
+}
+
+.darkmode .post .det .price,.det .sell{
+    color: rgb(240,240,240);
+}
+
+.darkmode .post .det .name a{
+    color: #007aff;
+}
+
+.darkmode .tog-con{
+    background: rgba(100,100,100,.5);
+    border: solid 1px rgba(230,230,230,.7);
+}
+
+.darkmode .tog-con a{
+    color: rgb(240,240,240);
+}
+
+.darkmode .nd .dots .tog-con a .tog:hover{
+    background: rgba(0,0,0,.1);
+}
+
+.darkmode .dotsin .dot{
+    background-color: white;
+}
+
+
+/* upload post */
+
+
+.darkmode .swiper-container{
+    border:solid 1px transparent;
+    background-color: transparent;
+}
+
+.darkmode .swiper-slide{
+    border: rgba(200,200,200,.5) solid 1px;
+    background: rgba(192,192,192,.5);
+    color: white;
+}
+
+.darkmode .book{
+    background: cornflowerblue;
+    color: white;
+}
+
+.darkmode .lab{
+    color: rgb(240,240,240);
+}
+
+.darkmode .inp input, .darkmode .inp textarea, .darkmode .lab input{
+    background: rgba(100,100,100,.7);
+    outline-color: cornflowerblue;
+    color: rgb(240,240,240);
+}
+
+.darkmode .but button{
+    background-color: cornflowerblue;
+    color: white;
+    border: solid 1px rgba(150,150,150,.3);
+}
+
+.darkmode .but button:hover{
+    box-shadow: 0 0 2px cornflowerblue;
+    color: white;
+    border: solid 1px cornflowerblue;
+}
+
+/* settings */
+
+
+.darkmode .theme-settings .theme-heading, .darkmode .profile-settings .prof-heading,.darkmode .password-settings .pass-heading{
+    color: rgb(200,200,200);
+}
+
+.darkmode .hr{
+    background-color: rgb(100,100,100);
+}
+
+.darkmode .profile-settings .prof-main{
+    color: rgb(240,240,240);
+}
+
+.darkmode .password-settings .pass-main{
+    color: rgb(240,240,240);
+}
+
+.darkmode .theme-settings .theme-main{
+    color: rgb(240,240,240);
+}
+
+.darkmode .prof-inp input{
+    background: rgba(100,100,100,.7);
+    outline-color: cornflowerblue;
+    color: rgb(240,240,240);
+}
+
+.darkmode .pass-inp input{
+    background: rgba(100,100,100,.7);
+    outline-color: cornflowerblue;
+    color: rgb(240,240,240);
+}
+
+.darkmode .fil input{
+    background: transparent;
+}
+
+
+/* dashboard */
+
+.darkmode .con-inside .dashboard .dash-head{
+    color: rgb(240,240,240);
+}
+
+.darkmode .con-inside .dashboard .dash-head:hover{
+    box-shadow: 0 0 5px rgb( 200, 200, 200);
+    
+}
+
+.darkmode .con-inside .dashboard .info{
+    border: solid .5px rgba(200,200,200,.5);
+    color: rgb(240,240,240);
+    border-radius: 10px;
+}
+
+.darkmode .con-inside .dashboard .info .info-head{
+    color: rgb(50,50,50);
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    background: rgba(240,240,240,.7);
+}
+
+.darkmode .con-inside .dashboard .info .info-head div:nth-child(2) a{
+    color: rgb(50,50,50);
+    border: solid .6px transparent;
+}
+
+.darkmode .con-inside .dashboard .info .info-head div:nth-child(2) a:hover{
+    border: solid .6px rgba(192,192,192,.2);
+    background: linear-gradient(rgba(192,192,192,.3),rgba(192,192,192,.1));
+}
+
+.darkmode .con-inside .dashboard .info:hover{
+    box-shadow: 0 0 5px rgb( 200, 200, 200);
+}
+
+.darkmode .con-inside .dashboard .info .info-one .label{
+    border-right:solid 1px rgba(192,192,192,.5);
+}
+
+/* faqs */
+
+.darkmode .faqs{
+    color: rgb(220,220,220);
+}
+
+.darkmode .faqs .faqs-s .search{
+    background: transparent;
+    border-bottom: solid 1px rgba(200,200,200,.7);
+}
+
+.darkmode .faqs .faqs-s .search .search_in{
+    background-color: transparent;
+}
+
+.darkmode .faqs .faqs-s .search .inn input{
+    background-color: transparent;
+}
+
+
+.darkmode .faqs .faqs-s .hr{
+    background: rgba(100,100,100,.7);
+}
+
+.darkmode .faqs .faqs-s .hr:last-child{
+    background: transparent;
+}
+
+/* contact */
+
+.darkmode .contact{
+    color: rgb(240,240,240);
+}
+
+.darkmode .contact .contact-s .msg_us .msg-s input,.contact .contact-s .msg_us .msg-s button{
+    border: solid 1px rgba(200,200,200,.7);
+    color: rgb(240,240,240);
+    background: rgba(100,100,100,.7);
+}
+
+.darkmode .contact .contact-s .msg_us .msg-s textarea{
+    border: solid 1px rgba(200,200,200,.7);
+    color: rgb(240,240,240);
+    background: rgba(100,100,100,.7);
+}
+
+.darkmode .contact .contact-s .msg_us .msg-s .msg-inp button{
+    background: rgba(50,50,50.7);
+    color: rgb(240,240,240);
+}
+
+.darkmode .contact .contact-s .msg_us .msg-s .msg-inp button:hover{
+    background: rgba(50,50,50,.9);
+}
+
+
+.darkmode .contact .contact-s .see_faq .see-faq-s a{
+    color: rgb(240,240,240);
+}
+
+   
