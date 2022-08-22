@@ -228,7 +228,7 @@ def register(request):
                     login(request,user)
                     messages.success(request, 'Registered Successfully')
                     if loc=='home':
-                        return redirect('/')
+                        return redirect('/settings')
                     else:
                         return redirect('/post/'+loc)
         else:

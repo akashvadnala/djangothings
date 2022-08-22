@@ -7,10 +7,10 @@
                 <div type="button" onclick="del_sel()">&times;</div>
             </div>
             <div class="sell-det">
-                <div><span>Seller: </span>{{post.uname}}</div>
-                <div>{% if post.Institute %}<span>Institute: </span>{{post.Institute}} {% endif %}</div>
+                <div><span>Seller: </span>{{post.uname.user.first_name}}</div>
+                <div><span>Institute: </span>{{post.Institute}}</div>
                 <div><span>Email ID: </span><a href="mailto:{{post.uname.email}}">{{post.uname.email}}</a></div>
-                <div><span>Contact: </span>{{post.contact}}</div>
+                <div><span>Contact: </span>{{post.uname.contact_number}}</div>
             </div>
             {% comment %} <div class="sell-msg">
             {% if user.is_authenticated %}

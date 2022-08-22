@@ -42,7 +42,7 @@ class chatters(models.Model):
         return str(self.recipient)
 
 class Post(models.Model):
-    uname = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    uname = models.ForeignKey(register_table, on_delete=models.CASCADE,null=True)
     post_title = models.CharField(max_length=200,null=True)
     author = models.CharField(max_length=200,null=True, blank=True)
     comp = models.CharField(max_length=200,null=True, blank=True)
