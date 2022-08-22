@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -92,6 +92,7 @@ DATABASES = {
         'HOST':'localhost',
     }
 }
+'''
 '''
 DATABASES = {
     'default': {
@@ -106,13 +107,13 @@ DATABASES = {
 }
 
 '''
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'db.sqlite3',
     }
-}'''
+}
 '''
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)'''

@@ -167,7 +167,7 @@ def user_login(request):
                 reg.login+=1
                 reg.save()
                 context = {'log_data':'Logged in Successfully'}
-                messages.success(request, 'Logged in Successfully')
+                # messages.success(request, 'Logged in Successfully')
             if user.is_superuser:
                 if loc=='home':
                     return redirect('/')
@@ -232,7 +232,7 @@ def register(request):
                     else:
                         return redirect('/post/'+loc)
         else:
-            messages.success(request, 'Confirm Password not matched')
+            # messages.success(request, 'Confirm Password not matched')
             if loc=='home':
                 return redirect('/')
             else:

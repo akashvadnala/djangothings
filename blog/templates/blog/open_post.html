@@ -78,7 +78,7 @@
             </div>
             <div class="det-each">
                 <div class="det-lab">About : </div>
-                <div class="det-val">{{ post.desc }}</div>
+                <div class="det-val"><p style="white-space: pre-line; margin-top:0">{{ post.desc }}</p></div>
             </div>
             <div class="but">
             {% if user.is_authenticated %}
@@ -169,9 +169,9 @@
             $(".log_data").remove();
         }
         function sendrequest(rec,id){
-            $('.msg-box').css('display','block');
+            {% comment %} $('.msg-box').css('display','block');
             $('.msg-span').text('Request has been sent to the seller through mail..');
-            {% comment %} $('.msg-link').html(`<a href="{% url 'base' 'notifications' %}" onclick="">Messages/Notificaions</a>`); {% endcomment %}
+            $('.msg-link').html(`<a href="{% url 'base' 'notifications' %}" onclick="">Messages/Notificaions</a>`); {% endcomment %}
             $.ajax({
                 type:'GET',
                 url: "{% url 'send-request' %}",

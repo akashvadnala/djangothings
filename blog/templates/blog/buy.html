@@ -9,8 +9,10 @@
             <div class="sell-det">
                 <div><span>Seller: </span>{{post.uname}}</div>
                 <div>{% if post.Institute %}<span>Institute: </span>{{post.Institute}} {% endif %}</div>
+                <div><span>Email ID: </span><a href="mailto:{{post.uname.email}}">{{post.uname.email}}</a></div>
+                <div><span>Contact: </span>{{post.contact}}</div>
             </div>
-            <div class="sell-msg">
+            {% comment %} <div class="sell-msg">
             {% if user.is_authenticated %}
                 <div>
                     Confirm the product request to seller to buy this product
@@ -26,7 +28,7 @@
                     <button onclick="dologin()">Login</button>
                 </div>
             {% endif %}
-            </div>
+            </div> {% endcomment %}
         </div>
     </div>
 </div>

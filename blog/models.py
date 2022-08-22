@@ -31,7 +31,7 @@ class register_table(models.Model):
         verbose_name_plural = "Register Table"
 
 class chatters(models.Model):
-    user = models.ForeignKey(User,related_name="chatter1", on_delete=models.CASCADE,null=True)
+    user = models.ForeignKey(register_table,related_name="chatter1", on_delete=models.CASCADE,null=True)
     recipient = models.ForeignKey(User,related_name="chatter2", on_delete=models.CASCADE,null=True)
     num = models.BigIntegerField(default=0)
     notification = models.BooleanField(default=False)
