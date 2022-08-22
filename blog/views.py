@@ -318,7 +318,7 @@ def base(request,sec):
         if len(check)>0:
             data = register_table.objects.get(user__id=request.user.id)
             context['data'] = data
-            posts = Post.objects.filter(uname=request.user)
+            posts = Post.objects.filter(uname=data)
             context['posts'] = posts
             imgs = PostImage.objects.all()
             context['imgs'] = imgs
@@ -364,7 +364,7 @@ def sel_submit(request):
         inp2 = None
         if "inp2" in request.POST:
             inp2 = request.POST['inp2']
-        upload = Post(uname=request.user,post_title=post_title,category=category,author=author,comp=comp,place=place,Institute=Institute,price=price,desc=desc,label1=label1,inp1=inp1,label2=label2,inp2=inp2)
+        upload = Post(uname=data,post_title=post_title,category=category,author=author,comp=comp,place=place,Institute=Institute,price=price,desc=desc,label1=label1,inp1=inp1,label2=label2,inp2=inp2)
         upload.save()
         images = request.FILES.getlist('cover')
         for img in images:
@@ -395,12 +395,6 @@ def prof_update(request):
             usr.last_name = ln
             usr.email = em
             usr.save()
-
-            posts = Post.objects.filter(uname=request.user)
-            for post in posts:
-                post.place = place
-                post.Institute = inst
-                post.save()
 
             data.contact_number = con
             data.place = place
@@ -457,7 +451,7 @@ def open_post(request,sha):
     check=Post.objects.filter(sha=sha)
     if len(check)>0:
         if sha=='lastpost':
-            post_main = Post.objects.get(uname=request.user)[-1]
+            post_main = Post.objects.get(uname=data)[-1]
         else:
             post_main = Post.objects.get(sha = sha)
         context['post'] = post_main
@@ -582,7 +576,7 @@ def post_edit(request,sha):
         check = Post.objects.filter(sha=sha)
         if(len(check)>0):
             post = Post.objects.get(sha=sha)
-            if post.uname == request.user:
+            if post.uname == data:
                 context['post'] = post
                 context['page_title'] = 'Edit Post - '+post.post_title
                 imgs = PostImage.objects.all()

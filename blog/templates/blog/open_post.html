@@ -82,7 +82,7 @@
             </div>
             <div class="but">
             {% if user.is_authenticated %}
-                {% if post.uname == request.user %}
+                {% if post.uname.user == request.user %}
                 <button ><a style="color: white;text-decoration: none;" target="_blank" href="{% url 'edit' post.sha %}">Edit</a></button>
                 {% else %}
                 <button onclick="onContact()">Contact</button>
